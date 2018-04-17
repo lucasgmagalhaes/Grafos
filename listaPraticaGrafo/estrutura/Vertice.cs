@@ -11,7 +11,8 @@ namespace listaPraticaGrafo
         private Dados dados;
         private List<Aresta> arestas;
 
-        public Dados getDados { get { return dados; } }
+        public Dados getDados { get { return this.dados; } }
+        public int getGrau { get { return this.arestas.Count(); } }
 
         public Vertice(Dados dados)
         {
