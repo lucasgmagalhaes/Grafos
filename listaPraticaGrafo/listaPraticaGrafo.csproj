@@ -43,11 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="estrutura\Aresta.cs" />
+    <Compile Include="estrutura\Dados.cs" />
+    <Compile Include="estrutura\Vertice.cs" />
+    <Compile Include="Grafo.cs" />
+    <Compile Include="GrafoDirecionado.cs" />
+    <Compile Include="GrafoNaoDirecionado.cs" />
+    <Compile Include="LeitorArquivo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="interface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
