@@ -114,5 +114,18 @@ namespace listaPraticaGrafo.interfaces
         /// </summary>
         /// <returns></returns>
         int GetCutVertices();
+
+        /// <summary>
+        /// Deve adicionar um vértice a lista de vértices do grafo
+        /// </summary>
+        /// <param name="v1"></param>
+        void AddVertice(Vertice v1);
+
+        /// <summary>
+        /// Deve remover um vértice da lista vértices do grafo, bem como as arestas que os demais vértices
+        /// possuem com o qual será removido.
+        /// </summary>
+        /// <param name="v1"></param>
+        void RemoverVertice(Vertice v1);
     }
 }

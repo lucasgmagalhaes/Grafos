@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="estrutura\Aresta.cs" />
+    <Compile Include="estrutura\ArestaDirigida.cs" />
     <Compile Include="estrutura\ConteudoVertice.cs" />
     <Compile Include="estrutura\Dado.cs" />
     <Compile Include="estrutura\Vertice.cs" />

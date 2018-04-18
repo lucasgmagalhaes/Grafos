@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+
 namespace listaPraticaGrafo.estrutura
 {
     public class Vertice
     {
         private List<Aresta> arestas;
-
-        public Dado dado { get; }
-        public int getGrau { get { return this.arestas.Count(); } }
+        private Dado dado;
 
         public Vertice(Dado dados)
         {
@@ -25,11 +26,53 @@ namespace listaPraticaGrafo.estrutura
             this.arestas.Add(aresta);
         }
 
-        public Aresta AddArestaCom(Vertice vertice)
+        public int GetGrau()
         {
-            Aresta a = new Aresta(this, vertice);
-            this.arestas.Add(a);
-            return a;
+            return this.arestas.Count();
+        }
+
+        public Dado GetDado()
+        {
+            return this.dado;
+        }
+
+        /// <summary>
+        /// Retorna a direção em que uma aresta aponta
+        /// </summary>
+        /// <param name="aresta"></param>
+        /// <returns></returns>
+        public object GetDirecao(Aresta aresta)
+        {
+            if (this.arestas.Contains(aresta))
+            {
+               List<Vertice> vertices = aresta.GetVertices();
+               if(vertices[0] == this)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            return null;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder retorno = new StringBuilder(this.dado.ToString());
+            foreach(Aresta arr in this.arestas)
+            {
+
+                retorno.Append(arr.GetVertices()[0].GetDado() + ";" + arr.GetVertices()[1].GetDado() 
+                    + ";" + this.GetDirecao(arr) + ";" + arr.GetPeso());
+            }
+            return retorno.ToString();
+        }
+
+        public List<Aresta> GetArestas()
+        {
+            return this.arestas;
         }
     }
 }

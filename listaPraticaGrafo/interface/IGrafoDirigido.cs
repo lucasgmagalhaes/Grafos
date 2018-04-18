@@ -2,7 +2,7 @@
 
 namespace listaPraticaGrafo.interfaces
 {
-    interface IGrafoDirigido
+    interface IGrafoDirigido : IGrafo
     {
         /// <summary>
         /// Retorna o número de vértices que incidem ao vértice passado por parâmetro

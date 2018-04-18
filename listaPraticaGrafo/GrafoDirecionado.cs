@@ -1,6 +1,7 @@
 ﻿using System;
 using listaPraticaGrafo.interfaces;
 using listaPraticaGrafo.estrutura;
+
 namespace listaPraticaGrafo
 {
     public class GrafoDirecionado : Grafo, IGrafoDirigido
