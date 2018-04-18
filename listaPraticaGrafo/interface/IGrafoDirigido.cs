@@ -1,4 +1,6 @@
-﻿namespace listaPraticaGrafo.interfaces
+﻿using listaPraticaGrafo.estrutura;
+
+namespace listaPraticaGrafo.interfaces
 {
     interface IGrafoDirigido
     {

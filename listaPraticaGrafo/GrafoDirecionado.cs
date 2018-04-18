@@ -1,12 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ListaPraticaGrafos
+using listaPraticaGrafo.interfaces;
+using listaPraticaGrafo.estrutura;
+namespace listaPraticaGrafo
 {
-    public class GrafoDirecionado : Grafo
+    public class GrafoDirecionado : Grafo, IGrafoDirigido
     {
+        public int GetGrauEntrada(Vertice v1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetGrauSaida(Vertice v1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasCiclo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

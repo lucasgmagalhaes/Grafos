@@ -1,6 +1,8 @@
-﻿namespace listaPraticaGrafo.interfaces
+﻿using listaPraticaGrafo.estrutura;
+
+namespace listaPraticaGrafo.interfaces
 {
-    interface IGrafo
+    public interface IGrafo
     {
         /// <summary>
         /// Passando dois vértices como parâmetro, o método deve verificar se os dois vértices possuem

@@ -44,11 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="estrutura\Aresta.cs" />
-    <Compile Include="estrutura\Dados.cs" />
+    <Compile Include="estrutura\ConteudoVertice.cs" />
+    <Compile Include="estrutura\Dado.cs" />
     <Compile Include="estrutura\Vertice.cs" />
     <Compile Include="Grafo.cs" />
     <Compile Include="GrafoDirecionado.cs" />
-    <Compile Include="GrafoNaoDirecionado.cs" />
     <Compile Include="interface\IGrafo.cs" />
     <Compile Include="interface\IGrafoDirigido.cs" />
     <Compile Include="LeitorArquivo.cs" />

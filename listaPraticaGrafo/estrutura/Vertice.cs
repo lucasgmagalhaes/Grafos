@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace listaPraticaGrafo
+namespace listaPraticaGrafo.estrutura
 {
-    class Vertice
+    public class Vertice
     {
-        private Dados dados;
         private List<Aresta> arestas;
 
-        public Dados getDados { get { return this.dados; } }
+        public Dado dado { get; }
         public int getGrau { get { return this.arestas.Count(); } }
 
-        public Vertice(Dados dados)
+        public Vertice(Dado dados)
         {
-            this.dados = dados;
+            this.dado = dados;
         }
 
-        public Vertice(Dados dados, List<Aresta> arestas)
+        public Vertice(Dado dado, List<Aresta> arestas)
         {
-            this.dados = dados;
+            this.dado = dado;
             this.arestas = arestas;
         }
 
