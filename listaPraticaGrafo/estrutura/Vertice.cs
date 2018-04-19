@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,10 @@ namespace listaPraticaGrafo.estrutura
     {
         private List<Aresta> arestas;
         private Dado dado;
+        /// <summary>
+        /// vChefe - Usado para kruskal e para definir se tem ciclo
+        /// </summary>
+        protected Vertice vChefe; 
 
         public Vertice(Dado dados)
         {
@@ -19,11 +23,15 @@ namespace listaPraticaGrafo.estrutura
         {
             this.dado = dado;
             this.arestas = arestas;
+            this.vChefe = this;
         }
 
         public void AddAresta(Aresta aresta)
         {
             this.arestas.Add(aresta);
+            List<Vertice> lstAux = aresta.GetVertices();
+            Vertice vAux = lstAux.Last();
+            vAux.vChefe = this;
         }
 
         public int GetGrau()
@@ -45,8 +53,8 @@ namespace listaPraticaGrafo.estrutura
         {
             if (this.arestas.Contains(aresta))
             {
-               List<Vertice> vertices = aresta.GetVertices();
-               if(vertices[0] == this)
+                List<Vertice> vertices = aresta.GetVertices();
+                if (vertices[0] == this)
                 {
                     return -1;
                 }
@@ -61,10 +69,10 @@ namespace listaPraticaGrafo.estrutura
         public override string ToString()
         {
             StringBuilder retorno = new StringBuilder(this.dado.ToString());
-            foreach(Aresta arr in this.arestas)
+            foreach (Aresta arr in this.arestas)
             {
 
-                retorno.Append(arr.GetVertices()[0].GetDado() + ";" + arr.GetVertices()[1].GetDado() 
+                retorno.Append(arr.GetVertices()[0].GetDado() + ";" + arr.GetVertices()[1].GetDado()
                     + ";" + this.GetDirecao(arr) + ";" + arr.GetPeso());
             }
             return retorno.ToString();
@@ -73,6 +81,11 @@ namespace listaPraticaGrafo.estrutura
         public List<Aresta> GetArestas()
         {
             return this.arestas;
+        }
+
+        public Vertice GetVerticeChefe()
+        {
+            return this.vChefe;
         }
     }
 }
