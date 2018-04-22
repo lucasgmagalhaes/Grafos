@@ -13,10 +13,13 @@ namespace listaPraticaGrafo.estrutura
         /// vChefe - Usado para kruskal e para definir se tem ciclo
         /// </summary>
         protected Vertice vChefe; 
+        protected bool visitado;
 
         public Vertice(Dado dados)
         {
             this.dado = dados;
+            this.vChefe = this;
+            this.visitado = false;
         }
 
         public Vertice(Dado dado, List<Aresta> arestas)
@@ -24,6 +27,7 @@ namespace listaPraticaGrafo.estrutura
             this.dado = dado;
             this.arestas = arestas;
             this.vChefe = this;
+            this.visitado = false;
         }
 
         public void AddAresta(Aresta aresta)
@@ -86,6 +90,14 @@ namespace listaPraticaGrafo.estrutura
         public Vertice GetVerticeChefe()
         {
             return this.vChefe;
+        }
+         public bool GetVisitado()
+        {
+            return this.visitado;
+        }
+        public void setVisitado(bool visita)
+        {
+              this.visitado = visita;
         }
     }
 }
