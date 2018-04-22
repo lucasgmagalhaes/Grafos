@@ -14,7 +14,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Insere um novo vÈrtice ao grafo
+        /// Insere um novo v√©rtice ao grafo
         /// </summary>
         /// <param name="v1"></param>
         public void AddVertice(Vertice v1)
@@ -37,7 +37,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Remove os valores nulos da lista de arestas dos vÈrtices que fazem ligaÁ„o com aquele passado no par‚metro.
+        /// Remove os valores nulos da lista de arestas dos v√©rtices que fazem liga√ß√£o com aquele passado no par√¢metro.
         /// </summary>
         /// <param name="v1"></param>
         private void LimparArestas(Vertice v1)
@@ -87,7 +87,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Informa o grau de um vÈrtice (N˙mero de arestas que ele possui)
+        /// Informa o grau de um v√©rtice (N√∫mero de arestas que ele possui)
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Verifica se um vÈrtice possui ligaÁ„o com outro
+        /// Verifica se um v√©rtice possui liga√ß√£o com outro
         /// </summary>
         /// <param name="v1"></param>
         /// <param name="v2"></param>
@@ -115,7 +115,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Verifica se todos os vÈrtices est„o conectados com todos os outros
+        /// Verifica se todos os v√©rtices est√£o conectados com todos os outros
         /// </summary>
         /// <returns></returns>
         public bool IsCompleto()
@@ -136,14 +136,34 @@ namespace listaPraticaGrafo
         {
             throw new System.NotImplementedException();
         }
-
+        /// <summary>
+        /// Verifica se todos os vertices tem grau par e √© conexo, ou seja, euleriano
+        /// </summary>
+        /// <returns></returns>
         public bool IsEuleriano()
         {
-            throw new System.NotImplementedException();
+           try
+            {
+                if (IsConexo())
+                { 
+                    foreach (Vertice vertice in this.vertices)
+                    {
+                        if ((vertice.GetGrau() % 2) != 0) // todos vertices devem possuir grau par
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         /// <summary>
-        /// Verifica se um vÈrtice n„o possui arestas
+        /// Verifica se um v√©rtice n√£o possui arestas
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
@@ -153,7 +173,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Verifica se o grafo n„o possui arestas
+        /// Verifica se o grafo n√£o possui arestas
         /// </summary>
         /// <returns></returns>
         public bool IsNulo()
@@ -169,7 +189,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Verifica se um vÈrtice possui grau 1
+        /// Verifica se um v√©rtice possui grau 1
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
@@ -179,7 +199,7 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Verifica se os vÈrtices possuem o mesmo grau
+        /// Verifica se os v√©rtices possuem o mesmo grau
         /// </summary>
         /// <returns></returns>
         public bool IsRegular()
