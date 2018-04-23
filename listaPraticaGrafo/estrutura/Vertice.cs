@@ -95,7 +95,7 @@ namespace listaPraticaGrafo.estrutura
         {
             return this.visitado;
         }
-        public void setVisitado(bool visita)
+        public void SetVisitado(bool visita)
         {
               this.visitado = visita;
         }

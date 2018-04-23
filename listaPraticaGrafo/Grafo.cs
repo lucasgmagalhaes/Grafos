@@ -199,7 +199,7 @@ namespace listaPraticaGrafo
         {
             try
             {
-                if (IsConexo())
+                if (this.IsConexo())
                 {
                     foreach (Vertice vertice in this.vertices)
                     { 
