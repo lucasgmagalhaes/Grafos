@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using listaPraticaGrafo.Enum;
 
 namespace listaPraticaGrafo.estrutura
 {
@@ -11,17 +10,16 @@ namespace listaPraticaGrafo.estrutura
         private List<Aresta> arestas;
         private Dado dado;
         /// <summary>
-        /// Usado para realizar os métodos de pesquisa
-        /// </summary>
-        private Cor cor;
-        /// <summary>
         /// vChefe - Usado para kruskal e para definir se tem ciclo
         /// </summary>
         protected Vertice vChefe; 
+        protected bool visitado;
 
         public Vertice(Dado dados)
         {
             this.dado = dados;
+            this.vChefe = this;
+            this.visitado = false;
         }
 
         public Vertice(Dado dado, List<Aresta> arestas)
@@ -29,6 +27,7 @@ namespace listaPraticaGrafo.estrutura
             this.dado = dado;
             this.arestas = arestas;
             this.vChefe = this;
+            this.visitado = false;
         }
 
         public void AddAresta(Aresta aresta)
@@ -92,44 +91,13 @@ namespace listaPraticaGrafo.estrutura
         {
             return this.vChefe;
         }
-
-        /// <summary>
-        /// Define a cor do vértice baseado na cor atual. Se ela for BRANCA, passará a ser CINZA,
-        /// e se for CINZA, será PRETA.
-        /// </summary>
-        public void AtualizarCor()
+         public bool GetVisitado()
         {
-            if (this.cor == Cor.BRANCO)
-            {
-                this.cor = Cor.CINZA;
-            }
-            else if (this.cor == Cor.CINZA)
-            {
-                this.cor = Cor.PRETO;
-            }
+            return this.visitado;
         }
-
-        /// <summary>
-        /// Torna a cor do vértice, PRETO
-        /// </summary>
-        public void FinalizaPercurso()
+        public void setVisitado(bool visita)
         {
-            this.cor = Cor.PRETO;
-        }
-
-        public void ResetarCor()
-        {
-            this.cor = Cor.BRANCO;
-        }
-
-        public Cor GetCor()
-        {
-            return this.cor;
-        }
-
-        public void SetCor(Cor cor)
-        {
-            this.cor = cor;
+              this.visitado = visita;
         }
     }
 }
