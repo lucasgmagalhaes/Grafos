@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\Cor.cs" />
     <Compile Include="estrutura\Aresta.cs" />
     <Compile Include="estrutura\ArestaDirigida.cs" />
     <Compile Include="estrutura\ConteudoVertice.cs" />

@@ -12,7 +12,6 @@ namespace listaPraticaGrafo
     {
         static void Main(string[] args)
         {
-         
         }
     }
 }

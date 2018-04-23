@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using listaPraticaGrafo.Enum;
 
 namespace listaPraticaGrafo.estrutura
 {
@@ -9,6 +10,10 @@ namespace listaPraticaGrafo.estrutura
     {
         private List<Aresta> arestas;
         private Dado dado;
+        /// <summary>
+        /// Usado para realizar os métodos de pesquisa
+        /// </summary>
+        private Cor cor;
         /// <summary>
         /// vChefe - Usado para kruskal e para definir se tem ciclo
         /// </summary>
@@ -86,6 +91,45 @@ namespace listaPraticaGrafo.estrutura
         public Vertice GetVerticeChefe()
         {
             return this.vChefe;
+        }
+
+        /// <summary>
+        /// Define a cor do vértice baseado na cor atual. Se ela for BRANCA, passará a ser CINZA,
+        /// e se for CINZA, será PRETA.
+        /// </summary>
+        public void AtualizarCor()
+        {
+            if (this.cor == Cor.BRANCO)
+            {
+                this.cor = Cor.CINZA;
+            }
+            else if (this.cor == Cor.CINZA)
+            {
+                this.cor = Cor.PRETO;
+            }
+        }
+
+        /// <summary>
+        /// Torna a cor do vértice, PRETO
+        /// </summary>
+        public void FinalizaPercurso()
+        {
+            this.cor = Cor.PRETO;
+        }
+
+        public void ResetarCor()
+        {
+            this.cor = Cor.BRANCO;
+        }
+
+        public Cor GetCor()
+        {
+            return this.cor;
+        }
+
+        public void SetCor(Cor cor)
+        {
+            this.cor = cor;
         }
     }
 }

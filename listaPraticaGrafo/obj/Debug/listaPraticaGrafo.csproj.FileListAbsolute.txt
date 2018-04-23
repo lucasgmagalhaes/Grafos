@@ -5,3 +5,10 @@ C:\Users\1047825\Downloads\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.
 C:\Users\1047825\Downloads\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojResolveAssemblyReference.cache
 C:\Users\1047825\Downloads\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.exe
 C:\Users\1047825\Downloads\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.pdb
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe.config
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.pdb
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojResolveAssemblyReference.cache
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csproj.CoreCompileInputs.cache
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.exe
+C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.pdb

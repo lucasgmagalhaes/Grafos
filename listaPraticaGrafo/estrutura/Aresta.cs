@@ -34,20 +34,44 @@ namespace listaPraticaGrafo.estrutura
         /// <returns></returns>
         public List<Vertice> GetVertices()
         {
-            List<Vertice> listaRetorno = new List<Vertice>();
-            listaRetorno.Add(this.vertice1);
-            listaRetorno.Add(this.vertice2);
-            return listaRetorno;
+            return new List<Vertice> { this.vertice1, this.vertice2 };
         }
 
         public object GetPeso()
         {
             return this.peso;
         }
+
+        /// <summary>
+        /// Dado um vértice para comparação, retorna aquela que não é o passado por parâmetro.
+        /// 
+        /// Tendo uma aresta dois vértices, A e B, passando A no parâmetro do método, este ira 
+        /// retornar B, e vice versa.
+        /// </summary>
+        /// <param name="vertice">vertice</param>
+        /// <returns></returns>
+        public Vertice GetVerticeDiferente(Vertice vertice)
+        {
+            if(this.vertice1 == vertice)
+            {
+                return this.vertice2;
+            }
+            else if(this.vertice2 == vertice)
+            {
+                return this.vertice1;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Retorna se a busca/pesquisa já passou por esta aresta
+        /// </summary>
+        /// <returns></returns>
         public bool GetVisitado()
         {
             return visitada;
         }
+
         public void SetVisitado(bool visita)
         {
             this.visitada = visita;
