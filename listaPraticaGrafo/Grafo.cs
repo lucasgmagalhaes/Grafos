@@ -202,11 +202,11 @@ namespace listaPraticaGrafo
                 if (this.IsConexo())
                 {
                     foreach (Vertice vertice in this.vertices)
-                    { 
+                    {
                         if ((vertice.GetGrau() % 2) != 0) // todos vertices devem possuir grau par
                         {
                             return false;
-                        } 
+                        }
                     }
                     return true;
                 }
@@ -276,7 +276,22 @@ namespace listaPraticaGrafo
 
         public bool IsUnicursal()
         {
-            throw new System.NotImplementedException();
+            foreach (Vertice vertice in this.vertices)
+            {
+                
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Define a cor de todos os vértices do grafo como BRANCO.
+        /// </summary>
+        private void ResetarCorDosVertices()
+        {
+            foreach (Vertice vertice in this.vertices)
+            {
+                vertice.ResetarCor();
+            }
         }
     }
 }
