@@ -9,7 +9,7 @@ namespace listaPraticaGrafo.estrutura
     public class Vertice
     {
         private List<Aresta> arestas;
-        private Dado dado;
+        private IDado dado;
         /// <summary>
         /// Usado para realizar os métodos de pesquisa
         /// </summary>
@@ -20,14 +20,14 @@ namespace listaPraticaGrafo.estrutura
         protected Vertice vChefe; 
         protected bool visitado;
 
-        public Vertice(Dado dados)
+        public Vertice(IDado dados)
         {
             this.dado = dados;
             this.vChefe = this;
             this.visitado = false;
         }
 
-        public Vertice(Dado dado, List<Aresta> arestas)
+        public Vertice(IDado dado, List<Aresta> arestas)
         {
             this.dado = dado;
             this.arestas = arestas;
@@ -48,7 +48,7 @@ namespace listaPraticaGrafo.estrutura
             return this.arestas.Count();
         }
 
-        public Dado GetDado()
+        public IDado GetDado()
         {
             return this.dado;
         }

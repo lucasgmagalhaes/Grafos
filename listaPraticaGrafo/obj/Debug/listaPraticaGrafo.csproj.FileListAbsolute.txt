@@ -15,3 +15,6 @@ C:\Users\lgMagalhaesBOT\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaG
 C:\Users\1047825\Desktop\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe.config
 C:\Users\1047825\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.exe
 C:\Users\1047825\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.pdb
+C:\Users\1047825\Desktop\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe
+C:\Users\1047825\Desktop\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.pdb
+C:\Users\1047825\Desktop\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojResolveAssemblyReference.cache
