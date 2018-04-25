@@ -14,6 +14,10 @@ namespace listaPraticaGrafo
         {
             vertices = new List<Vertice>();
         }
+         public Grafo(List<Vertice> lstVertices)
+        {
+            vertices = lstVertices;
+        }
         public void LimpaVisitaVertices()
         {
             foreach (Vertice vAux in vertices)
@@ -204,9 +208,65 @@ namespace listaPraticaGrafo
             throw new System.NotImplementedException();
         }
 
-        public IGrafo GetComplementar()
+        public Grafo GetComplementar()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
+                List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
+                foreach (Vertice vertice1 in vertices) // para cada vertice, traz a lista de arestas para comparar com a lista de arestas do proximo vertice do grafo,
+                    //sem tem alguma aresta em comum(igual), que representa a ligação
+                {
+                    List<Aresta> lstAuxAresta = vertice1.GetArestas();
+                    foreach (Vertice vertice2 in vertices)
+                    {
+                        if (vertice1.Equals(vertice2) == false && lstVertice.Contains(vertice2) == false) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
+                            // se estiver na lista é porque não tem ligação com algum outro vertice
+                        {
+                            List<Aresta> lstAuxAresta2 = vertice2.GetArestas(); 
+                            //verifica se tenho aresta em comum , se não tiver adiciona lstVertice 
+                            //inicio
+                            foreach (Aresta aItem in lstAuxAresta)
+                            {
+                                foreach (Aresta aItem2 in lstAuxAresta2)
+                                {
+                                    if(aItem2.Equals(aItem) == false)
+                                    {  
+                                        //quando não possuir aresta em comum , não tem ligação
+                                        //adiciona na lista de verificação de vertice - inicio
+                                        lstVertice.Add(vertice1);
+                                        lstVertice.Add(vertice2); 
+                                        //fim
+                                        //clona os vertice   - inicio
+                                        Vertice aux = (Vertice)(vertice1.Clone());
+                                        Vertice aux2 = (Vertice)(vertice1.Clone());
+                                        //fim
+                                        // desfaz todas ligações
+                                        aux.LimpaArestas();
+                                        aux2.LimpaArestas();
+                                        // fim
+                                        //cria aresta de ligação dos 2 vertices e adiciona ela aos vertices
+                                        Aresta nAresta = new Aresta(aux, aux2);
+                                        aux.AddAresta(nAresta);
+                                        aux2.AddAresta(nAresta);
+                                        //fim , adiciona os vertices a lista de vertice do grafo complementar 
+                                        lstVerticeComplementar.Add(aux);
+                                        lstVerticeComplementar.Add(aux2);
+                                    }
+                                }
+                            }
+                            //fim
+                        }
+                    } 
+                }
+                Grafo cGrafo = new Grafo(lstVerticeComplementar);
+                return cGrafo;
+            }
+            catch (System.Exception)
+            {
+
+                throw new System.Exception();
+            } 
         }
 
         public int GetCutVertices()
