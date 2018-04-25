@@ -25,21 +25,19 @@ namespace listaPraticaGrafo.estrutura
 
         public bool Equals(IDado other)
         {
-            if (other.GetValor() is int)
+            try
             {
-                return ((int)other.GetValor() == this.GetValor());
+                Informacao comparador = (Informacao)other;
+                return (comparador.GetValor() == this.GetValor());
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
-
-        public int GetValor()
+        public object GetValor()
         {
             return this.valor;
-        }
-
-        object IDado.GetValor()
-        {
-            throw new NotImplementedException();
         }
     }
 }

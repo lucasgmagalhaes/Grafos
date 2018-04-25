@@ -25,6 +25,7 @@ namespace listaPraticaGrafo.estrutura
             this.dado = dados;
             this.vChefe = this;
             this.visitado = false;
+            this.arestas = new List<Aresta>();
         }
 
         public Vertice(IDado dado, List<Aresta> arestas)
@@ -108,6 +109,11 @@ namespace listaPraticaGrafo.estrutura
          public bool GetVisitado()
         {
             return this.visitado;
+        }
+
+        public object GetDadoValor()
+        {
+            return this.dado.GetValor();
         }
         public void SetVisitado(bool visita)
         {
