@@ -46,8 +46,8 @@
     <Compile Include="Enum\Cor.cs" />
     <Compile Include="estrutura\Aresta.cs" />
     <Compile Include="estrutura\ArestaDirigida.cs" />
-    <Compile Include="estrutura\ConteudoVertice.cs" />
-    <Compile Include="estrutura\Dado.cs" />
+    <Compile Include="estrutura\Informacao.cs" />
+    <Compile Include="estrutura\IDado.cs" />
     <Compile Include="estrutura\Vertice.cs" />
     <Compile Include="Grafo.cs" />
     <Compile Include="GrafoDirecionado.cs" />

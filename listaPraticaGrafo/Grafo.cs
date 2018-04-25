@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using listaPraticaGrafo.interfaces;
 using listaPraticaGrafo.estrutura;
+using listaPraticaGrafo.Enum;
 
 namespace listaPraticaGrafo
 {
@@ -18,6 +19,56 @@ namespace listaPraticaGrafo
             {
                 vAux.SetVisitado(false);
             }
+        }
+
+        /// <summary>
+        /// Recebe um vetor string no qual deve estar com os itens separados por ';',
+        /// a primeira linha deve dizer a quantidade de vértices que o grafo terá,
+        /// e as linhas seguintes devem estar no seguinte formado:
+        /// 
+        /// v1;v2;p;d
+        /// 
+        /// v1 e v2 = Vértices que compoem a aresta
+        /// p = peso da aresta do grafo caso exista
+        /// d = direção da aresta caso exista
+        /// 
+        /// </summary>
+        /// <param name="arquivo"></param>
+        public void GerarGrafo(string[] arquivo)
+        {
+            if (arquivo != null)
+            {
+                Informacao conteudo;
+                Vertice vertice;
+                string[] lineSplit;
+
+                foreach (string line in arquivo)
+                {
+                    lineSplit = line.Split(';');
+                    conteudo = new Informacao(int.Parse(lineSplit[0]));
+                    vertice = new Vertice(conteudo);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Verifica se existe o vértice no grafo
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        public bool Contem(Vertice vertice)
+        {
+            if (vertice != null)
+            {
+                foreach (Vertice verticeLocal in this.vertices)
+                {
+                    if (vertice.GetDado().Equals(verticeLocal.GetDado()))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         /// <summary>
         /// Insere um novo vértice ao grafo
@@ -41,6 +92,7 @@ namespace listaPraticaGrafo
                 v1 = null;
             }
         }
+
 
         /// <summary>
         /// Remove os valores nulos da lista de arestas dos vértices que fazem ligação com aquele passado no parâmetro.
@@ -199,14 +251,14 @@ namespace listaPraticaGrafo
         {
             try
             {
-                if (IsConexo())
+                if (this.IsConexo())
                 {
                     foreach (Vertice vertice in this.vertices)
-                    { 
+                    {
                         if ((vertice.GetGrau() % 2) != 0) // todos vertices devem possuir grau par
                         {
                             return false;
-                        } 
+                        }
                     }
                     return true;
                 }
@@ -276,7 +328,38 @@ namespace listaPraticaGrafo
 
         public bool IsUnicursal()
         {
-            throw new System.NotImplementedException();
+            foreach (Vertice vertice in this.vertices)
+            {
+                return this.IsPercursoCompleto(vertice);
+            }
+            return false;
+        }
+
+        private bool IsPercursoCompleto(Vertice vertice)
+        {
+            Vertice proximo;
+            foreach (Aresta aresta in vertice.GetArestas())
+            {
+                proximo = aresta.GetVerticeDiferente(vertice);
+                vertice.FinalizaPercurso();
+
+                if (proximo != null && proximo.GetCor() != Cor.PRETO)
+                {
+                    return this.IsPercursoCompleto(vertice);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Define a cor de todos os vértices do grafo como BRANCO.
+        /// </summary>
+        private void ResetarCorDosVertices()
+        {
+            foreach (Vertice vertice in this.vertices)
+            {
+                vertice.ResetarCor();
+            }
         }
     }
 }
