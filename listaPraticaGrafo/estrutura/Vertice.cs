@@ -6,7 +6,7 @@ using System.Text;
 
 namespace listaPraticaGrafo.estrutura
 {
-    public class Vertice
+    public class Vertice : ICloneable
     {
         private List<Aresta> arestas;
         private IDado dado;
@@ -25,7 +25,6 @@ namespace listaPraticaGrafo.estrutura
             this.dado = dados;
             this.vChefe = this;
             this.visitado = false;
-            this.arestas = new List<Aresta>();
         }
 
         public Vertice(IDado dado, List<Aresta> arestas)
@@ -36,12 +35,21 @@ namespace listaPraticaGrafo.estrutura
             this.visitado = false;
         }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
         public void AddAresta(Aresta aresta)
         {
             this.arestas.Add(aresta);
             List<Vertice> lstAux = aresta.GetVertices();
             Vertice vAux = lstAux.Last();
             vAux.vChefe = this;
+        }
+        public void LimpaArestas()
+        {
+            this.arestas = new List<Aresta>();
         }
 
         public int GetGrau()
