@@ -1,4 +1,4 @@
-﻿using listaPraticaGrafo.estrutura;
+using listaPraticaGrafo.estrutura;
 
 namespace listaPraticaGrafo.interfaces
 {
@@ -84,7 +84,7 @@ namespace listaPraticaGrafo.interfaces
         /// complementadas.
         /// </summary>
         /// <returns></returns>
-        IGrafo GetComplementar();
+        Grafo GetComplementar();
 
         /// <summary>
         /// Esse método deve retornar, para um grafo conexo, a Árvore Geradora Mínima obtida por meio da aplicação
