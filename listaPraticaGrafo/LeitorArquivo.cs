@@ -1,4 +1,3 @@
-using listaPraticaGrafo.estrutura;
 using System.IO;
 
 namespace listaPraticaGrafo

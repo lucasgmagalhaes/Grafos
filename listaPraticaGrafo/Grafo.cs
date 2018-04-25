@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using listaPraticaGrafo.interfaces;
 using listaPraticaGrafo.estrutura;
 using listaPraticaGrafo.Enum;
+using System;
 
 namespace listaPraticaGrafo
 {
@@ -39,16 +40,84 @@ namespace listaPraticaGrafo
             if (arquivo != null)
             {
                 Informacao conteudo;
-                Vertice vertice;
+                Vertice vertice, novoVertice;
                 string[] lineSplit;
 
-                foreach (string line in arquivo)
+                for (int i = 1; i < arquivo.Length; i++)
                 {
-                    lineSplit = line.Split(';');
-                    conteudo = new Informacao(int.Parse(lineSplit[0]));
-                    vertice = new Vertice(conteudo);
+                    try
+                    {
+                        lineSplit = arquivo[i].Split(';');
+                        conteudo = new Informacao(int.Parse(lineSplit[1]));
+
+                        if (this.Contem(conteudo))
+                        {
+                            vertice = this.GetVertice(conteudo);
+                        }
+                        else
+                        {
+                            vertice = new Vertice(new Informacao(int.Parse(lineSplit[0])));
+                        }
+
+                        conteudo = new Informacao(int.Parse(lineSplit[1]));
+
+                        if (this.Contem(conteudo))
+                        {
+                            vertice.AddAresta(new Aresta(vertice, this.GetVertice(conteudo),
+                                int.Parse(lineSplit[2])));
+                        }
+                        else
+                        {
+                            novoVertice = new Vertice(conteudo);
+                            vertice.AddAresta(new Aresta(vertice, novoVertice,
+                                int.Parse(lineSplit[2])));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Arquivo possui conteúdo inválido para leitura " + e.Message);
+                    }
+                    this.vertices.Add(vertice);
                 }
             }
+        }
+
+        /// <summary>
+        /// Procura e retorna pelo primeiro vértice cujo dado é igual aquele passado no parâmetro.
+        /// Retorna null se nenhum for encontrado
+        /// </summary>
+        /// <param name="dado"></param>
+        /// <returns></returns>
+        public Vertice GetVertice(IDado dado)
+        {
+            foreach (Vertice vertice in this.vertices)
+            {
+                if (vertice.GetDado().Equals(dado))
+                {
+                    return vertice;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Verifica se existe o vértice no grafo
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        public bool Contem(IDado vertice)
+        {
+            if (vertice != null)
+            {
+                foreach (Vertice verticeLocal in this.vertices)
+                {
+                    if (verticeLocal.GetDado().Equals(vertice))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -70,6 +139,7 @@ namespace listaPraticaGrafo
             }
             return false;
         }
+
         /// <summary>
         /// Insere um novo vértice ao grafo
         /// </summary>

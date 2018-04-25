@@ -25,6 +25,7 @@ namespace listaPraticaGrafo.estrutura
             this.dado = dados;
             this.vChefe = this;
             this.visitado = false;
+            this.arestas = new List<Aresta>();
         }
 
         public Vertice(IDado dado, List<Aresta> arestas)

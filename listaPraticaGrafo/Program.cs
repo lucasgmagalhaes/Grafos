@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using listaPraticaGrafo.estrutura;
 using listaPraticaGrafo.interfaces;
+using System.IO;
 
 namespace listaPraticaGrafo
 {
@@ -12,6 +13,11 @@ namespace listaPraticaGrafo
     {
         static void Main(string[] args)
         {
+
+            LeitorArquivo leitor = new LeitorArquivo();
+           string[] linhas =  leitor.lerArquivo("grafo.txt");
+            Grafo grafo = new Grafo();
+            grafo.GerarGrafo(linhas);
         }
     }
 }
