@@ -13,6 +13,12 @@ namespace listaPraticaGrafo.estrutura
         protected bool visitada;
         protected object peso;
 
+        public Vertice getVertice1 { get { return vertice1; } }
+        public Vertice getVertice2 { get { return vertice2; } }
+
+        public object getValorVertice1 { get { return vertice1.GetDadoValor(); } }
+        public object getValorVertice2 { get { return vertice2.GetDadoValor(); } }
+
         public Aresta(Vertice v1, Vertice v2)
         {
             this.vertice1 = v1;
@@ -43,10 +49,10 @@ namespace listaPraticaGrafo.estrutura
         }
 
         /// <summary>
-        /// Dado um vértice para comparação, retorna aquela que não é o passado por parâmetro.
+        /// Dado um vértice para comparação, retorna aquele que não é o passado por parâmetro.
         /// 
-        /// Tendo uma aresta dois vértices, A e B, passando A no parâmetro do método, este ira 
-        /// retornar B, e vice versa.
+        /// <para>Tendo uma aresta dois vértices, A e B, passando A no parâmetro do método, este irá 
+        /// retornar B, e vice versa.</para>
         /// </summary>
         /// <param name="vertice">vertice</param>
         /// <returns></returns>
@@ -75,6 +81,14 @@ namespace listaPraticaGrafo.estrutura
         public void SetVisitado(bool visita)
         {
             this.visitada = visita;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - {1} ; Peso {2}",
+                    this.getValorVertice1,
+                    this.getValorVertice2,
+                    this.GetPeso());
         }
     }
 }

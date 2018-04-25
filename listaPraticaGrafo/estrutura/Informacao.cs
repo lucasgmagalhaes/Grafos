@@ -28,7 +28,7 @@ namespace listaPraticaGrafo.estrutura
             try
             {
                 Informacao comparador = (Informacao)other;
-                return (comparador.GetValor() == this.GetValor());
+                return ((int)comparador.GetValor() == this.valor);
             }
             catch
             {

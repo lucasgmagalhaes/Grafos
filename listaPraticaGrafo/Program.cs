@@ -20,7 +20,9 @@ namespace listaPraticaGrafo
             //grafo.GerarGrafo(linhas);
             grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
             Console.WriteLine(grafo.ToString());
+            Console.CursorVisible = false;
             Console.ReadKey();
+            
         }
     }
 }

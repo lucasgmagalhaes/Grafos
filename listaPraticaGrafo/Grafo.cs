@@ -53,7 +53,7 @@ namespace listaPraticaGrafo
                     try
                     {
                         lineSplit = arquivo[i].Split(';');
-                        conteudo = new Informacao(int.Parse(lineSplit[1]));
+                        conteudo = new Informacao(int.Parse(lineSplit[0]));
 
                         if (this.Contem(conteudo))
                         {
@@ -62,6 +62,7 @@ namespace listaPraticaGrafo
                         else
                         {
                             vertice = new Vertice(new Informacao(int.Parse(lineSplit[0])));
+                            this.vertices.Add(vertice);
                         }
 
                         conteudo = new Informacao(int.Parse(lineSplit[1]));
@@ -75,6 +76,7 @@ namespace listaPraticaGrafo
                         {
                             novoVertice = new Vertice(conteudo);
                             vertice.AddAresta(new Aresta(vertice, novoVertice, int.Parse(lineSplit[2])));
+                            this.vertices.Add(novoVertice);
                         }
                     }
                     catch (Exception e)
@@ -492,20 +494,24 @@ namespace listaPraticaGrafo
             }
         }
 
+        private string GetEspacamento(string primeiroString)
+        {
+            StringBuilder builder = new StringBuilder("   ");
+            foreach (char ch in primeiroString.ToCharArray())
+            {
+                builder.Append(" ");
+            }
+            return builder.ToString();
+        }
+
         public override string ToString()
         {
             StringBuilder retorno = new StringBuilder();
-            List<Vertice> verticesAresta;
             foreach (Vertice vertice in this.vertices)
-            {
-                retorno.Append(vertice.GetDadoValor() + " [ ");
-                foreach(Aresta aresta in vertice.GetArestas())
-                {
-                    verticesAresta = aresta.GetVertices();
-                    retorno.Append(verticesAresta[0].GetDadoValor() + ";" 
-                        + verticesAresta[1].GetDadoValor() + ";" + aresta.GetPeso());
-                }
-                retorno.Append(" ] \n");
+            {        
+                retorno.AppendLine("Vértice " + vertice.GetDadoValor());
+                retorno.AppendLine(vertice.ToString());
+                retorno.AppendLine();
             }
             return retorno.ToString();
         }

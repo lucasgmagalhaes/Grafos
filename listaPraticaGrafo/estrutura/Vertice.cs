@@ -87,13 +87,11 @@ namespace listaPraticaGrafo.estrutura
 
         public override string ToString()
         {
-            StringBuilder retorno = new StringBuilder(this.dado.ToString());
-            foreach (Aresta arr in this.arestas)
-            {
+            StringBuilder retorno = new StringBuilder();
 
-                retorno.Append(arr.GetVertices()[0].GetDado() + ";" + arr.GetVertices()[1].GetDado()
-                    + ";" + this.GetDirecao(arr) + ";" + arr.GetPeso());
-            }
+            foreach (Aresta aresta in this.arestas)
+                retorno.AppendLine(aresta.ToString());
+
             return retorno.ToString();
         }
 
