@@ -18,8 +18,10 @@ namespace listaPraticaGrafo
            string[] linhas =  leitor.lerArquivo("grafo.txt");
             Grafo grafo = new Grafo();
             //grafo.GerarGrafo(linhas);
+
             grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
             Console.WriteLine(grafo.ToString());
+            Console.WriteLine(grafo.DFS());
             Console.CursorVisible = false;
             Console.ReadKey();
             

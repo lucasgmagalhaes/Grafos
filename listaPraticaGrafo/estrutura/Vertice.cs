@@ -14,16 +14,13 @@ namespace listaPraticaGrafo.estrutura
         /// Usado para realizar os métodos de pesquisa
         /// </summary>
         private Cor cor;
-        /// <summary>
-        /// vChefe - Usado para kruskal e para definir se tem ciclo
-        /// </summary>
-        protected Vertice vChefe; 
         protected bool visitado;
+
+        public Cor Cor { get { return this.cor; } }
 
         public Vertice(IDado dados)
         {
             this.dado = dados;
-            this.vChefe = this;
             this.visitado = false;
             this.arestas = new List<Aresta>();
         }
@@ -32,7 +29,6 @@ namespace listaPraticaGrafo.estrutura
         {
             this.dado = dado;
             this.arestas = arestas;
-            this.vChefe = this;
             this.visitado = false;
         }
 
@@ -46,7 +42,6 @@ namespace listaPraticaGrafo.estrutura
             this.arestas.Add(aresta);
             List<Vertice> lstAux = aresta.GetVertices();
             Vertice vAux = lstAux.Last();
-            vAux.vChefe = this;
         }
         public void LimpaArestas()
         {
@@ -90,6 +85,20 @@ namespace listaPraticaGrafo.estrutura
             return this.dado.GetValor().ToString();
         }
 
+        /// <summary>
+        /// Fornece a lista de todos os vértices que fazem ligação(possuem aresta) com
+        /// </summary>
+        /// <returns></returns>
+        public List<Vertice> GetVerticesDistintosDasArestas()
+        {
+            List<Vertice> listaRetorno = new List<Vertice>();
+            foreach(Aresta aresta in this.arestas)
+            {
+                listaRetorno.Add(aresta.GetVerticeDiferente(this));
+            }
+            return listaRetorno;
+        }
+
         public string ToStringComArestas()
         {
             StringBuilder retorno = new StringBuilder();
@@ -104,7 +113,7 @@ namespace listaPraticaGrafo.estrutura
 
         public Vertice GetVerticeChefe()
         {
-            return this.vChefe;
+            return this;
         }
          public bool GetVisitado()
         {
@@ -150,11 +159,6 @@ namespace listaPraticaGrafo.estrutura
         public void ResetarCor()
         {
             this.cor = Cor.BRANCO;
-        }
-
-        public Cor GetCor()
-        {
-            return this.cor;
         }
 
         public void SetCor(Cor cor)

@@ -65,13 +65,17 @@ namespace listaPraticaGrafo.interfaces
         /// <summary>
         /// Deve retornar TRUE caso seja possivel percorer todo o grafo passando uma única vez por todos os vértices.
         /// Se não for possível, este grafo não é euleriano e deve ser retornado FALSE
+        /// Começa em um vértice v de um grafo G.
+        /// termina em outro vértice w de G
+        /// passando pelo menos uma vez em cada vértice
+        /// e exatamente uma única vez em cada aresta G
         /// </summary>
         /// <returns></returns>
         bool IsEuleriano();
 
         /// <summary>
         /// Deve retornar TRUE caso seja possível percorrer todos os vértices do grafo uma única vez, sem retornar 
-        /// ao vértice inicial
+        /// ao vértice inicial.
         /// </summary>
         /// <returns></returns>
         bool IsUnicursal();

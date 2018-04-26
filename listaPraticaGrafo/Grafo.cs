@@ -19,6 +19,10 @@ namespace listaPraticaGrafo
         {
             vertices = lstVertices;
         }
+
+        /// <summary>
+        /// Define a variável "visitado" de cada vértice como false
+        /// </summary>
         public void LimpaVisitaVertices()
         {
             foreach (Vertice vAux in vertices)
@@ -96,11 +100,14 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public Vertice GetVertice(IDado dado)
         {
-            foreach (Vertice vertice in this.vertices)
+            if (dado != null)
             {
-                if (vertice.GetDado().Equals(dado))
+                foreach (Vertice vertice in this.vertices)
                 {
-                    return vertice;
+                    if (vertice.GetDado().Equals(dado))
+                    {
+                        return vertice;
+                    }
                 }
             }
             return null;
@@ -152,7 +159,10 @@ namespace listaPraticaGrafo
         /// <param name="v1"></param>
         public void AddVertice(Vertice v1)
         {
-            this.vertices.Add(v1);
+            if (v1 != null)
+            {
+                this.vertices.Add(v1);
+            }
         }
 
         /// <summary>
@@ -161,7 +171,7 @@ namespace listaPraticaGrafo
         /// <param name="v1"></param>
         public void RemoverVertice(Vertice v1)
         {
-            if (this.vertices.Contains(v1))
+            if (v1 != null && this.vertices.Contains(v1))
             {
                 this.vertices.Remove(v1);
                 this.LimparArestas(v1);
@@ -176,27 +186,31 @@ namespace listaPraticaGrafo
         /// <param name="v1"></param>
         private void LimparArestas(Vertice v1)
         {
-            Vertice vertice1;
-            Vertice vertice2;
-            List<Vertice> verticesLimpar = new List<Vertice>();
-            foreach (Aresta aresta in v1.GetArestas())
+            if (v1 != null)
             {
-                vertice1 = aresta.GetVertices()[0];
-                vertice2 = aresta.GetVertices()[1];
+                Vertice vertice1;
+                Vertice vertice2;
+                List<Vertice> verticesLimpar = new List<Vertice>();
 
-                if (vertice1 != v1)
+                foreach (Aresta aresta in v1.GetArestas())
                 {
-                    verticesLimpar.Add(vertice1);
+                    vertice1 = aresta.GetVertices()[0];
+                    vertice2 = aresta.GetVertices()[1];
+
+                    if (vertice1 != v1)
+                    {
+                        verticesLimpar.Add(vertice1);
+                    }
+                    else if (vertice2 != v1)
+                    {
+                        verticesLimpar.Add(vertice2);
+                    }
                 }
-                else if (vertice2 != v1)
+                v1.GetArestas().Clear();
+                foreach (Vertice vertice in verticesLimpar)
                 {
-                    verticesLimpar.Add(vertice2);
+                    vertice.GetArestas().RemoveAll(arr => arr == null);
                 }
-            }
-            v1.GetArestas().Clear();
-            foreach (Vertice vertice in verticesLimpar)
-            {
-                vertice.GetArestas().RemoveAll(arr => arr == null);
             }
         }
 
@@ -212,78 +226,93 @@ namespace listaPraticaGrafo
 
         public Grafo GetComplementar()
         {
-            try
+            List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
+            List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
+            foreach (Vertice vertice1 in vertices) // para cada vertice, traz a lista de arestas para comparar com a lista de arestas do proximo vertice do grafo,
+                                                   //sem tem alguma aresta em comum(igual), que representa a ligação
             {
-                List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
-                List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
-                foreach (Vertice vertice1 in vertices) // para cada vertice, traz a lista de arestas para comparar com a lista de arestas do proximo vertice do grafo,
-                                                       //sem tem alguma aresta em comum(igual), que representa a ligação
+                List<Aresta> lstAuxAresta = vertice1.GetArestas();
+                foreach (Vertice vertice2 in vertices)
                 {
-                    List<Aresta> lstAuxAresta = vertice1.GetArestas();
-                    foreach (Vertice vertice2 in vertices)
+                    if (vertice1.Equals(vertice2) == false && lstVertice.Contains(vertice2) == false) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
+                                                                                                      // se estiver na lista é porque não tem ligação com algum outro vertice
                     {
-                        if (vertice1.Equals(vertice2) == false && lstVertice.Contains(vertice2) == false) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
-                                                                                                          // se estiver na lista é porque não tem ligação com algum outro vertice
+                        List<Aresta> lstAuxAresta2 = vertice2.GetArestas();
+                        //verifica se tenho aresta em comum , se não tiver adiciona lstVertice 
+                        //inicio
+                        foreach (Aresta aItem in lstAuxAresta)
                         {
-                            List<Aresta> lstAuxAresta2 = vertice2.GetArestas();
-                            //verifica se tenho aresta em comum , se não tiver adiciona lstVertice 
-                            //inicio
-                            foreach (Aresta aItem in lstAuxAresta)
+                            foreach (Aresta aItem2 in lstAuxAresta2)
                             {
-                                foreach (Aresta aItem2 in lstAuxAresta2)
+                                if (aItem2.Equals(aItem) == false)
                                 {
-                                    if (aItem2.Equals(aItem) == false)
-                                    {
-                                        //quando não possuir aresta em comum , não tem ligação
-                                        //adiciona na lista de verificação de vertice - inicio
-                                        lstVertice.Add(vertice1);
-                                        lstVertice.Add(vertice2);
-                                        //fim
-                                        //clona os vertice   - inicio
-                                        Vertice aux = (Vertice)(vertice1.Clone());
-                                        Vertice aux2 = (Vertice)(vertice1.Clone());
-                                        //fim
-                                        // desfaz todas ligações
-                                        aux.LimpaArestas();
-                                        aux2.LimpaArestas();
-                                        // fim
-                                        //cria aresta de ligação dos 2 vertices e adiciona ela aos vertices
-                                        Aresta nAresta = new Aresta(aux, aux2);
-                                        aux.AddAresta(nAresta);
-                                        aux2.AddAresta(nAresta);
-                                        //fim , adiciona os vertices a lista de vertice do grafo complementar 
-                                        lstVerticeComplementar.Add(aux);
-                                        lstVerticeComplementar.Add(aux2);
-                                    }
+                                    //quando não possuir aresta em comum , não tem ligação
+                                    //adiciona na lista de verificação de vertice - inicio
+                                    lstVertice.Add(vertice1);
+                                    lstVertice.Add(vertice2);
+                                    //fim
+                                    //clona os vertice   - inicio
+                                    Vertice aux = (Vertice)(vertice1.Clone());
+                                    Vertice aux2 = (Vertice)(vertice1.Clone());
+                                    //fim
+                                    // desfaz todas ligações
+                                    aux.LimpaArestas();
+                                    aux2.LimpaArestas();
+                                    // fim
+                                    //cria aresta de ligação dos 2 vertices e adiciona ela aos vertices
+                                    Aresta nAresta = new Aresta(aux, aux2);
+                                    aux.AddAresta(nAresta);
+                                    aux2.AddAresta(nAresta);
+                                    //fim , adiciona os vertices a lista de vertice do grafo complementar 
+                                    lstVerticeComplementar.Add(aux);
+                                    lstVerticeComplementar.Add(aux2);
                                 }
                             }
-                            //fim
                         }
+                        //fim
                     }
                 }
-                Grafo cGrafo = new Grafo(lstVerticeComplementar);
-                return cGrafo;
             }
-            catch (System.Exception)
-            {
+            Grafo cGrafo = new Grafo(lstVerticeComplementar);
+            return cGrafo;
+        }
 
-                throw new System.Exception();
+        public int DFS()
+        {
+            int componentes = 0;
+            this.ResetarCorDosVertices();
+
+            foreach(Vertice vertice in this.vertices)
+            {
+                if(vertice.Cor == Cor.BRANCO)
+                {
+                    this.Visitar(vertice);
+                    componentes++;
+                }
             }
+            return componentes;
         }
 
         public int GetCutVertices()
         {
-            throw new System.NotImplementedException();
+            //HERE IS CALANGO!
+
+            return 0;
         }
 
         /// <summary>
         /// Informa o grau de um vértice (Número de arestas que ele possui)
+        /// Retorna -1 se o parâmetro for nulo.
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
         public int GetGrau(Vertice v1)
         {
-            return v1.GetGrau();
+            if (v1 != null)
+            {
+                return v1.GetGrau();
+            }
+            return -1;
         }
 
         /// <summary>
@@ -294,11 +323,14 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsAdjacente(Vertice v1, Vertice v2)
         {
-            foreach (Aresta aresta in v1.GetArestas())
+            if (v1 != null && v2 != null)
             {
-                if (aresta.GetVertices()[0] == v2 || aresta.GetVertices()[1] == v2)
+                foreach (Aresta aresta in v1.GetArestas())
                 {
-                    return true;
+                    if (aresta.GetVertices()[0] == v2 || aresta.GetVertices()[1] == v2)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -327,35 +359,42 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsConexo()
         {
-            try
+            LimpaVisitaVertices();
+            foreach (Vertice vertice in this.vertices)
             {
-                LimpaVisitaVertices();
-                foreach (Vertice vertice in this.vertices)
+                if (vertice.GetVisitado() == false)
                 {
-                    if (vertice.GetVisitado() == false)
-                    {
-                        Visitar(vertice, vertice.GetArestas());
-                        componente++;
-                    }
-                    vertice.SetVisitado(true);
+                    Visitar(vertice, vertice.GetArestas());
+                    componente++;
                 }
-                if (componente >= 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                vertice.SetVisitado(true);
             }
-            catch (System.Exception)
+            if (componente >= 1)
             {
-                throw new System.Exception("Erro IsConexo");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
+
+        private void Visitar(Vertice vertice)
+        {
+            vertice.AtualizarCor();
+            foreach(Vertice vertice2 in vertice.GetVerticesDistintosDasArestas())
+            {
+                if(vertice2.Cor == Cor.BRANCO)
+                {
+                    this.Visitar(vertice2);
+                }
+            }
+            vertice.AtualizarCor();
+        }
+
         private void Visitar(Vertice v, List<Aresta> a)
         {
-            try
+            if (v != null && a != null)
             {
                 List<Vertice> lstVAux;
                 foreach (Aresta aAux in a)
@@ -370,10 +409,6 @@ namespace listaPraticaGrafo
                     }
                 }
             }
-            catch (System.Exception)
-            {
-                throw new System.Exception("Erro Visitar");
-            }
         }
         /// <summary>
         /// Verifica se todos os vertices tem grau par e é conexo, ou seja, euleriano
@@ -381,27 +416,20 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsEuleriano()
         {
-            try
+            if (this.IsConexo())
             {
-                if (this.IsConexo())
+                foreach (Vertice vertice in this.vertices)
                 {
-                    foreach (Vertice vertice in this.vertices)
+                    if ((vertice.GetGrau() % 2) != 0) // todos vertices devem possuir grau par
                     {
-                        if ((vertice.GetGrau() % 2) != 0) // todos vertices devem possuir grau par
-                        {
-                            return false;
-                        }
+                        return false;
                     }
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
-            catch (System.Exception)
+            else
             {
-                throw new System.Exception("Erro IsEuleriano");
+                return false;
             }
         }
 
@@ -412,7 +440,11 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsIsolado(Vertice v1)
         {
-            return v1.GetGrau() == 0;
+            if (v1 != null)
+            {
+                return v1.GetGrau() == 0;
+            }
+            return false;
         }
 
         /// <summary>
@@ -438,7 +470,11 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsPendente(Vertice v1)
         {
-            return v1.GetGrau() == 1;
+            if (v1 != null)
+            {
+                return v1.GetGrau() == 1;
+            }
+            return false;
         }
 
         /// <summary>
@@ -458,26 +494,19 @@ namespace listaPraticaGrafo
             return true;
         }
 
+        /// <summary>
+        /// Verifica se existem dois vértices de grau ímpar
+        /// </summary>
+        /// <returns></returns>
         public bool IsUnicursal()
         {
+            int countImpares = 0;
             foreach (Vertice vertice in this.vertices)
             {
-                return this.IsPercursoCompleto(vertice);
-            }
-            return false;
-        }
-
-        private bool IsPercursoCompleto(Vertice vertice)
-        {
-            Vertice proximo;
-            foreach (Aresta aresta in vertice.GetArestas())
-            {
-                proximo = aresta.GetVerticeDiferente(vertice);
-                vertice.FinalizaPercurso();
-
-                if (proximo != null && proximo.GetCor() != Cor.PRETO)
+                if (vertice.GetGrau() % 2 != 0)
                 {
-                    return this.IsPercursoCompleto(vertice);
+                    countImpares++;
+                    if (countImpares > 1) return true;
                 }
             }
             return false;
@@ -494,16 +523,15 @@ namespace listaPraticaGrafo
             }
         }
 
-        private string GetEspacamento(string primeiroString)
-        {
-            StringBuilder builder = new StringBuilder("   ");
-            foreach (char ch in primeiroString.ToCharArray())
-            {
-                builder.Append(" ");
-            }
-            return builder.ToString();
-        }
-
+        /// <summary>
+        /// Converte todas as informações do grafo em um string no seguinte formado
+        /// <para>
+        /// Vertice VERTICE
+        /// <para> VERTICE_1 - VERTICE_2 ; Peso PESO_ARESTA</para>
+        /// </para>
+        /// (Essa estrutura é repetida para cada vértice do grafo.)
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder retorno = new StringBuilder();
