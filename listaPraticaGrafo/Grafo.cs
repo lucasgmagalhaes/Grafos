@@ -46,6 +46,7 @@ namespace listaPraticaGrafo
             {
                 Informacao conteudo;
                 Vertice vertice, novoVertice;
+                Aresta aresta;
                 string[] lineSplit;
 
                 for (int i = 1; i < arquivo.Length; i++)
@@ -55,10 +56,7 @@ namespace listaPraticaGrafo
                         lineSplit = arquivo[i].Split(';');
                         conteudo = new Informacao(int.Parse(lineSplit[0]));
 
-                        if (this.Contem(conteudo))
-                        {
-                            vertice = this.GetVertice(conteudo);
-                        }
+                        if (this.Contem(conteudo)) vertice = this.GetVertice(conteudo);
                         else
                         {
                             vertice = new Vertice(new Informacao(int.Parse(lineSplit[0])));
@@ -69,21 +67,23 @@ namespace listaPraticaGrafo
 
                         if (this.Contem(conteudo))
                         {
-                            vertice.AddAresta(new Aresta(vertice, this.GetVertice(conteudo),
-                                int.Parse(lineSplit[2])));
+                            novoVertice = this.GetVertice(conteudo);
+                            aresta = new Aresta(vertice, novoVertice, int.Parse(lineSplit[2]));
                         }
                         else
                         {
                             novoVertice = new Vertice(conteudo);
-                            vertice.AddAresta(new Aresta(vertice, novoVertice, int.Parse(lineSplit[2])));
+                            aresta = new Aresta(vertice, novoVertice, int.Parse(lineSplit[2]));
                             this.vertices.Add(novoVertice);
                         }
+
+                        vertice.AddAresta(aresta);
+                        novoVertice.AddAresta(aresta);
                     }
                     catch (Exception e)
                     {
                         throw new Exception("Arquivo possui conteúdo inválido para leitura " + e.Message);
                     }
-                    this.vertices.Add(vertice);
                 }
             }
         }
@@ -508,9 +508,9 @@ namespace listaPraticaGrafo
         {
             StringBuilder retorno = new StringBuilder();
             foreach (Vertice vertice in this.vertices)
-            {        
+            {
                 retorno.AppendLine("Vértice " + vertice.GetDadoValor());
-                retorno.AppendLine(vertice.ToString());
+                retorno.AppendLine(vertice.ToStringComArestas());
                 retorno.AppendLine();
             }
             return retorno.ToString();
