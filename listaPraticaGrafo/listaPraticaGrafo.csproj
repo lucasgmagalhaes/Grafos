@@ -47,12 +47,13 @@
     <Compile Include="estrutura\Aresta.cs" />
     <Compile Include="estrutura\ArestaDirigida.cs" />
     <Compile Include="estrutura\Informacao.cs" />
-    <Compile Include="estrutura\IDado.cs" />
+    <Compile Include="interfaces\IDado.cs" />
     <Compile Include="estrutura\Vertice.cs" />
     <Compile Include="Grafo.cs" />
     <Compile Include="GrafoDirecionado.cs" />
-    <Compile Include="interface\IGrafo.cs" />
-    <Compile Include="interface\IGrafoDirigido.cs" />
+    <Compile Include="interfaces\IGrafo.cs" />
+    <Compile Include="interfaces\IDigrafo.cs" />
+    <Compile Include="interfaces\IVertice.cs" />
     <Compile Include="LeitorArquivo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

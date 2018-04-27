@@ -4,7 +4,7 @@ using listaPraticaGrafo.estrutura;
 
 namespace listaPraticaGrafo
 {
-    public class GrafoDirecionado : Grafo, IGrafoDirigido
+    public class GrafoDirecionado : Grafo, IDigrafo
     {
         public int GetGrauEntrada(Vertice v1)
         {

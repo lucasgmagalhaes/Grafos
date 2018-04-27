@@ -58,11 +58,11 @@ namespace listaPraticaGrafo.estrutura
         /// <returns></returns>
         public Vertice GetVerticeDiferente(Vertice vertice)
         {
-            if(this.vertice1 == vertice)
+            if (this.vertice1 == vertice)
             {
                 return this.vertice2;
             }
-            else if(this.vertice2 == vertice)
+            else if (this.vertice2 == vertice)
             {
                 return this.vertice1;
             }
@@ -85,9 +85,7 @@ namespace listaPraticaGrafo.estrutura
 
         public override string ToString()
         {
-            return string.Format("{0} - {1} ; Peso {2}",
-                    this.getValorVertice1,
-                    this.getValorVertice2,
+            return string.Format("{0} - {1} ; Peso {2}", this.getValorVertice1, this.getValorVertice2,
                     this.GetPeso());
         }
     }

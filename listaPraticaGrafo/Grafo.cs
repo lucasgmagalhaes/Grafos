@@ -10,14 +10,21 @@ namespace listaPraticaGrafo
     public class Grafo : IGrafo
     {
         protected List<Vertice> vertices;
-        protected int componente = 0;
+        protected int num_arestas;
+        protected int componentes;
+
+        public int Numero_vertices { get { return this.vertices.Count; } }
+        public int Numero_arestas { get { return this.num_arestas; } }
         public Grafo()
         {
-            vertices = new List<Vertice>();
+            this.Init();
+            this.vertices = new List<Vertice>();
         }
         public Grafo(List<Vertice> lstVertices)
         {
-            vertices = lstVertices;
+            this.Init();
+            this.vertices = lstVertices;
+            this.CalcularArestas();
         }
 
         /// <summary>
@@ -25,9 +32,83 @@ namespace listaPraticaGrafo
         /// </summary>
         public void LimpaVisitaVertices()
         {
+            this.Init();
             foreach (Vertice vAux in vertices)
             {
                 vAux.SetVisitado(false);
+                this.CalcularArestas(vAux);
+            }
+        }
+
+        private void Init()
+        {
+            this.num_arestas = 0;
+            this.componentes = 0;
+        }
+
+        /// <summary>
+        /// Aumenta o números de arestas que o grafo possui contando quantas arestas 
+        /// o vértice passado no parâmetro possui
+        /// </summary>
+        /// <param name="vertice"></param>
+        private void CalcularArestas(Vertice vertice)
+        {
+            this.num_arestas += vertice.GetArestas().Count;
+        }
+
+        /// <summary>
+        /// Aumenta o números de arestas que o grafo possui contando quantas arestas 
+        /// a lista de vértices passado no parâmetro possui
+        /// </summary>
+        /// <param name="vertice"></param>
+        private void CalcularArestas(List<Vertice> vertices)
+        {
+            foreach (Vertice vertice in vertices)
+            {
+                this.num_arestas += vertice.GetArestas().Count;
+            }
+        }
+
+        /// <summary>
+        /// Aumenta o números de arestas que o grafo possui contando quantas arestas 
+        /// a lista de vértices o grafo possui
+        /// </summary>
+        /// <param name="vertice"></param>
+        private void CalcularArestas()
+        {
+            this.num_arestas = 0;
+            foreach (Vertice vertice in this.vertices)
+            {
+                this.num_arestas += vertice.GetArestas().Count;
+            }
+        }
+
+        /// <summary>
+        /// Diminui o números de arestas que o grafo possui contando quantas arestas 
+        /// a lista de vértices passado no parâmetro possui
+        /// </summary>
+        /// <param name="vertice"></param>
+        private void DiminuirArestas(List<Vertice> vertices)
+        {
+            foreach (Vertice vertice in vertices)
+            {
+                if (this.num_arestas > 0)
+                {
+                    this.num_arestas -= vertice.GetArestas().Count;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Diminui o números de arestas que o grafo possui contando quantas arestas 
+        /// o vértice passado no parâmetro possui
+        /// </summary>
+        /// <param name="vertice"></param>
+        private void DiminuirArestas(Vertice vertice)
+        {
+            if (this.num_arestas > 0)
+            {
+                this.num_arestas -= vertice.GetArestas().Count;
             }
         }
 
@@ -90,6 +171,7 @@ namespace listaPraticaGrafo
                     }
                 }
             }
+            this.CalcularArestas();
         }
 
         /// <summary>
@@ -162,6 +244,7 @@ namespace listaPraticaGrafo
             if (v1 != null)
             {
                 this.vertices.Add(v1);
+                this.CalcularArestas(v1);
             }
         }
 
@@ -192,6 +275,7 @@ namespace listaPraticaGrafo
                 Vertice vertice2;
                 List<Vertice> verticesLimpar = new List<Vertice>();
 
+                this.DiminuirArestas(v1);
                 foreach (Aresta aresta in v1.GetArestas())
                 {
                     vertice1 = aresta.GetVertices()[0];
@@ -277,14 +361,18 @@ namespace listaPraticaGrafo
             return cGrafo;
         }
 
+        /// <summary>
+        /// Busca em profundidade. Verifica quantos componentes há no grafo
+        /// </summary>
+        /// <returns></returns>
         public int DFS()
         {
             int componentes = 0;
             this.ResetarCorDosVertices();
 
-            foreach(Vertice vertice in this.vertices)
+            foreach (Vertice vertice in this.vertices)
             {
-                if(vertice.Cor == Cor.BRANCO)
+                if (vertice.Cor == Cor.BRANCO)
                 {
                     this.Visitar(vertice);
                     componentes++;
@@ -365,11 +453,11 @@ namespace listaPraticaGrafo
                 if (vertice.GetVisitado() == false)
                 {
                     Visitar(vertice, vertice.GetArestas());
-                    componente++;
+                    componentes++;
                 }
                 vertice.SetVisitado(true);
             }
-            if (componente >= 1)
+            if (componentes >= 1)
             {
                 return true;
             }
@@ -382,9 +470,9 @@ namespace listaPraticaGrafo
         private void Visitar(Vertice vertice)
         {
             vertice.AtualizarCor();
-            foreach(Vertice vertice2 in vertice.GetVerticesDistintosDasArestas())
+            foreach (Vertice vertice2 in vertice.GetVerticesDistintosDasArestas())
             {
-                if(vertice2.Cor == Cor.BRANCO)
+                if (vertice2.Cor == Cor.BRANCO)
                 {
                     this.Visitar(vertice2);
                 }
@@ -410,6 +498,7 @@ namespace listaPraticaGrafo
                 }
             }
         }
+
         /// <summary>
         /// Verifica se todos os vertices tem grau par e é conexo, ou seja, euleriano
         /// </summary>

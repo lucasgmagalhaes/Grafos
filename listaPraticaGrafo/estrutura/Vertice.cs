@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using listaPraticaGrafo.interfaces;
 
 namespace listaPraticaGrafo.estrutura
 {
-    public class Vertice : ICloneable
+    public class Vertice : IVertice
     {
         private List<Aresta> arestas;
         private IDado dado;

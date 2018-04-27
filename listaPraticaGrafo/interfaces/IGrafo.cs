@@ -2,6 +2,11 @@ using listaPraticaGrafo.estrutura;
 
 namespace listaPraticaGrafo.interfaces
 {
+    /// <summary>
+    /// Define a arquitetura para uma estrutura abstrata que representa 
+    /// um conjunto de elementos denominados vértices e suas
+    /// relações de interdependência(ou arestas)
+    /// </summary>
     public interface IGrafo
     {
         /// <summary>
@@ -114,7 +119,30 @@ namespace listaPraticaGrafo.interfaces
         IGrafo GetAGMKruskal(Vertice v1);
 
         /// <summary>
+        /// 
         /// Esse vértice deve retornar, para um grafo conexo, seu número de cut-vértices.
+        /// 
+        /// <para>
+        /// Cut-vértice: Vértice que desconecta um grafo separável (também chamado cut vertex ou ponto de articulação) 
+        /// </para>
+        /// 
+        /// <para> TEOREMAS:</para>
+        /// 
+        /// Teorema 1: 
+        /// A conectividade de aresta de um grafo G, λ(G), não pode exceder o grau do vértice de menor grau λ(G) ≤ grau 
+        /// do vértice de menor grau. Se um grafo apresenta, pelo menos, um vértice de grau 1 então a conectividade de aresta 
+        /// desse grafo é composta por apenas uma aresta
+        ///
+        /// <para>
+        /// Teorema 2: A conectividade de vértice de um grafo G, K(G), não pode exceder a conectividade de aresta de G.
+        /// Para todo grafo conexo G tem-se: K(G) ≤ λ(G) ≤ grau do vértice de menor grau.
+        /// </para>
+        /// 
+        /// <para>CONECTIVIDADE</para>
+        /// Seja δ(G) o menor grau de vértice em G
+        /// Para todo grafo conexo G, tem-se: K(G) ≤ λ (G) ≤ δ(G)
+        /// 
+        /// A máxima conectividade de vértice de um grafo G com N vértices e E arestas (e >= n-1) é 2e/n
         /// </summary>
         /// <returns></returns>
         int GetCutVertices();

@@ -2,7 +2,13 @@
 
 namespace listaPraticaGrafo.interfaces
 {
-    interface IGrafoDirigido : IGrafo
+    /// <summary>
+    /// Define a arquitetura para uma estrutura abstrata que representa 
+    /// um conjunto de elementos denominados vértices e suas
+    /// relações de interdependência(ou arestas) na qual as arestas possuem
+    /// direção.
+    /// </summary>
+    interface IDigrafo : IGrafo
     {
         /// <summary>
         /// Retorna o número de vértices que incidem ao vértice passado por parâmetro

@@ -1,8 +1,11 @@
 ﻿using System;
 
-namespace listaPraticaGrafo.estrutura
+namespace listaPraticaGrafo.interfaces
 {
-    public interface IDado : IEquatable<IDado>
+    /// <summary>
+    /// Define uma estrutura que é usada por um Grafo
+    /// </summary>
+    public interface IDado : IEquatable<IDado>, IComparable<IDado>
     {
         /// <summary>
         /// Deve verificar se um IDado é igual à outro
@@ -18,7 +21,7 @@ namespace listaPraticaGrafo.estrutura
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        int CompareTo(IDado other);
+        new int CompareTo(IDado other);
 
         /// <summary>
         /// Deve retornar o valor que o dado contém
