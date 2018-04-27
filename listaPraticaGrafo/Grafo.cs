@@ -234,7 +234,7 @@ namespace listaPraticaGrafo
                 List<Aresta> lstAuxAresta = vertice1.GetArestas();
                 foreach (Vertice vertice2 in vertices)
                 {
-                    if (vertice1.Equals(vertice2) == false && lstVertice.Contains(vertice2) == false) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
+                    if (vertice1.Equals(vertice2) == false ) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
                                                                                                       // se estiver na lista é porque não tem ligação com algum outro vertice
                     {
                         List<Aresta> lstAuxAresta2 = vertice2.GetArestas();
