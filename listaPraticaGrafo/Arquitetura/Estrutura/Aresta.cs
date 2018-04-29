@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace listaPraticaGrafo.estrutura
+namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     public class Aresta
     {
@@ -11,7 +11,7 @@ namespace listaPraticaGrafo.estrutura
         /// visitada, usada para grafo euleriano
         /// </summary>
         protected bool visitada;
-        protected object peso;
+        protected int peso;
 
         public Vertice getVertice1 { get { return vertice1; } }
         public Vertice getVertice2 { get { return vertice2; } }
@@ -43,7 +43,7 @@ namespace listaPraticaGrafo.estrutura
             return new List<Vertice> { this.vertice1, this.vertice2 };
         }
 
-        public object GetPeso()
+        public int GetPeso()
         {
             return this.peso;
         }

@@ -1,9 +1,9 @@
-﻿using listaPraticaGrafo.Enum;
-using listaPraticaGrafo.estrutura;
-using System;
+﻿using System;
+using listaPraticaGrafo.Arquitetura.Enum;
+using listaPraticaGrafo.Arquitetura.Estrutura;
 using System.Collections.Generic;
 
-namespace listaPraticaGrafo.interfaces
+namespace listaPraticaGrafo.Arquitetura.Interfaces
 {
     public interface IVertice : ICloneable
     {
@@ -94,5 +94,7 @@ namespace listaPraticaGrafo.interfaces
         /// </summary>
         /// <param name="cor"></param>
         void SetCor(Cor cor);
+
+        List<Vertice> GetVerticesDistintosDasArestas();
     }
 }

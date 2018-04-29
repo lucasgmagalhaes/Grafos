@@ -1,11 +1,11 @@
-using listaPraticaGrafo.Enum;
+using listaPraticaGrafo.Arquitetura.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using listaPraticaGrafo.interfaces;
+using listaPraticaGrafo.Arquitetura.Interfaces;
 
-namespace listaPraticaGrafo.estrutura
+namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     public class Vertice : IVertice
     {

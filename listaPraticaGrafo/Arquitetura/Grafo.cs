@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using listaPraticaGrafo.interfaces;
-using listaPraticaGrafo.estrutura;
-using listaPraticaGrafo.Enum;
+using listaPraticaGrafo.Arquitetura.Interfaces;
+using listaPraticaGrafo.Arquitetura.Estrutura;
+using listaPraticaGrafo.Arquitetura.Enum;
 using System;
 using System.Text;
 
@@ -15,6 +15,7 @@ namespace listaPraticaGrafo
 
         public int Numero_vertices { get { return this.vertices.Count; } }
         public int Numero_arestas { get { return this.num_arestas; } }
+
         public Grafo()
         {
             this.Init();
@@ -51,7 +52,7 @@ namespace listaPraticaGrafo
         /// o vértice passado no parâmetro possui
         /// </summary>
         /// <param name="vertice"></param>
-        private void CalcularArestas(Vertice vertice)
+        private void CalcularArestas(IVertice vertice)
         {
             this.num_arestas += vertice.GetArestas().Count;
         }
@@ -220,7 +221,7 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="vertice"></param>
         /// <returns></returns>
-        public bool Contem(Vertice vertice)
+        public bool Contem(IVertice vertice)
         {
             if (vertice != null)
             {
@@ -394,7 +395,7 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
-        public int GetGrau(Vertice v1)
+        public int GetGrau(IVertice v1)
         {
             if (v1 != null)
             {
@@ -467,7 +468,7 @@ namespace listaPraticaGrafo
             }
         }
 
-        private void Visitar(Vertice vertice)
+        private void Visitar(IVertice vertice)
         {
             vertice.AtualizarCor();
             foreach (Vertice vertice2 in vertice.GetVerticesDistintosDasArestas())
@@ -480,7 +481,7 @@ namespace listaPraticaGrafo
             vertice.AtualizarCor();
         }
 
-        private void Visitar(Vertice v, List<Aresta> a)
+        private void Visitar(IVertice v, List<Aresta> a)
         {
             if (v != null && a != null)
             {

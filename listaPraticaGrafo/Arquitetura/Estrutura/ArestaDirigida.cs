@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace listaPraticaGrafo.estrutura
+namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     class ArestaDirigida : Aresta
     {

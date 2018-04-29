@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using listaPraticaGrafo.interfaces;
+using listaPraticaGrafo.Arquitetura.Interfaces;
 
-namespace listaPraticaGrafo.estrutura
+namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     /// <summary>
     /// Representa o valor que o vértice possui

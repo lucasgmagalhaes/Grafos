@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace listaPraticaGrafo.interfaces
+namespace listaPraticaGrafo.Arquitetura.Interfaces
 {
     /// <summary>
     /// Define uma estrutura que é usada por um Grafo

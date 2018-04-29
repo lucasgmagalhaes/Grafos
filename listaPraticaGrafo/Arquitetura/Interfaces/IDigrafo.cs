@@ -1,6 +1,6 @@
-﻿using listaPraticaGrafo.estrutura;
+﻿using listaPraticaGrafo.Arquitetura.Estrutura;
 
-namespace listaPraticaGrafo.interfaces
+namespace listaPraticaGrafo.Arquitetura.Interfaces
 {
     /// <summary>
     /// Define a arquitetura para uma estrutura abstrata que representa 

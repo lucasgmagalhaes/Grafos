@@ -43,21 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\Cor.cs" />
-    <Compile Include="estrutura\Aresta.cs" />
-    <Compile Include="estrutura\ArestaDirigida.cs" />
-    <Compile Include="estrutura\Informacao.cs" />
-    <Compile Include="interfaces\IDado.cs" />
-    <Compile Include="estrutura\Vertice.cs" />
-    <Compile Include="Grafo.cs" />
-    <Compile Include="GrafoDirecionado.cs" />
-    <Compile Include="interfaces\IGrafo.cs" />
-    <Compile Include="interfaces\IDigrafo.cs" />
-    <Compile Include="interfaces\IVertice.cs" />
+    <Compile Include="Arquitetura\Enum\Cor.cs" />
+    <Compile Include="Arquitetura\Estrutura\Aresta.cs" />
+    <Compile Include="Arquitetura\Estrutura\ArestaDirigida.cs" />
+    <Compile Include="Arquitetura\Estrutura\Informacao.cs" />
+    <Compile Include="Arquitetura\Interfaces\IDado.cs" />
+    <Compile Include="Arquitetura\Estrutura\Vertice.cs" />
+    <Compile Include="Arquitetura\Grafo.cs" />
+    <Compile Include="Arquitetura\GrafoDirecionado.cs" />
+    <Compile Include="Arquitetura\Interfaces\IGrafo.cs" />
+    <Compile Include="Arquitetura\Interfaces\IDigrafo.cs" />
+    <Compile Include="Arquitetura\Interfaces\IVertice.cs" />
     <Compile Include="LeitorArquivo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utils\FileArray.cs" />
+    <Compile Include="Utils\FileArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
