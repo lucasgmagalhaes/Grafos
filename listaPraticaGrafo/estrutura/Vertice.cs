@@ -93,7 +93,7 @@ namespace listaPraticaGrafo.estrutura
         public List<Vertice> GetVerticesDistintosDasArestas()
         {
             List<Vertice> listaRetorno = new List<Vertice>();
-            foreach(Aresta aresta in this.arestas)
+            foreach (Aresta aresta in this.arestas)
             {
                 listaRetorno.Add(aresta.GetVerticeDiferente(this));
             }
@@ -116,7 +116,7 @@ namespace listaPraticaGrafo.estrutura
         {
             return this;
         }
-         public bool GetVisitado()
+        public bool GetVisitado()
         {
             return this.visitado;
         }
@@ -127,7 +127,7 @@ namespace listaPraticaGrafo.estrutura
         }
         public void SetVisitado(bool visita)
         {
-              this.visitado = visita;
+            this.visitado = visita;
         }
 
         /// <summary>
@@ -165,6 +165,22 @@ namespace listaPraticaGrafo.estrutura
         public void SetCor(Cor cor)
         {
             this.cor = cor;
+        }
+        /// <summary>
+        /// Faz a busca da aresta de menor peso do vertice
+        /// </summary>
+        /// <returns>Retorna aresta de menor peso</returns>
+        public Aresta GetMenorAresta()
+        {
+            Aresta aMenor = new Aresta(null, null, 0);
+            foreach (Aresta aItem in this.arestas)
+            {
+                if (aMenor.GetPeso() < aItem.GetPeso()) //acha a aresta de menor valor do vertice
+                {
+                    aMenor = aItem;
+                }
+            }
+            return aMenor;
         }
     }
 }
