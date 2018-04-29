@@ -50,7 +50,7 @@
     <Compile Include="Arquitetura\Interfaces\IDado.cs" />
     <Compile Include="Arquitetura\Estrutura\Vertice.cs" />
     <Compile Include="Arquitetura\Grafo.cs" />
-    <Compile Include="Arquitetura\GrafoDirecionado.cs" />
+    <Compile Include="Arquitetura\Digrafo.cs" />
     <Compile Include="Arquitetura\Interfaces\IGrafo.cs" />
     <Compile Include="Arquitetura\Interfaces\IDigrafo.cs" />
     <Compile Include="Arquitetura\Interfaces\IVertice.cs" />

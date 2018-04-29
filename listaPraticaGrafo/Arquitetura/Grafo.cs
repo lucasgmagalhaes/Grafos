@@ -384,7 +384,10 @@ namespace listaPraticaGrafo
 
         public int GetCutVertices()
         {
-            //HERE IS CALANGO!
+            foreach(Vertice vertice in this.vertices)
+            {
+
+            }
 
             return 0;
         }
@@ -395,7 +398,7 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
-        public int GetGrau(IVertice v1)
+        public int GetGrau(Vertice v1)
         {
             if (v1 != null)
             {

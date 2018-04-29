@@ -1,10 +1,13 @@
 ﻿using System;
-using listaPraticaGrafo.interfaces;
-using listaPraticaGrafo.estrutura;
+using listaPraticaGrafo.Arquitetura.Interfaces;
+using listaPraticaGrafo.Arquitetura.Estrutura;
 
 namespace listaPraticaGrafo
 {
-    public class GrafoDirecionado : Grafo, IDigrafo
+    /// <summary>
+    /// Grafo direcionado
+    /// </summary>
+    public class Digrafo : Grafo, IDigrafo
     {
         public int GetGrauEntrada(Vertice v1)
         {
