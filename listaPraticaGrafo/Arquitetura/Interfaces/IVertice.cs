@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace listaPraticaGrafo.Arquitetura.Interfaces
 {
-    public interface IVertice : ICloneable
+    public interface IVertice : ICloneable, IEquatable<IVertice>
     {
         /// <summary>
         /// Cria uma nova instância idêntica a do objeto
@@ -13,6 +13,13 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <returns></returns>
         new object Clone();
 
+        /// <summary>
+        /// Verifica se um Vértice é igual ao outro por meio do dado que ele 
+        /// armazena
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        new bool Equals(IVertice vertice);
         /// <summary>
         /// Insere uma nova aresta na lista de arestas do vértice
         /// </summary>

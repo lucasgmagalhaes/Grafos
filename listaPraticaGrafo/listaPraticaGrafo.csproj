@@ -47,6 +47,7 @@
     <Compile Include="Arquitetura\Estrutura\Aresta.cs" />
     <Compile Include="Arquitetura\Estrutura\ArestaDirigida.cs" />
     <Compile Include="Arquitetura\Estrutura\Informacao.cs" />
+    <Compile Include="Arquitetura\Interfaces\IAresta.cs" />
     <Compile Include="Arquitetura\Interfaces\IDado.cs" />
     <Compile Include="Arquitetura\Estrutura\Vertice.cs" />
     <Compile Include="Arquitetura\Grafo.cs" />

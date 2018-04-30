@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
-    public class Aresta
+    public class Aresta : IAresta
     {
         protected Vertice vertice1;
         protected Vertice vertice2;
@@ -16,11 +16,42 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public Vertice getVertice1 { get { return this.vertice1; } }
         public Vertice getVertice2 { get { return this.vertice2; } }
 
-        public object getValorVertice1 { get { return this.vertice1.GetDadoValor(); } }
-        public object getValorVertice2 { get { return this.vertice2.GetDadoValor(); } }
+        public object getValorVertice1
+        {
+            get
+            {
+                if (this.vertice1 != null) return this.vertice1.GetDadoValor();
+                else return null;
+            }
+        }
 
-        public IDado getDadoVertice1 { get { return this.vertice1.GetDado(); } }
-        public IDado getDadoVertice2 { get { return this.vertice2.GetDado(); } }
+        public object getValorVertice2
+        {
+            get
+            {
+                if (this.vertice2 != null) return this.vertice2.GetDadoValor();
+                else return null;
+            }
+        }
+
+        public IDado getDadoVertice1
+        {
+            get
+
+            {
+                if (this.vertice1 != null) return this.vertice1.GetDado();
+                else return null;
+            }
+        }
+
+        public IDado getDadoVertice2
+        {
+            get
+            {
+                if (this.vertice2 != null) return this.vertice2.GetDado();
+                else return null;
+            }
+        }
 
         public Aresta(Vertice v1, Vertice v2)
         {
@@ -89,7 +120,27 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public override string ToString()
         {
             return string.Format("{0} - {1} ; Peso {2}", this.getValorVertice1, this.getValorVertice2,
-                    this.GetPeso());
+                    this.peso);
         }
+
+        /// <summary>
+        /// Compara a igualdade entre duas arestas comparando seus vértices e pesos
+        /// </summary>
+        /// <param name="aresta"></param>
+        /// <returns></returns>
+        public bool Equals(IAresta aresta)
+        {
+            try
+            {
+                Aresta comparar = (Aresta)aresta;
+                return ((comparar.getDadoVertice1.Equals(this.getDadoVertice1) || comparar.getDadoVertice1.Equals(this.getDadoVertice2)) &&
+                     (comparar.getDadoVertice2.Equals(this.getDadoVertice1) || comparar.getDadoVertice2.Equals(this.getDadoVertice2)) &&
+                    comparar.GetPeso().Equals(this.peso));
+            }
+            catch
+            {
+                return false;
+            }
+         }
     }
 }

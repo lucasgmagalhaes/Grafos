@@ -172,10 +172,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// <returns>Retorna aresta de menor peso</returns>
         public Aresta GetMenorAresta()
         {
-            Aresta aMenor = new Aresta(null, null, 0);
+            Aresta aMenor = null;
             foreach (Aresta aItem in this.arestas)
             {
-                if (aMenor.GetPeso() < aItem.GetPeso()) //acha a aresta de menor valor do vertice
+                if (aMenor == null || aItem.GetPeso() < aMenor.GetPeso()) //acha a aresta de menor valor do vertice
                 {
                     aMenor = aItem;
                 }
@@ -199,6 +199,33 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Verifica se o vértice já possui uma aresta igual aquela passada por parâmetro
+        /// </summary>
+        /// <param name="aresta"></param>
+        /// <returns></returns>
+        public bool Contem(Aresta aresta)
+        {
+            foreach (Aresta aresta1 in this.arestas)
+            {
+                if (aresta1.Equals(aresta))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Verifica a igualdade entre dois vértices através do dado que eles armazenam
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        public bool Equals(IVertice vertice)
+        {
+            return (vertice.GetDado().Equals(this.dado));
         }
     }
 }

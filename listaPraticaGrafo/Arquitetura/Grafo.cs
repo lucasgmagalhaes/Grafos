@@ -276,6 +276,8 @@ namespace listaPraticaGrafo
                 if (!this.Contem(v1)) this.vertices.Add(v1);
                 if (!this.Contem(v2)) this.vertices.Add(v2);
 
+                this.num_arestas++;
+
                 v1.AddAresta(aresta);
                 v2.AddAresta(aresta);
             }
@@ -358,19 +360,17 @@ namespace listaPraticaGrafo
 
         private void AGMPrimUtil(Vertice v1, Grafo grafo)
         {
-            Aresta proxima;
-            v1.SetVisitado(true);
-            foreach (Vertice p_vertice in v1.GetAdjacentes())
+            if (!v1.FoiVisitado())
             {
-                if (!p_vertice.FoiVisitado())
-                {
-                    p_vertice.SetVisitado(true);
-                    grafo.AddVertice(p_vertice);
-                    proxima = p_vertice.GetMenorAresta();
+                Aresta proxima;
+                Vertice p_vertice1;
 
-                    grafo.AddAresta(proxima);
-                    this.AGMPrimUtil(proxima.GetVerticeDiferente(p_vertice), grafo);
-                }
+                v1.SetVisitado(true);
+                proxima = v1.GetMenorAresta();
+                grafo.AddAresta(proxima);
+
+                p_vertice1 = proxima.GetVerticeDiferente(v1);
+                this.AGMPrimUtil(p_vertice1, grafo);
             }
         }
 
