@@ -39,7 +39,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// Retorna se a busca/pesquisa já passou por esta aresta
         /// </summary>
         /// <returns></returns>
-        bool GetVisitado();
+        bool FoiVisitado();
 
         /// <summary>
         /// Define se um a aresta ja foi visitada

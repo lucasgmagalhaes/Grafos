@@ -18,6 +18,10 @@ namespace listaPraticaGrafo
         /// Usado na contagem do tempo de descoberta dos vértices
         /// </summary>
         protected int tempo;
+        /// <summary>
+        /// Armazeda o AGMPrim do vértice
+        /// </summary>
+        protected string prim_formato;
         public int Numero_vertices { get { return this.vertices.Count; } }
         public int Numero_arestas { get { return this.CalcularArestas(); } }
 
@@ -238,6 +242,8 @@ namespace listaPraticaGrafo
             }
         }
 
+
+
         /// <summary>
         /// Insere uma nova aresta para os vértices aos quais ela está ligada.
         /// Se os vértices não estão no grafo, eles são inseridos no grafo.
@@ -322,12 +328,24 @@ namespace listaPraticaGrafo
         public IGrafo GetAGMPrim(Vertice v1)
         {
             Grafo subgrafo = new Grafo();
+            this.prim_formato = null;
+            StringBuilder builder = new StringBuilder();
 
             if (this.Contem(v1))
             {
-                this.AGMPrimUtil(v1, subgrafo);
+                this.AGMPrimUtil(v1, subgrafo, builder);
             }
             return subgrafo;
+        }
+
+        /// <summary>
+        /// Retorna as arestas geradas pelo percurso prim no grafo
+        /// </summary>
+        /// <returns></returns>
+        public string GetAGMPrimFormatado()
+        {
+            this.GetAGMPrim();
+            return this.prim_formato;
         }
 
         /// <summary>
@@ -338,8 +356,14 @@ namespace listaPraticaGrafo
         public IGrafo GetAGMPrim()
         {
             Grafo subgrafo = new Grafo();
+            this.prim_formato = null;
+            StringBuilder builder = new StringBuilder();
 
-            if (this.vertices[0] != null) this.AGMPrimUtil(this.vertices[0], subgrafo);
+            if (this.vertices[0] != null)
+            {
+                this.AGMPrimUtil(this.vertices[0], subgrafo, builder);
+                this.prim_formato = builder.ToString();
+            }
             else return null;
             return subgrafo;
         }
@@ -349,19 +373,26 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="v1"></param>
         /// <param name="grafo"></param>
-        private void AGMPrimUtil(Vertice v1, Grafo grafo)
+        private void AGMPrimUtil(Vertice v1, Grafo grafo, StringBuilder builder)
         {
             if (!v1.FoiVisitado())
             {
                 Aresta proxima;
-                Vertice p_vertice1;
+                Vertice p_vertice;
 
                 v1.SetVisitado(true);
-                proxima = v1.GetMenorAresta();
-                grafo.AddAresta(proxima);
+                proxima = v1.GetMenorArestaNaoVisitada();
 
-                p_vertice1 = proxima.GetVerticeDiferente(v1);
-                this.AGMPrimUtil(p_vertice1, grafo);
+                if (proxima != null)
+                {
+                    proxima.SetVisitado(true);
+
+                    grafo.AddAresta(proxima);
+                    p_vertice = proxima.GetVerticeDiferente(v1);
+
+                    builder.Append(proxima.getValorVertice1 + "-" + proxima.getValorVertice2 + " ");
+                    this.AGMPrimUtil(p_vertice, grafo, builder);
+                }
             }
         }
 

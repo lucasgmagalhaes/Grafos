@@ -20,7 +20,7 @@ namespace listaPraticaGrafo
             //grafo.GerarGrafo(linhas);
 
             grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
-            Console.WriteLine(grafo.GetAGMPrim());
+            Console.WriteLine(grafo.GetAGMPrimFormatado());
             Console.CursorVisible = false;
             Console.ReadKey();
 

@@ -174,6 +174,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             this.cor = cor;
         }
+
         /// <summary>
         /// Faz a busca da aresta de menor peso do vertice
         /// </summary>
@@ -186,6 +187,27 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 if (aMenor == null || aItem.GetPeso() < aMenor.GetPeso()) //acha a aresta de menor valor do vertice
                 {
                     aMenor = aItem;
+                }
+            }
+            return aMenor;
+        }
+
+        /// <summary>
+        /// Faz a busca da aresta de menor peso do vertice e que 
+        /// não foi visitada
+        /// </summary>
+        /// <returns>Retorna aresta de menor peso</returns>
+        public Aresta GetMenorArestaNaoVisitada()
+        {
+            Aresta aMenor = null;
+            foreach (Aresta aItem in this.arestas)
+            {
+                if (!aItem.FoiVisitado())
+                {
+                    if (aMenor == null || aItem.GetPeso() < aMenor.GetPeso())
+                    {
+                        aMenor = aItem;
+                    }
                 }
             }
             return aMenor;

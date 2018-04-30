@@ -107,7 +107,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// Retorna se a busca/pesquisa já passou por esta aresta
         /// </summary>
         /// <returns></returns>
-        public bool GetVisitado()
+        public bool FoiVisitado()
         {
             return visitada;
         }
