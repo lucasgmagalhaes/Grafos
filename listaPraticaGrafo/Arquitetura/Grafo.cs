@@ -324,7 +324,7 @@ namespace listaPraticaGrafo
             throw new System.NotImplementedException();
         }
 
-        public Grafo GetComplementar()
+       public Grafo GetComplementar()
         {
             List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
             List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
@@ -348,8 +348,14 @@ namespace listaPraticaGrafo
                                 {
                                     //quando não possuir aresta em comum , não tem ligação
                                     //adiciona na lista de verificação de vertice - inicio
-                                    lstVertice.Add(vertice1);
-                                    lstVertice.Add(vertice2);
+                                    if (lstVertice.Contains(vertice1) == false)
+                                    {
+                                        lstVertice.Add(vertice1);
+                                    }
+                                    if (lstVertice.Contains(vertice2) == false)
+                                    {
+                                        lstVertice.Add(vertice2);
+                                    }
                                     //fim
                                     //clona os vertice   - inicio
                                     Vertice aux = (Vertice)(vertice1.Clone());
@@ -364,8 +370,14 @@ namespace listaPraticaGrafo
                                     aux.AddAresta(nAresta);
                                     aux2.AddAresta(nAresta);
                                     //fim , adiciona os vertices a lista de vertice do grafo complementar 
-                                    lstVerticeComplementar.Add(aux);
-                                    lstVerticeComplementar.Add(aux2);
+                                    if (lstVerticeComplementar.Contains(aux) == false)
+                                    {
+                                        lstVerticeComplementar.Add(aux);
+                                    }
+                                    if (lstVerticeComplementar.Contains(aux2) == false)
+                                    {
+                                        lstVerticeComplementar.Add(aux2);
+                                    }
                                 }
                             }
                         }
