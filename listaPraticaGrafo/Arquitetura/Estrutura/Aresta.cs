@@ -1,4 +1,4 @@
-using System;
+using listaPraticaGrafo.Arquitetura.Interfaces;
 using System.Collections.Generic;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
@@ -13,11 +13,14 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         protected bool visitada;
         protected int peso;
 
-        public Vertice getVertice1 { get { return vertice1; } }
-        public Vertice getVertice2 { get { return vertice2; } }
+        public Vertice getVertice1 { get { return this.vertice1; } }
+        public Vertice getVertice2 { get { return this.vertice2; } }
 
-        public object getValorVertice1 { get { return vertice1.GetDadoValor(); } }
-        public object getValorVertice2 { get { return vertice2.GetDadoValor(); } }
+        public object getValorVertice1 { get { return this.vertice1.GetDadoValor(); } }
+        public object getValorVertice2 { get { return this.vertice2.GetDadoValor(); } }
+
+        public IDado getDadoVertice1 { get { return this.vertice1.GetDado(); } }
+        public IDado getDadoVertice2 { get { return this.vertice2.GetDado(); } }
 
         public Aresta(Vertice v1, Vertice v2)
         {

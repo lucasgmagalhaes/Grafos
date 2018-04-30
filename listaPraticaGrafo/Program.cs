@@ -15,15 +15,15 @@ namespace listaPraticaGrafo
         {
 
             LeitorArquivo leitor = new LeitorArquivo();
-           string[] linhas =  leitor.lerArquivo("grafo.txt");
+            string[] linhas = leitor.lerArquivo("grafo.txt");
             Grafo grafo = new Grafo();
             //grafo.GerarGrafo(linhas);
 
             grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
-            Console.WriteLine(grafo.GetCutVertices());
+            Console.WriteLine(grafo.GetAGMPrim());
             Console.CursorVisible = false;
             Console.ReadKey();
-            
+
         }
     }
 }

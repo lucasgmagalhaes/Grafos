@@ -264,13 +264,30 @@ namespace listaPraticaGrafo
             }
         }
 
+        public void AddAresta(Aresta aresta)
+        {
+            if (aresta != null && aresta.getVertice1 != null && aresta.getVertice2 != null)
+            {
+                Vertice v1, v2;
+
+                v1 = aresta.getVertice1;
+                v2 = aresta.getVertice2;
+
+                if (!this.Contem(v1)) this.vertices.Add(v1);
+                if (!this.Contem(v2)) this.vertices.Add(v2);
+
+                v1.AddAresta(aresta);
+                v2.AddAresta(aresta);
+            }
+        }
+
         /// <summary>
         /// Retira um vertice do grafo e define o objeto como nulo
         /// </summary>
         /// <param name="v1"></param>
         public void RemoverVertice(Vertice v1)
         {
-            if (v1 != null && this.vertices.Contains(v1))
+            if (v1 != null && this.Contem(v1))
             {
                 this.vertices.Remove(v1);
                 this.LimparArestas(v1);
@@ -316,15 +333,48 @@ namespace listaPraticaGrafo
 
         public IGrafo GetAGMKruskal(Vertice v1)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
         public IGrafo GetAGMPrim(Vertice v1)
         {
-            throw new System.NotImplementedException();
+            Grafo subgrafo = new Grafo();
+
+            if (this.Contem(v1))
+            {
+                this.AGMPrimUtil(v1, subgrafo);
+            }
+            return subgrafo;
         }
 
-       public Grafo GetComplementar()
+        public IGrafo GetAGMPrim()
+        {
+            Grafo subgrafo = new Grafo();
+
+            if (this.vertices[0] != null) this.AGMPrimUtil(this.vertices[0], subgrafo);
+            else return null;
+            return subgrafo;
+        }
+
+        private void AGMPrimUtil(Vertice v1, Grafo grafo)
+        {
+            Aresta proxima;
+            v1.SetVisitado(true);
+            foreach (Vertice p_vertice in v1.GetAdjacentes())
+            {
+                if (!p_vertice.FoiVisitado())
+                {
+                    p_vertice.SetVisitado(true);
+                    grafo.AddVertice(p_vertice);
+                    proxima = p_vertice.GetMenorAresta();
+
+                    grafo.AddAresta(proxima);
+                    this.AGMPrimUtil(proxima.GetVerticeDiferente(p_vertice), grafo);
+                }
+            }
+        }
+
+        public Grafo GetComplementar()
         {
             List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
             List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
@@ -389,26 +439,6 @@ namespace listaPraticaGrafo
             return cGrafo;
         }
 
-        /// <summary>
-        /// Depth First Search
-        /// </summary>
-        /// <returns></returns>
-        public int DFS()
-        {
-            int componentes = 0;
-            this.ResetarCorDosVertices();
-
-            foreach (Vertice vertice in this.vertices)
-            {
-                if (vertice.Cor == Cor.BRANCO)
-                {
-                    this.Visitar(vertice);
-                    componentes++;
-                }
-            }
-            return componentes;
-        }
-
         // Função recursiva para achar os cut-vértices
         // u --> O próximo vertice para ser visitado
         // visited[] --> mantem armazeado os vértices que foram visitados
@@ -455,6 +485,10 @@ namespace listaPraticaGrafo
             }
         }
 
+        /// <summary>
+        /// Retorna o número de vértices que, se removidos criam novos componentes no grafo.
+        /// </summary>
+        /// <returns></returns>
         public int GetCutVertices()
         {
             int size = this.vertices.Count;
@@ -478,7 +512,7 @@ namespace listaPraticaGrafo
             // Chama a função recursiva de ajuda para achar a articulação
             // Ponto na "árvore" DFS com base no vertex 'i'
             for (int i = 0; i < size; i++) if (visited[i] == false) APUtil(i, visited, disc, low, parent, ap);
-           
+
             // Agora a ap[] contém pontos de articulação, conta os valores
             for (int i = 0; i < size; i++) if (ap[i] == true) number++;
             return number;
