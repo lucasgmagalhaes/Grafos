@@ -58,7 +58,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// Verifica se o vértice já foi visitado
         /// </summary>
         /// <returns></returns>
-        bool GetVisitado();
+        bool FoiVisitado();
 
         /// <summary>
         /// Retorna o valor que o dado armazena
@@ -95,6 +95,17 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <param name="cor"></param>
         void SetCor(Cor cor);
 
-        List<Vertice> GetVerticesDistintosDasArestas();
+        /// <summary>
+        /// Retorna todos os vértices adjacetes ao vértice
+        /// </summary>
+        /// <returns></returns>
+        List<Vertice> GetAdjacentes();
+
+        /// <summary>
+        /// Verifica se um vértice é adjacente(possui aresta) com outro vértice
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        bool isAdjacenteDe(Vertice vertice);
     }
 }

@@ -11,8 +11,8 @@
         /// <para>1;2;4</para> 
         /// <para>2;3;10</para>
         /// </summary>
-        public static string[] GRAFO1_NAO_DIRIGIDO = { "3", "1;2;4", "1;3;10" };
-
+        public static string[] GRAFO1_NAO_DIRIGIDO = { "3", "1;2;4", "1;3;7", "2;3;10" };
+        
         /// <summary>
         /// <para>3</para>
         /// <para>1;2;4;1</para>

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using listaPraticaGrafo.estrutura;
-using listaPraticaGrafo.interfaces;
+using listaPraticaGrafo.Arquitetura.Estrutura;
+using listaPraticaGrafo.Arquitetura.Interfaces;
 using System.IO;
 using listaPraticaGrafo.utils;
 namespace listaPraticaGrafo
@@ -20,8 +20,7 @@ namespace listaPraticaGrafo
             //grafo.GerarGrafo(linhas);
 
             grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
-            Console.WriteLine(grafo.ToString());
-            Console.WriteLine(grafo.DFS());
+            Console.WriteLine(grafo.GetCutVertices());
             Console.CursorVisible = false;
             Console.ReadKey();
             

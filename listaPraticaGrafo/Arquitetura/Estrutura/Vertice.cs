@@ -90,7 +90,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// Fornece a lista de todos os vértices que fazem ligação(possuem aresta) com
         /// </summary>
         /// <returns></returns>
-        public List<Vertice> GetVerticesDistintosDasArestas()
+        public List<Vertice> GetAdjacentes()
         {
             List<Vertice> listaRetorno = new List<Vertice>();
             foreach (Aresta aresta in this.arestas)
@@ -116,7 +116,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             return this;
         }
-        public bool GetVisitado()
+        public bool FoiVisitado()
         {
             return this.visitado;
         }
@@ -181,6 +181,24 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 }
             }
             return aMenor;
+        }
+
+        /// <summary>
+        /// Verifica se o vértice atual possui adjacência com outro vértice
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        public bool isAdjacenteDe(Vertice vertice)
+        {
+            List<Vertice> adjacentes = this.GetAdjacentes();
+            foreach (Vertice v in adjacentes)
+            {
+                if (v.GetDadoValor().Equals(vertice.GetDadoValor()))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
