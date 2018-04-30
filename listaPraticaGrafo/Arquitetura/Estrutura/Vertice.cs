@@ -38,11 +38,19 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return this.MemberwiseClone();
         }
 
+        /// <summary>
+        /// Insere uma nova aresta na lista de arestas do vértice.
+        /// Não permite a inserção de arestas repetidas
+        /// </summary>
+        /// <param name="aresta"></param>
         public void AddAresta(Aresta aresta)
         {
-            this.arestas.Add(aresta);
-            List<Vertice> lstAux = aresta.GetVertices();
-            Vertice vAux = lstAux.Last();
+            if (!this.Contem(aresta))
+            {
+                this.arestas.Add(aresta);
+                List<Vertice> lstAux = aresta.GetVertices();
+                Vertice vAux = lstAux.Last();
+            }
         }
         public void LimpaArestas()
         {

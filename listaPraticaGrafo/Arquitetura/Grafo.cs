@@ -10,7 +10,6 @@ namespace listaPraticaGrafo
     public class Grafo : IGrafo
     {
         protected List<Vertice> vertices;
-        protected int num_arestas;
         /// <summary>
         /// Número de componentes do grafo
         /// </summary>
@@ -20,7 +19,7 @@ namespace listaPraticaGrafo
         /// </summary>
         protected int tempo;
         public int Numero_vertices { get { return this.vertices.Count; } }
-        public int Numero_arestas { get { return this.num_arestas; } }
+        public int Numero_arestas { get { return this.CalcularArestas(); } }
 
         public Grafo()
         {
@@ -58,7 +57,6 @@ namespace listaPraticaGrafo
 
         private void Init()
         {
-            this.num_arestas = 0;
             this.componentes = 0;
         }
 
@@ -67,9 +65,11 @@ namespace listaPraticaGrafo
         /// o vértice passado no parâmetro possui
         /// </summary>
         /// <param name="vertice"></param>
-        private void CalcularArestas(IVertice vertice)
+        private int CalcularArestas(IVertice vertice)
         {
-            this.num_arestas += vertice.GetArestas().Count;
+            int num_arestas = 0;
+            return num_arestas += vertice.GetArestas().Count;
+
         }
 
         /// <summary>
@@ -77,55 +77,29 @@ namespace listaPraticaGrafo
         /// a lista de vértices passado no parâmetro possui
         /// </summary>
         /// <param name="vertice"></param>
-        private void CalcularArestas(List<Vertice> vertices)
+        private int CalcularArestas(List<Vertice> vertices)
         {
+            int num_arestas = 0;
             foreach (Vertice vertice in vertices)
             {
-                this.num_arestas += vertice.GetArestas().Count;
+                num_arestas += vertice.GetArestas().Count;
             }
+            return num_arestas;
         }
 
         /// <summary>
-        /// Aumenta o números de arestas que o grafo possui contando quantas arestas 
+        /// Calcula o números de arestas que o grafo possui contando quantas arestas 
         /// a lista de vértices o grafo possui
         /// </summary>
         /// <param name="vertice"></param>
-        private void CalcularArestas()
+        private int CalcularArestas()
         {
-            this.num_arestas = 0;
+            int num_arestas = 0;
             foreach (Vertice vertice in this.vertices)
             {
-                this.num_arestas += vertice.GetArestas().Count;
+                num_arestas += vertice.GetArestas().Count;
             }
-        }
-
-        /// <summary>
-        /// Diminui o números de arestas que o grafo possui contando quantas arestas 
-        /// a lista de vértices passado no parâmetro possui
-        /// </summary>
-        /// <param name="vertice"></param>
-        private void DiminuirArestas(List<Vertice> vertices)
-        {
-            foreach (Vertice vertice in vertices)
-            {
-                if (this.num_arestas > 0)
-                {
-                    this.num_arestas -= vertice.GetArestas().Count;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Diminui o números de arestas que o grafo possui contando quantas arestas 
-        /// o vértice passado no parâmetro possui
-        /// </summary>
-        /// <param name="vertice"></param>
-        private void DiminuirArestas(Vertice vertice)
-        {
-            if (this.num_arestas > 0)
-            {
-                this.num_arestas -= vertice.GetArestas().Count;
-            }
+            return num_arestas;
         }
 
         /// <summary>
@@ -264,6 +238,11 @@ namespace listaPraticaGrafo
             }
         }
 
+        /// <summary>
+        /// Insere uma nova aresta para os vértices aos quais ela está ligada.
+        /// Se os vértices não estão no grafo, eles são inseridos no grafo.
+        /// </summary>
+        /// <param name="aresta"></param>
         public void AddAresta(Aresta aresta)
         {
             if (aresta != null && aresta.getVertice1 != null && aresta.getVertice2 != null)
@@ -275,8 +254,6 @@ namespace listaPraticaGrafo
 
                 if (!this.Contem(v1)) this.vertices.Add(v1);
                 if (!this.Contem(v2)) this.vertices.Add(v2);
-
-                this.num_arestas++;
 
                 v1.AddAresta(aresta);
                 v2.AddAresta(aresta);
@@ -310,7 +287,6 @@ namespace listaPraticaGrafo
                 Vertice vertice2;
                 List<Vertice> verticesLimpar = new List<Vertice>();
 
-                this.DiminuirArestas(v1);
                 foreach (Aresta aresta in v1.GetArestas())
                 {
                     vertice1 = aresta.GetVertices()[0];
@@ -338,6 +314,11 @@ namespace listaPraticaGrafo
             return null;
         }
 
+        /// <summary>
+        /// Gera um grafo pelo método Prim iniciando pelo vértice passado 
+        /// por referência(caso ele exista no grafo)
+        /// </summary>
+        /// <returns></returns>
         public IGrafo GetAGMPrim(Vertice v1)
         {
             Grafo subgrafo = new Grafo();
@@ -349,6 +330,11 @@ namespace listaPraticaGrafo
             return subgrafo;
         }
 
+        /// <summary>
+        /// Gera um grafo pelo método Prim iniciando pelo primeiro vértice
+        /// do grafo
+        /// </summary>
+        /// <returns></returns>
         public IGrafo GetAGMPrim()
         {
             Grafo subgrafo = new Grafo();
@@ -358,6 +344,11 @@ namespace listaPraticaGrafo
             return subgrafo;
         }
 
+        /// <summary>
+        /// Método recursivo para caminhar no grafo e gerar a arvore pelo método Prim
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="grafo"></param>
         private void AGMPrimUtil(Vertice v1, Grafo grafo)
         {
             if (!v1.FoiVisitado())
