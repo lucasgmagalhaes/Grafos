@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using listaPraticaGrafo.Arquitetura.Interfaces;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
@@ -10,7 +6,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
     /// <summary>
     /// Representa o valor que o vértice possui
     /// </summary>
-    class Informacao : IDado
+    public class Informacao : IDado
     {
         private int valor;
 

@@ -39,6 +39,12 @@ namespace listaPraticaGrafo
             }
         }
 
+        public Grafo(string[] arquivo)
+        {
+            this.vertices = new List<Vertice>();
+            this.GerarGrafo(arquivo);
+        }
+
         public Grafo(List<Vertice> lstVertices)
         {
             this.Init();
@@ -165,7 +171,6 @@ namespace listaPraticaGrafo
                     }
                 }
             }
-            this.CalcularArestas();
         }
 
         /// <summary>

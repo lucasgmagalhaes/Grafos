@@ -77,14 +77,8 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             if (this.arestas.Contains(aresta))
             {
                 List<Vertice> vertices = aresta.GetVertices();
-                if (vertices[0] == this)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 1;
-                }
+                if (vertices[0] == this) return -1;
+                else return 1;
             }
             return null;
         }
