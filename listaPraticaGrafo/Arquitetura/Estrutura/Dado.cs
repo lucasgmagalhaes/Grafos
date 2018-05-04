@@ -1,30 +1,34 @@
-﻿using System;
-using listaPraticaGrafo.Arquitetura.Interfaces;
+﻿using listaPraticaGrafo.Arquitetura.Interfaces;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     /// <summary>
     /// Representa o valor que o vértice possui
     /// </summary>
-    public class Informacao : IDado
+    public class Dado : IDado
     {
         private int valor;
 
-        public Informacao(int valor)
+        public Dado(int valor)
         {
             this.valor = valor;
         }
 
         public int CompareTo(IDado other)
         {
-            throw new NotImplementedException();
+            Dado comparador = (Dado)other;
+            int valor = (int)other.GetValor();
+
+            if (valor < this.valor) return -1;
+            else if (valor > this.valor) return 1;
+            else return 0;
         }
 
         public bool Equals(IDado other)
         {
             try
             {
-                Informacao comparador = (Informacao)other;
+                Dado comparador = (Dado)other;
                 return ((int)comparador.GetValor() == this.valor);
             }
             catch

@@ -114,5 +114,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <param name="vertice"></param>
         /// <returns></returns>
         bool isAdjacenteDe(Vertice vertice);
+
+        Aresta GetMenorArestaNaoVisitada();
     }
 }

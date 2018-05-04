@@ -1,6 +1,7 @@
 ﻿using System;
 using listaPraticaGrafo.Arquitetura.Interfaces;
 using listaPraticaGrafo.Arquitetura.Estrutura;
+using System.Collections.Generic;
 
 namespace listaPraticaGrafo
 {
@@ -9,6 +10,33 @@ namespace listaPraticaGrafo
     /// </summary>
     public class Digrafo : Grafo, IDigrafo
     {
+        public Digrafo()
+        {
+            base.Init();
+            base.vertices = new List<VerticeDirigido>();
+        }
+
+        public Digrafo(int numero_vertices)
+        {
+            for (int i = 0; i < numero_vertices; i++)
+            {
+                base.vertices = new List<VerticeDirigido>();
+            }
+        }
+
+        public Digrafo(string[] arquivo)
+        {
+            base.vertices = new List<VerticeDirigido>();
+            base.GerarGrafo(arquivo);
+        }
+
+        public Digrafo(List<VerticeDirigido> lstVertices)
+        {
+            base.Init();
+            base.vertices = lstVertices;
+            base.CalcularArestas();
+        }
+
         public int GetGrauEntrada(Vertice v1)
         {
             throw new NotImplementedException();

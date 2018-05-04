@@ -6,6 +6,9 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
 {
     public interface IAresta : IEquatable<IAresta>
     {
+
+        Vertice getVertice1 { get; }
+        Vertice getVertice2 { get; }
         /// <summary>
         /// Verifica se uma aresta é igual a outra por meio dos seus vértices
         /// e peso

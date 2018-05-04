@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using listaPraticaGrafo.Arquitetura.Interfaces;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
-    class ArestaDirigida : Aresta
+    class ArestaDirigida : Aresta, IArestaDirigida
     {
         public ArestaDirigida(Vertice origem, Vertice destino) : base(origem, destino)
         {
