@@ -1,5 +1,4 @@
 using listaPraticaGrafo.Arquitetura.Enum;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +8,8 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     public class Vertice : IVertice
     {
-        private List<Aresta> arestas;
-        private IDado dado;
+        protected List<Aresta> arestas;
+        protected IDado dado;
         /// <summary>
         /// Usado para realizar os métodos de pesquisa
         /// </summary>
@@ -52,6 +51,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 Vertice vAux = lstAux.Last();
             }
         }
+
         public void LimpaArestas()
         {
             this.arestas = new List<Aresta>();
@@ -127,6 +127,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             return this.dado.GetValor();
         }
+
         public void SetVisitado(bool visita)
         {
             this.visitado = visita;

@@ -65,7 +65,7 @@ namespace listaPraticaGrafo
             }
         }
 
-        private void Init()
+        protected void Init()
         {
             this.componentes = 0;
         }
@@ -75,7 +75,7 @@ namespace listaPraticaGrafo
         /// o vértice passado no parâmetro possui
         /// </summary>
         /// <param name="vertice"></param>
-        private int CalcularArestas(IVertice vertice)
+        protected int CalcularArestas(IVertice vertice)
         {
             int num_arestas = 0;
             return num_arestas += vertice.GetArestas().Count;
@@ -87,7 +87,7 @@ namespace listaPraticaGrafo
         /// a lista de vértices passado no parâmetro possui
         /// </summary>
         /// <param name="vertice"></param>
-        private int CalcularArestas(List<Vertice> vertices)
+        protected int CalcularArestas(List<Vertice> vertices)
         {
             int num_arestas = 0;
             foreach (Vertice vertice in vertices)
@@ -102,7 +102,7 @@ namespace listaPraticaGrafo
         /// a lista de vértices o grafo possui
         /// </summary>
         /// <param name="vertice"></param>
-        private int CalcularArestas()
+        protected int CalcularArestas()
         {
             int num_arestas = 0;
             foreach (Vertice vertice in this.vertices)
@@ -129,7 +129,7 @@ namespace listaPraticaGrafo
         {
             if (arquivo != null)
             {
-                Informacao conteudo;
+                Dado conteudo;
                 Vertice vertice, novoVertice;
                 Aresta aresta;
                 string[] lineSplit;
@@ -139,16 +139,16 @@ namespace listaPraticaGrafo
                     try
                     {
                         lineSplit = arquivo[i].Split(';');
-                        conteudo = new Informacao(int.Parse(lineSplit[0]));
+                        conteudo = new Dado(int.Parse(lineSplit[0]));
 
                         if (this.Contem(conteudo)) vertice = this.GetVertice(conteudo);
                         else
                         {
-                            vertice = new Vertice(new Informacao(int.Parse(lineSplit[0])));
+                            vertice = new Vertice(new Dado(int.Parse(lineSplit[0])));
                             this.vertices.Add(vertice);
                         }
 
-                        conteudo = new Informacao(int.Parse(lineSplit[1]));
+                        conteudo = new Dado(int.Parse(lineSplit[1]));
 
                         if (this.Contem(conteudo))
                         {
@@ -290,7 +290,7 @@ namespace listaPraticaGrafo
         /// Remove os valores nulos da lista de arestas dos vértices que fazem ligação com aquele passado no parâmetro.
         /// </summary>
         /// <param name="v1"></param>
-        private void LimparArestas(Vertice v1)
+        protected void LimparArestas(Vertice v1)
         {
             if (v1 != null)
             {
@@ -378,7 +378,7 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="v1"></param>
         /// <param name="grafo"></param>
-        private void AGMPrimUtil(Vertice v1, Grafo grafo, StringBuilder builder)
+        protected void AGMPrimUtil(Vertice v1, Grafo grafo, StringBuilder builder)
         {
             if (!v1.FoiVisitado())
             {
@@ -624,7 +624,7 @@ namespace listaPraticaGrafo
             }
         }
 
-        private void Visitar(IVertice vertice)
+        protected void Visitar(Vertice vertice)
         {
             vertice.AtualizarCor();
             foreach (Vertice vertice2 in vertice.GetAdjacentes())
@@ -637,7 +637,7 @@ namespace listaPraticaGrafo
             vertice.AtualizarCor();
         }
 
-        private void Visitar(IVertice v, List<Aresta> a)
+        protected void Visitar(Vertice v, List<Aresta> a)
         {
             if (v != null && a != null)
             {
@@ -761,7 +761,7 @@ namespace listaPraticaGrafo
         /// <summary>
         /// Define a cor de todos os vértices do grafo como BRANCO.
         /// </summary>
-        private void ResetarCorDosVertices()
+        protected void ResetarCorDosVertices()
         {
             foreach (Vertice vertice in this.vertices)
             {
