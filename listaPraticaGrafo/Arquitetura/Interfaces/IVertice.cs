@@ -43,13 +43,6 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         IDado GetDado();
 
         /// <summary>
-        /// Retorna a direção em que uma aresta aponta
-        /// </summary>
-        /// <param name="aresta"></param>
-        /// <returns></returns>
-        object GetDirecao(Aresta aresta);
-
-        /// <summary>
         /// Retorna a lista de todas as arestas do vértice
         /// </summary>
         /// <returns></returns>

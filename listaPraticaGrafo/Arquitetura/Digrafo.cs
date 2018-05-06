@@ -13,24 +13,24 @@ namespace listaPraticaGrafo
         public Digrafo()
         {
             base.Init();
-            base.vertices = new List<VerticeDirigido>();
+            base.vertices = new List<Vertice>();
         }
 
         public Digrafo(int numero_vertices)
         {
             for (int i = 0; i < numero_vertices; i++)
             {
-                base.vertices = new List<VerticeDirigido>();
+                base.vertices = new List<Vertice>();
             }
         }
 
         public Digrafo(string[] arquivo)
         {
-            base.vertices = new List<VerticeDirigido>();
+            base.vertices = new List<Vertice>();
             base.GerarGrafo(arquivo);
         }
 
-        public Digrafo(List<VerticeDirigido> lstVertices)
+        public Digrafo(List<Vertice> lstVertices)
         {
             base.Init();
             base.vertices = lstVertices;

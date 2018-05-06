@@ -45,9 +45,9 @@
   <ItemGroup>
     <Compile Include="Arquitetura\Enum\Cor.cs" />
     <Compile Include="Arquitetura\Estrutura\Aresta.cs" />
+    <Compile Include="Arquitetura\Estrutura\ArestaBase.cs" />
     <Compile Include="Arquitetura\Estrutura\ArestaDirigida.cs" />
     <Compile Include="Arquitetura\Estrutura\Dado.cs" />
-    <Compile Include="Arquitetura\Estrutura\teste.cs" />
     <Compile Include="Arquitetura\Estrutura\VerticeDirigido.cs" />
     <Compile Include="Arquitetura\Interfaces\IAresta.cs" />
     <Compile Include="Arquitetura\Interfaces\IArestaDirigida.cs" />
