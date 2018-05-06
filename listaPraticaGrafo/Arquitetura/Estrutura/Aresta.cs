@@ -47,5 +47,18 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 else return null;
             }
         }
+
+        public Vertice GetVerticeDiferente(Vertice vertice)
+        {
+            if (this.vertice1 == vertice)
+            {
+                return this.vertice2;
+            }
+            else if (this.vertice2 == vertice)
+            {
+                return this.vertice1;
+            }
+            return null;
+        }
     }
 }
