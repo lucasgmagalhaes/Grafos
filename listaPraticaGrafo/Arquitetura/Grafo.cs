@@ -508,7 +508,7 @@ namespace listaPraticaGrafo
                 }
 
                 // Update low value of u for parent function calls.
-                else if (v.isAdjacenteDe(this.vertices[u])) low[u] = Math.Min(low[u], disc[index]);
+                else if (v.IsAdjacente(this.vertices[u])) low[u] = Math.Min(low[u], disc[index]);
             }
         }
 

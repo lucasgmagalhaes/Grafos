@@ -8,7 +8,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
     {
         public VerticeDirigido(IDado dado, List<Aresta> arestas) : base(dado, arestas)
         {
-            this.validarArestas(arestas);
+            this.ValidarArestas(arestas);
             this.dado = dado;
             this.arestas = new List<ArestaBase>();
             this.arestas.AddRange(arestas);
@@ -20,7 +20,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// da classe Arestadirida
         /// </summary>
         /// <param name="arestas"></param>
-        private void validarArestas(List<Aresta> arestas)
+        private void ValidarArestas(List<Aresta> arestas)
         {
             foreach (Aresta item in arestas)
             {

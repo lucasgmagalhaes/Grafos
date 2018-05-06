@@ -49,7 +49,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// </summary>
         /// <param name="vertice">vertice</param>
         /// <returns></returns>
-        public Vertice GetVerticeDiferente(Vertice vertice)
+        public Vertice GetVerticeDiferente(VerticeBase vertice)
         {
             if (this.vertice1 == vertice)
             {

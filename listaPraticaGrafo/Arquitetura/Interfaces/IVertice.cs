@@ -52,7 +52,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// ?????????????????????????????
         /// </summary>
         /// <returns></returns>
-        Vertice GetVerticeChefe();
+        VerticeBase GetVerticeChefe();
 
         /// <summary>
         /// Verifica se o vértice já foi visitado
@@ -106,7 +106,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// </summary>
         /// <param name="vertice"></param>
         /// <returns></returns>
-        bool isAdjacenteDe(Vertice vertice);
+        bool IsAdjacente(Vertice vertice);
 
         Aresta GetMenorArestaNaoVisitada();
     }
