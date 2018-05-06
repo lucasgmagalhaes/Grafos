@@ -17,13 +17,16 @@ namespace listaPraticaGrafo
             LeitorArquivo leitor = new LeitorArquivo();
             string[] linhas = leitor.lerArquivo("grafo.txt");
             Grafo grafo = new Grafo();
-            //grafo.GerarGrafo(linhas);
+            grafo.GerarGrafo(linhas);
 
             Aresta a = new Aresta(null, null, 10);
             Console.WriteLine(a.GetPeso());
             //grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
             //Console.WriteLine(grafo.GetAGMPrimFormatado());
             //Console.CursorVisible = false;
+
+            Console.WriteLine(grafo.GetComplementar().ToString());
+
             Console.ReadKey();
 
         }
