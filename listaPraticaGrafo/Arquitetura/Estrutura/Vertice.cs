@@ -1,5 +1,4 @@
 using listaPraticaGrafo.Arquitetura.Enum;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +8,8 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     public class Vertice : IVertice
     {
-        private List<Aresta> arestas;
-        private IDado dado;
+        protected List<ArestaBase> arestas;
+        protected IDado dado;
         /// <summary>
         /// Usado para realizar os métodos de pesquisa
         /// </summary>
@@ -23,13 +22,14 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             this.dado = dados;
             this.visitado = false;
-            this.arestas = new List<Aresta>();
+            this.arestas = new List<ArestaBase>();
         }
 
         public Vertice(IDado dado, List<Aresta> arestas)
         {
             this.dado = dado;
-            this.arestas = arestas;
+            this.arestas = new List<ArestaBase>();
+            this.arestas.AddRange(arestas);
             this.visitado = false;
         }
 
@@ -48,13 +48,12 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             if (!this.Contem(aresta))
             {
                 this.arestas.Add(aresta);
-                List<Vertice> lstAux = aresta.GetVertices();
-                Vertice vAux = lstAux.Last();
             }
         }
+
         public void LimpaArestas()
         {
-            this.arestas = new List<Aresta>();
+            this.arestas = new List<ArestaBase>();
         }
 
         public int GetGrau()
@@ -65,22 +64,6 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public IDado GetDado()
         {
             return this.dado;
-        }
-
-        /// <summary>
-        /// Retorna a direção em que uma aresta aponta
-        /// </summary>
-        /// <param name="aresta"></param>
-        /// <returns></returns>
-        public object GetDirecao(Aresta aresta)
-        {
-            if (this.arestas.Contains(aresta))
-            {
-                List<Vertice> vertices = aresta.GetVertices();
-                if (vertices[0] == this) return -1;
-                else return 1;
-            }
-            return null;
         }
 
         public override string ToString()
@@ -105,13 +88,13 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public string ToStringComArestas()
         {
             StringBuilder retorno = new StringBuilder();
-            this.arestas.ForEach(delegate (Aresta aresta) { retorno.AppendLine(aresta.ToString()); });
+            this.arestas.ForEach(delegate (ArestaBase aresta) { retorno.AppendLine(aresta.ToString()); });
             return retorno.ToString();
         }
 
         public List<Aresta> GetArestas()
         {
-            return this.arestas;
+            return this.arestas.ConvertAll(aresta => new Aresta(aresta.GetVertices()[0], aresta.GetVertices()[1]));
         }
 
         public Vertice GetVerticeChefe()
@@ -127,6 +110,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             return this.dado.GetValor();
         }
+
         public void SetVisitado(bool visita)
         {
             this.visitado = visita;

@@ -45,9 +45,12 @@
   <ItemGroup>
     <Compile Include="Arquitetura\Enum\Cor.cs" />
     <Compile Include="Arquitetura\Estrutura\Aresta.cs" />
+    <Compile Include="Arquitetura\Estrutura\ArestaBase.cs" />
     <Compile Include="Arquitetura\Estrutura\ArestaDirigida.cs" />
-    <Compile Include="Arquitetura\Estrutura\Informacao.cs" />
+    <Compile Include="Arquitetura\Estrutura\Dado.cs" />
+    <Compile Include="Arquitetura\Estrutura\VerticeDirigido.cs" />
     <Compile Include="Arquitetura\Interfaces\IAresta.cs" />
+    <Compile Include="Arquitetura\Interfaces\IArestaDirigida.cs" />
     <Compile Include="Arquitetura\Interfaces\IDado.cs" />
     <Compile Include="Arquitetura\Estrutura\Vertice.cs" />
     <Compile Include="Arquitetura\Grafo.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="Arquitetura\Interfaces\IGrafo.cs" />
     <Compile Include="Arquitetura\Interfaces\IDigrafo.cs" />
     <Compile Include="Arquitetura\Interfaces\IVertice.cs" />
+    <Compile Include="Arquitetura\Interfaces\IVerticeDirigido.cs" />
     <Compile Include="LeitorArquivo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
