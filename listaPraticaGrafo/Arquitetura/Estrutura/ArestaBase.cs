@@ -44,6 +44,8 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// 
         /// <para>Tendo uma aresta dois vértices, A e B, passando A no parâmetro do método, este irá 
         /// retornar B, e vice versa.</para>
+        /// É retornado null caso o vértice no parâmetro seja igual aos dois vértices da aresta
+        /// ou seja, a aresta seja um loop para o vértice
         /// </summary>
         /// <param name="vertice">vertice</param>
         /// <returns></returns>

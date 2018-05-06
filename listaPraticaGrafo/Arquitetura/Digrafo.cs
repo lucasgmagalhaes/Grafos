@@ -37,19 +37,26 @@ namespace listaPraticaGrafo
             base.CalcularArestas();
         }
 
-        public int GetGrauEntrada(Vertice v1)
+        public int GetGrauEntrada(VerticeDirigido v1)
         {
-            throw new NotImplementedException();
+            return v1.GetGrauEntrada();
         }
 
-        public int GetGrauSaida(Vertice v1)
+        public int GetGrauSaida(VerticeDirigido v1)
         {
-            throw new NotImplementedException();
+            return v1.GetGrauSaida();
         }
 
         public bool HasCiclo()
         {
-            throw new NotImplementedException();
+            foreach(VerticeDirigido vertice in base.vertices)
+            {
+                if (vertice.TemCiclos())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

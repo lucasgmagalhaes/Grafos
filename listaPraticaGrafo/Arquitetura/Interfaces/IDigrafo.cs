@@ -15,14 +15,14 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
-        int GetGrauEntrada(Vertice v1);
+        int GetGrauEntrada(VerticeDirigido v1);
 
         /// <summary>
         /// Retorna o número de vértices que vértice passado por parâmetro incide
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
-        int GetGrauSaida(Vertice v1);
+        int GetGrauSaida(VerticeDirigido v1);
 
         /// <summary>
         /// Retorna TRUE caso o grafo possua vértices que possuam areas com eles mesmo
