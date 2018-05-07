@@ -417,7 +417,7 @@ namespace listaPraticaGrafo
 
             for (int i = 0; i < somaIndice.Length; i++) // adiciona a aresta de menor soma na lista de segundo empate
             {
-                if(menorSoma == somaIndice.Length)
+                if(menorSoma == somaIndice[i])
                     segundoEmpate.Add(arestas[i]);
             }
 
