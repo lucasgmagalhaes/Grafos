@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +17,20 @@ namespace listaPraticaGrafo
             LeitorArquivo leitor = new LeitorArquivo();
             string[] linhas = leitor.lerArquivo("grafo.txt");
             Grafo grafo = new Grafo();
-            grafo.GerarGrafo(linhas);
+            //grafo.GerarGrafo(linhas);
 
             grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
             //Console.WriteLine(grafo.GetAGMPrimFormatado());
-            //Console.CursorVisible = false;
 
-            Console.WriteLine(grafo.ToStringSimplesSemEspaco());
+            Console.WriteLine(grafo.ToString());
 
+            StringBuilder str;
+            IGrafo agm = grafo.GetAGMKruskal(out str);
+
+            Console.WriteLine("\n\nOrdem de Kruskal = " + str);
+            Console.WriteLine("\nKruskal:\n" + agm.ToString());
+
+            Console.CursorVisible = false;
             Console.ReadKey();
 
         }
