@@ -130,50 +130,56 @@ namespace listaPraticaGrafo
         /// 
         /// </summary>
         /// <param name="arquivo"></param>
-        public void GerarGrafo(string[] arquivo)
+        public virtual void GerarGrafo(string[] arquivo)
         {
-            if (arquivo != null)
+            if (arquivo == null)
             {
-                Dado conteudo;
-                Vertice vertice, novoVertice;
-                Aresta aresta;
-                string[] lineSplit;
+                throw new Exception("Arquivo não possui valor");
+            }
+            else if (arquivo[0].Split(';').Length != 3)
+            {
+                throw new Exception("Arquivo não está no formato adequado para gerar um grafo");
+            }
 
-                for (int i = 1; i < arquivo.Length; i++)
+            Dado conteudo;
+            Vertice vertice, novoVertice;
+            Aresta aresta;
+            string[] lineSplit;
+
+            for (int i = 1; i < arquivo.Length; i++)
+            {
+                try
                 {
-                    try
+                    lineSplit = arquivo[i].Split(';');
+                    conteudo = new Dado(int.Parse(lineSplit[0]));
+
+                    if (this.Contem(conteudo)) vertice = (Vertice)this.GetVertice(conteudo);
+                    else
                     {
-                        lineSplit = arquivo[i].Split(';');
-                        conteudo = new Dado(int.Parse(lineSplit[0]));
-
-                        if (this.Contem(conteudo)) vertice = this.GetVertice(conteudo);
-                        else
-                        {
-                            vertice = new Vertice(new Dado(int.Parse(lineSplit[0])));
-                            this.vertices.Add(vertice);
-                        }
-
-                        conteudo = new Dado(int.Parse(lineSplit[1]));
-
-                        if (this.Contem(conteudo))
-                        {
-                            novoVertice = this.GetVertice(conteudo);
-                            aresta = new Aresta(vertice, novoVertice, int.Parse(lineSplit[2]));
-                        }
-                        else
-                        {
-                            novoVertice = new Vertice(conteudo);
-                            aresta = new Aresta(vertice, novoVertice, int.Parse(lineSplit[2]));
-                            this.vertices.Add(novoVertice);
-                        }
-
-                        vertice.AddAresta(aresta);
-                        novoVertice.AddAresta(aresta);
+                        vertice = new Vertice(new Dado(int.Parse(lineSplit[0])));
+                        this.vertices.Add(vertice);
                     }
-                    catch (Exception e)
+
+                    conteudo = new Dado(int.Parse(lineSplit[1]));
+
+                    if (this.Contem(conteudo))
                     {
-                        throw new Exception("Arquivo possui conteúdo inválido para leitura " + e.Message);
+                        novoVertice = (Vertice)this.GetVertice(conteudo);
+                        aresta = new Aresta(vertice, novoVertice, int.Parse(lineSplit[2]));
                     }
+                    else
+                    {
+                        novoVertice = new Vertice(conteudo);
+                        aresta = new Aresta(vertice, novoVertice, int.Parse(lineSplit[2]));
+                        this.vertices.Add(novoVertice);
+                    }
+
+                    vertice.AddAresta(aresta);
+                    novoVertice.AddAresta(aresta);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Arquivo possui conteúdo inválido para leitura " + e.Message);
                 }
             }
         }
@@ -184,11 +190,11 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="dado"></param>
         /// <returns></returns>
-        public Vertice GetVertice(IDado dado)
+        public VerticeBase GetVertice(IDado dado)
         {
             if (dado != null)
             {
-                foreach (Vertice vertice in this.vertices)
+                foreach (VerticeBase vertice in this.vertices)
                 {
                     if (vertice.GetDado().Equals(dado))
                     {
@@ -388,7 +394,7 @@ namespace listaPraticaGrafo
                 Vertice p_vertice;
 
                 v1.SetVisitado(true);
-                proxima = v1.GetMenorArestaNaoVisitada();
+                proxima = (Aresta)v1.GetMenorArestaNaoVisitada();
 
                 if (proxima != null)
                 {
@@ -794,7 +800,7 @@ namespace listaPraticaGrafo
         public string ToStringSimplesSemEspaco()
         {
             StringBuilder builder = new StringBuilder();
-            foreach(Vertice vertice in this.vertices)
+            foreach (Vertice vertice in this.vertices)
             {
                 builder.Append(vertice.ToStringComArestasSemEspaco());
             }

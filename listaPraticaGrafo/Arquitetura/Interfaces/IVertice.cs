@@ -24,7 +24,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// Insere uma nova aresta na lista de arestas do vértice
         /// </summary>
         /// <param name="aresta"></param>
-        void AddAresta(Aresta aresta);
+        void AddAresta(ArestaBase aresta);
         /// <summary>
         /// Remove todas as arestas do vértice
         /// </summary>
@@ -100,8 +100,8 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// </summary>
         /// <param name="vertice"></param>
         /// <returns></returns>
-        bool IsAdjacente(Vertice vertice);
+        bool IsAdjacente(VerticeBase vertice);
 
-        Aresta GetMenorArestaNaoVisitada();
+        ArestaBase GetMenorArestaNaoVisitada();
     }
 }

@@ -43,7 +43,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// Não permite a inserção de arestas repetidas
         /// </summary>
         /// <param name="aresta"></param>
-        public void AddAresta(Aresta aresta)
+        public void AddAresta(ArestaBase aresta)
         {
             if (!this.Contem(aresta))
             {
@@ -160,10 +160,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// Faz a busca da aresta de menor peso do vertice
         /// </summary>
         /// <returns>Retorna aresta de menor peso</returns>
-        public Aresta GetMenorAresta()
+        public ArestaBase GetMenorAresta()
         {
-            Aresta aMenor = null;
-            foreach (Aresta aItem in this.arestas)
+            ArestaBase aMenor = null;
+            foreach (ArestaBase aItem in this.arestas)
             {
                 if (aMenor == null || aItem.GetPeso() < aMenor.GetPeso()) //acha a aresta de menor valor do vertice
                 {
@@ -178,10 +178,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// não foi visitada
         /// </summary>
         /// <returns>Retorna aresta de menor peso</returns>
-        public Aresta GetMenorArestaNaoVisitada()
+        public ArestaBase GetMenorArestaNaoVisitada()
         {
-            Aresta aMenor = null;
-            foreach (Aresta aItem in this.arestas)
+            ArestaBase aMenor = null;
+            foreach (ArestaBase aItem in this.arestas)
             {
                 if (!aItem.FoiVisitado())
                 {
@@ -199,10 +199,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// </summary>
         /// <param name="vertice"></param>
         /// <returns></returns>
-        public bool IsAdjacente(Vertice vertice)
+        public bool IsAdjacente(VerticeBase vertice)
         {
             List<Vertice> adjacentes = this.GetAdjacentes();
-            foreach (Vertice v in adjacentes)
+            foreach (VerticeBase v in adjacentes)
             {
                 if (v.GetDadoValor().Equals(vertice.GetDadoValor()))
                 {
@@ -217,9 +217,9 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// </summary>
         /// <param name="aresta"></param>
         /// <returns></returns>
-        public bool Contem(Aresta aresta)
+        public bool Contem(ArestaBase aresta)
         {
-            foreach (Aresta aresta1 in this.arestas)
+            foreach (ArestaBase aresta1 in this.arestas)
             {
                 if (aresta1.Equals(aresta))
                 {
@@ -231,7 +231,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public bool TemCiclos()
         {
-            foreach (Aresta aresta in this.arestas)
+            foreach (ArestaBase aresta in this.arestas)
             {
                 if (aresta.GetVerticeDiferente(this) == null)
                 {

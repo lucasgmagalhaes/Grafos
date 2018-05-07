@@ -6,6 +6,13 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
     public class VerticeDirigido : Vertice, IVerticeDirigido
     {
+        public VerticeDirigido(IDado dado) : base(dado)
+        {
+            this.dado = dado;
+            this.arestas = new List<ArestaBase>();
+            this.arestas.AddRange(arestas);
+            this.visitado = false;
+        }
         public VerticeDirigido(IDado dado, List<Aresta> arestas) : base(dado, arestas)
         {
             this.ValidarArestas(arestas);
