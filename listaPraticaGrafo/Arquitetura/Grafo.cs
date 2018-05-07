@@ -52,6 +52,11 @@ namespace listaPraticaGrafo
             this.CalcularArestas();
         }
 
+        public List<Vertice> GetVertices()
+        {
+            return this.vertices;
+        }
+
         /// <summary>
         /// Define a variável "visitado" de cada vértice como false
         /// </summary>
@@ -784,6 +789,16 @@ namespace listaPraticaGrafo
                 retorno.AppendLine();
             }
             return retorno.ToString();
+        }
+
+        public string ToStringSimplesSemEspaco()
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach(Vertice vertice in this.vertices)
+            {
+                builder.Append(vertice.ToStringComArestasSemEspaco());
+            }
+            return builder.ToString();
         }
     }
 }

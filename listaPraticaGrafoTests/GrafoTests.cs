@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using listaPraticaGrafo.utils;
+using listaPraticaGrafo.Arquitetura.Interfaces;
 using listaPraticaGrafo.Arquitetura.Estrutura;
+using System.Collections.Generic;
 
 namespace listaPraticaGrafo.Tests
 {
@@ -8,10 +10,12 @@ namespace listaPraticaGrafo.Tests
     public class GrafoTests
     {
         private readonly Grafo grafo = new Grafo(FileArray.GRAFO1_NAO_DIRIGIDO);
+        private readonly Digrafo digrafo = new Digrafo(FileArray.GRAFO01_DIRIGIDO);
 
         [TestMethod()]
         public void GerarGrafoTest()
         {
+            string grafoString = this.grafo.ToString();
             Assert.Fail();
         }
 
@@ -42,8 +46,8 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsPendenteTest()
         {
-            //Vertice vertice = new Vertice(new Informacao(10));
-            //Assert.IsFalse(this.grafo.IsPendente(vertice));
+            Vertice vertice = new Vertice(new Dado(10));
+            Assert.IsFalse(this.grafo.IsPendente(vertice));
         }
 
         [TestMethod()]
@@ -55,8 +59,8 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsIsoladoTest()
         {
-            //Vertice vertice = new Vertice(new Informacao(10));
-            //Assert.IsTrue(this.grafo.IsIsolado(vertice));
+            Vertice vertice = new Vertice(new Dado(10));
+            Assert.IsTrue(this.grafo.IsIsolado(vertice));
         }
 
         [TestMethod()]
@@ -68,25 +72,27 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsConexoTest()
         {
-            Assert.Fail();
+            Assert.IsTrue(this.grafo.IsConexo());
         }
 
         [TestMethod()]
         public void IsCompletoTest()
         {
-            Assert.Fail();
+            Assert.IsTrue(this.grafo.IsCompleto());
         }
 
         [TestMethod()]
         public void IsAdjacenteTest()
         {
-            Assert.Fail();
+            bool val = this.grafo.IsAdjacente(this.grafo.GetVertices()[0], this.grafo.GetVertices()[1]);
+            Assert.IsTrue(val);
         }
 
         [TestMethod()]
         public void GetGrauTest()
         {
-            Assert.Fail();
+            List<Vertice> lista = this.grafo.GetVertices();
+            Assert.AreEqual(2, this.grafo.GetGrau(lista[0]));
         }
 
         [TestMethod()]

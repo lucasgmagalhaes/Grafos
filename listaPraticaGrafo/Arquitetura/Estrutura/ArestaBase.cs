@@ -76,9 +76,27 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             this.visitada = visita;
         }
 
+        /// <summary>
+        /// Formado a - a; Peso x
+        /// <para> a = aresta </para>
+        /// <para> x = peso </para>
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("{0} - {1} ; Peso {2}", this.vertice1.GetDadoValor(), this.vertice2.GetDadoValor(),
+                    this.peso);
+        }
+
+        /// <summary>
+        /// Formato: a-a;x
+        /// <para> a = aresta </para>
+        /// <para> x = peso </para>
+        /// </summary>
+        /// <returns></returns>
+        public string ToStringSemEspaco()
+        {
+            return string.Format("{0}-{1};{2}", this.vertice1.GetDadoValor(), this.vertice2.GetDadoValor(),
                     this.peso);
         }
 

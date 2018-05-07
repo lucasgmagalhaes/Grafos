@@ -92,6 +92,13 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return retorno.ToString();
         }
 
+        public string ToStringComArestasSemEspaco()
+        {
+            StringBuilder retorno = new StringBuilder();
+            this.arestas.ForEach(delegate (ArestaBase aresta) { retorno.Append(aresta.ToStringSemEspaco() + " "); });
+            return retorno.ToString();
+        }
+
         public List<Aresta> GetArestas()
         {
             return this.arestas.ConvertAll(aresta => new Aresta(aresta.GetVertices()[0], aresta.GetVertices()[1]));

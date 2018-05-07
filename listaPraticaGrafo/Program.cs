@@ -19,13 +19,11 @@ namespace listaPraticaGrafo
             Grafo grafo = new Grafo();
             grafo.GerarGrafo(linhas);
 
-            Aresta a = new Aresta(null, null, 10);
-            Console.WriteLine(a.GetPeso());
-            //grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
+            grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
             //Console.WriteLine(grafo.GetAGMPrimFormatado());
             //Console.CursorVisible = false;
 
-            Console.WriteLine(grafo.GetComplementar().ToString());
+            Console.WriteLine(grafo.ToStringSimplesSemEspaco());
 
             Console.ReadKey();
 
