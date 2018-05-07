@@ -19,16 +19,18 @@ namespace listaPraticaGrafo
             Grafo grafo = new Grafo();
             //grafo.GerarGrafo(linhas);
 
-            grafo.GerarGrafo(FileArray.GRAFO1_NAO_DIRIGIDO);
-            //Console.WriteLine(grafo.GetAGMPrimFormatado());
+            grafo.GerarGrafo(FileArray.GRAFO2_NAO_DIRIGIDO);
 
             Console.WriteLine(grafo.ToString());
 
             StringBuilder str;
-            IGrafo agm = grafo.GetAGMKruskal(out str);
+            IGrafo agm = grafo.GetAGMPrim(out str);
 
-            Console.WriteLine("\n\nOrdem de Kruskal = " + str);
-            Console.WriteLine("\nKruskal:\n" + agm.ToString());
+            //Console.WriteLine("\n\nOrdem de Kruskal = " + str);
+            //Console.WriteLine("\nKruskal:\n" + agm.ToString());
+
+            Console.WriteLine("\n\nOrdem de Prim = " + str);
+            Console.WriteLine("\nPrim:\n" + agm.ToString());
 
             Console.CursorVisible = false;
             Console.ReadKey();
