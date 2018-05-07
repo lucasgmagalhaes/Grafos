@@ -105,7 +105,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// </summary>
         /// <param name="v1">Vértice</param>
         /// <returns></returns>
-        IGrafo GetAGMPrim(Vertice v1);
+        IGrafo GetAGMPrim(Vertice inicial, out StringBuilder ordemInsercaoVertices);
 
         /// <summary>
         /// Esse método deve retornar, para um grafo conexo, sua Árvore Geradora Mínima obtida por meio da aplicação 
