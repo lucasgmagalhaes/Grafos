@@ -84,14 +84,14 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsAdjacenteTest()
         {
-            bool val = this.grafo.IsAdjacente(this.grafo.GetVertices()[0], this.grafo.GetVertices()[1]);
+            bool val = this.grafo.IsAdjacente(this.grafo.GetVertices[0], this.grafo.GetVertices[1]);
             Assert.IsTrue(val);
         }
 
         [TestMethod()]
         public void GetGrauTest()
         {
-            List<Vertice> lista = this.grafo.GetVertices();
+            List<Vertice> lista = this.grafo.GetVertices;
             Assert.AreEqual(2, this.grafo.GetGrau(lista[0]));
         }
 
