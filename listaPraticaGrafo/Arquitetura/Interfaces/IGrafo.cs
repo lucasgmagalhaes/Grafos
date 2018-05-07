@@ -1,4 +1,5 @@
 using listaPraticaGrafo.Arquitetura.Estrutura;
+using System.Text;
 
 namespace listaPraticaGrafo.Arquitetura.Interfaces
 {
@@ -109,6 +110,17 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <summary>
         /// Esse método deve retornar, para um grafo conexo, sua Árvore Geradora Mínima obtida por meio da aplicação 
         /// do algoritmo de Kruskal. Nesse método, deve também ser impressa uma linha de saída contendo a origem em que
+        /// o algoritmo de Kruskal inseriu na AGM os vértices do grafo original. Além disso, se tivermos duas arestas com o mesmo peso,
+        /// escolha aquela cuja soma dos índices dos vértices seja menor. Se tivermos um novo empate, escolha aquela
+        /// incidente ao vértice de menor índice.
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <returns></returns>
+        IGrafo GetAGMKruskal(out StringBuilder ordemInsercaoVertices);
+
+        /// <summary>
+        /// Esse método deve retornar, para um grafo conexo, sua Árvore Geradora Mínima obtida por meio da aplicação 
+        /// do algoritmo de Kruskal. Nesse método, deve também ser impressa uma linha de saída contendo a origem em que
         /// o algoritmo de Kruskal inseriu na AGM os vértices do grafo original, sendo que o vértice inicial 
         /// correspondente ao vértice passado como parâmetro. Além disso, se tivermos duas arestas com o mesmo peso,
         /// escolha aquela cuja soma dos índices dos vértices seja menor. Se tivermos um novo empate, escolha aquela
@@ -116,7 +128,7 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
-        IGrafo GetAGMKruskal(Vertice v1);
+        IGrafo GetAGMKruskal(Vertice inicial, out StringBuilder ordemInsercaoVertices);
 
         /// <summary>
         /// 
@@ -152,6 +164,11 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// </summary>
         /// <param name="v1"></param>
         void AddVertice(Vertice v1);
+
+        /// <summary>
+        /// Deve adicionar uma aresta à lista de arestas do grafo
+        /// </summary>
+        void AddAresta(Aresta a);
 
         /// <summary>
         /// Deve remover um vértice da lista vértices do grafo, bem como as arestas que os demais vértices
