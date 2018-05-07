@@ -238,7 +238,7 @@ namespace listaPraticaGrafo
         /// Insere um novo vértice ao grafo
         /// </summary>
         /// <param name="v1"></param>
-        public void AddVertice(Vertice v1)
+        public virtual void AddVertice(Vertice v1)
         {
             if (v1 != null)
             {
@@ -247,14 +247,12 @@ namespace listaPraticaGrafo
             }
         }
 
-
-
         /// <summary>
         /// Insere uma nova aresta para os vértices aos quais ela está ligada.
         /// Se os vértices não estão no grafo, eles são inseridos no grafo.
         /// </summary>
         /// <param name="aresta"></param>
-        public void AddAresta(Aresta aresta)
+        public virtual void AddAresta(Aresta aresta)
         {
             if (aresta != null && aresta.getVertice1 != null && aresta.getVertice2 != null)
             {
@@ -275,7 +273,7 @@ namespace listaPraticaGrafo
         /// Retira um vertice do grafo e define o objeto como nulo
         /// </summary>
         /// <param name="v1"></param>
-        public void RemoverVertice(Vertice v1)
+        public virtual void RemoverVertice(Vertice v1)
         {
             if (v1 != null && this.Contem(v1))
             {
@@ -284,7 +282,6 @@ namespace listaPraticaGrafo
                 v1 = null;
             }
         }
-
 
         /// <summary>
         /// Remove os valores nulos da lista de arestas dos vértices que fazem ligação com aquele passado no parâmetro.

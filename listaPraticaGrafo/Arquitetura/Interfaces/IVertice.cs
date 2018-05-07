@@ -31,12 +31,6 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         void LimpaArestas();
 
         /// <summary>
-        /// Informa o grau do vértice(Quantas arestas ele possui)
-        /// </summary>
-        /// <returns></returns>
-        int GetGrau();
-
-        /// <summary>
         /// Retorna a informção contida no vértice
         /// </summary>
         /// <returns></returns>

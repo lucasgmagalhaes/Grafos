@@ -61,11 +61,6 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             this.arestas = new List<ArestaBase>();
         }
 
-        public int GetGrau()
-        {
-            return this.arestas.Count();
-        }
-
         public IDado GetDado()
         {
             return this.dado;
