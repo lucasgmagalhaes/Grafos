@@ -103,14 +103,15 @@ namespace listaPraticaGrafo
                     if (this.Contem(conteudo))
                     {
                         novoVertice = (VerticeDirigido)this.GetVertice(conteudo);
-                        aresta = new ArestaDirigida(vertice, novoVertice, int.Parse(lineSplit[2]));
                     }
                     else
                     {
                         novoVertice = new VerticeDirigido(conteudo);
-                        aresta = new ArestaDirigida(vertice, novoVertice, int.Parse(lineSplit[2]));
                         this.vertices.Add(novoVertice);
                     }
+
+                    aresta = new ArestaDirigida(vertice, novoVertice, int.Parse(lineSplit[2]));
+                    if (lineSplit[3].Equals("-1")) aresta.TrocarVertices();
 
                     vertice.AddAresta(aresta);
                     novoVertice.AddAresta(aresta);

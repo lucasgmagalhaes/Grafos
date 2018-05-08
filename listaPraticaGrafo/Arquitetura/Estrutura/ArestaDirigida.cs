@@ -25,5 +25,15 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             return base.vertice2;
         }
+
+        /// <summary>
+        /// Inverte os vértices
+        /// </summary>
+        public void TrocarVertices()
+        {
+            Vertice aux = new Vertice(this.vertice2.GetDado());
+            this.vertice2 = this.vertice1;
+            this.vertice1 = aux;
+        }
     }
 }
