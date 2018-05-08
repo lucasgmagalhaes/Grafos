@@ -13,6 +13,7 @@ namespace listaPraticaGrafo
             StringBuilder builder = new StringBuilder();
             Grafo grafo;
 
+            Console.CursorVisible = false;
             Console.Write("Digite o nome do arquivo: ");
             string filename = Console.ReadLine();
 
@@ -25,35 +26,35 @@ namespace listaPraticaGrafo
                 Console.WriteLine("Grafo completo:");
                 Console.WriteLine(grafo.ToString());
 
-                Console.WriteLine("isAdjacente(): vertice1 = " + grafo.GetVertices[0].GetDadoValor()
-                    + "vertice2 = " + grafo.GetVertices[1].GetDadoValor());
+                Console.Write("isAdjacente(): vertice1{" + grafo.GetVertices[0].GetDadoValor()
+                    + "} vertice2{" + grafo.GetVertices[1].GetDadoValor() + "}  ");
                 Console.WriteLine(grafo.IsAdjacente(grafo.GetVertices[0], grafo.GetVertices[1]));
 
-                Console.WriteLine("GetGrau(): vertice1 =  " + grafo.GetVertices[0].GetDadoValor());
+                Console.Write("GetGrau(): vertice1{" + grafo.GetVertices[0].GetDadoValor() + "}  ");
                 Console.WriteLine(grafo.GetGrau(grafo.GetVertices[0]));
 
-                Console.WriteLine("IsIsolado(): vertice1 =  " + grafo.GetVertices[0].GetDadoValor());
+                Console.Write("IsIsolado(): vertice1{" + grafo.GetVertices[0].GetDadoValor() + "}  ");
                 Console.WriteLine(grafo.IsIsolado(grafo.GetVertices[0]).ToString());
 
-                Console.WriteLine("IsPendente(): vertice1 =  " + grafo.GetVertices[0].GetDadoValor());
+                Console.Write("IsPendente(): vertice1{" + grafo.GetVertices[0].GetDadoValor() + "}  ");
                 Console.WriteLine(grafo.IsPendente(grafo.GetVertices[0]).ToString());
 
-                Console.WriteLine("IsRegular()");
+                Console.Write("IsRegular(): ");
                 Console.WriteLine(grafo.IsRegular().ToString());
 
-                Console.WriteLine("IsNulo()");
+                Console.Write("IsNulo(): ");
                 Console.WriteLine(grafo.IsNulo().ToString());
 
-                Console.WriteLine("IsCompleto()");
+                Console.Write("IsCompleto(): ");
                 Console.WriteLine(grafo.IsCompleto().ToString());
 
-                Console.WriteLine("IsConexo()");
+                Console.Write("IsConexo(): ");
                 Console.WriteLine(grafo.IsConexo().ToString());
 
-                Console.WriteLine("IsEuleriano()");
+                Console.Write("IsEuleriano(): ");
                 Console.WriteLine(grafo.IsEuleriano().ToString());
 
-                Console.WriteLine("IsUnicursal()");
+                Console.Write("IsUnicursal(): ");
                 Console.WriteLine(grafo.IsUnicursal().ToString());
 
                 Console.WriteLine("GetComplementar()");
@@ -63,30 +64,28 @@ namespace listaPraticaGrafo
                 Console.WriteLine("Kruskal: ");
                 Console.WriteLine(builder.ToString());
 
-                grafo.GetAGMKruskal(out builder);
-                Console.WriteLine("Kruskal: ");
+                builder.Clear();
+                grafo.GetAGMPrim(out builder)
+                    ;
+                Console.WriteLine("Prim: ");
                 Console.WriteLine(builder.ToString());
-                Console.CursorVisible = false;
-                Console.ReadKey();
-
             }
             else if (Digrafo.IsFileADigrafo(arquivo))
             {
                Digrafo digrafo = new Digrafo(arquivo);
 
-                Console.WriteLine("GetGrauEntrada(): vertice1 = " + digrafo.GetVertices[0].GetDadoValor());
+                Console.Write("GetGrauEntrada(): vertice1{" + digrafo.GetVertices[0].GetDadoValor() + "} ");
                 Console.WriteLine(digrafo.GetGrauEntrada((VerticeDirigido) digrafo.GetVertices[0]));
 
-                Console.WriteLine("GetGrauSaida(): vertice1 = " + digrafo.GetVertices[0].GetDadoValor());
+                Console.Write("GetGrauSaida(): vertice1{" + digrafo.GetVertices[0].GetDadoValor() + "}  ");
                 Console.WriteLine(digrafo.GetGrauSaida((VerticeDirigido)digrafo.GetVertices[0]));
 
-                Console.WriteLine("HasCiclo()");
+                Console.Write("HasCiclo()" + " ");
                 Console.WriteLine(digrafo.HasCiclo());
             }
             else
             {
                 Console.Write("FALHA NA LEITURA DO ARQUIVO");
-                return;
             }
             Console.ReadKey();
         }
