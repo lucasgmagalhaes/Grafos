@@ -101,7 +101,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public List<Aresta> GetArestas()
         {
-            return this.arestas.ConvertAll(aresta => new Aresta(aresta.GetVertices()[0], aresta.GetVertices()[1]));
+            return this.arestas.ConvertAll(aresta => new Aresta(aresta.GetVertices()[0], aresta.GetVertices()[1], aresta.GetPeso()));
         }
  
         public bool FoiVisitado()
