@@ -129,7 +129,7 @@ namespace listaPraticaGrafo
             {
                 throw new Exception("Arquivo não possui valor");
             }
-            else if (arquivo[0].Split(';').Length != 3)
+            else if (arquivo[1].Split(';').Length != 3)
             {
                 throw new Exception("Arquivo não está no formato adequado para gerar um grafo");
             }
