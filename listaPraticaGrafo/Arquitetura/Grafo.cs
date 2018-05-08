@@ -10,18 +10,15 @@ namespace listaPraticaGrafo
     public class Grafo : IGrafo
     {
         protected List<Vertice> vertices;
-        /// <summary>
-        /// Número de componentes do grafo
-        /// </summary>
-        protected int componentes;
-        /// <summary>
-        /// Usado na contagem do tempo de descoberta dos vértices
-        /// </summary>
-        protected int tempo;
-        /// <summary>
-        /// Armazeda o AGMPrim do vértice
-        /// </summary>
-        protected string prim_formato;
+        protected List<Aresta> arestas;
+
+        public List<Vertice> GetVertices { get { return this.vertices; } }
+        public List<Aresta> GetArestas { get { return this.arestas; } }
+
+        protected int componentes; //Número de componentes do grafo
+
+        protected int tempo; //Usado na contagem do tempo de descoberta dos vértices
+
         public int Numero_vertices { get { return this.vertices.Count; } }
         public int Numero_arestas { get { return this.CalcularArestas(); } }
 
@@ -29,6 +26,7 @@ namespace listaPraticaGrafo
         {
             this.Init();
             this.vertices = new List<Vertice>();
+            this.arestas = new List<Aresta>();
         }
 
         public Grafo(int numero_vertices)
@@ -50,11 +48,6 @@ namespace listaPraticaGrafo
             this.Init();
             this.vertices = lstVertices;
             this.CalcularArestas();
-        }
-
-        public List<Vertice> GetVertices()
-        {
-            return this.vertices;
         }
 
         /// <summary>
@@ -249,7 +242,7 @@ namespace listaPraticaGrafo
         /// Insere um novo vértice ao grafo
         /// </summary>
         /// <param name="v1"></param>
-        public virtual void AddVertice(Vertice v1)
+        public void AddVertice(Vertice v1)
         {
             if (v1 != null)
             {
@@ -263,7 +256,7 @@ namespace listaPraticaGrafo
         /// Se os vértices não estão no grafo, eles são inseridos no grafo.
         /// </summary>
         /// <param name="aresta"></param>
-        public virtual void AddAresta(Aresta aresta)
+        public void AddAresta(Aresta aresta)
         {
             if (aresta != null && aresta.getVertice1 != null && aresta.getVertice2 != null)
             {
@@ -277,6 +270,7 @@ namespace listaPraticaGrafo
 
                 v1.AddAresta(aresta);
                 v2.AddAresta(aresta);
+                this.arestas.Add(aresta);
             }
         }
 
@@ -284,7 +278,7 @@ namespace listaPraticaGrafo
         /// Retira um vertice do grafo e define o objeto como nulo
         /// </summary>
         /// <param name="v1"></param>
-        public virtual void RemoverVertice(Vertice v1)
+        public void RemoverVertice(Vertice v1)
         {
             if (v1 != null && this.Contem(v1))
             {
@@ -293,6 +287,7 @@ namespace listaPraticaGrafo
                 v1 = null;
             }
         }
+
 
         /// <summary>
         /// Remove os valores nulos da lista de arestas dos vértices que fazem ligação com aquele passado no parâmetro.
@@ -328,9 +323,128 @@ namespace listaPraticaGrafo
             }
         }
 
-        public IGrafo GetAGMKruskal(Vertice v1)
+        public IGrafo GetAGMKruskal(out StringBuilder ordemInsercaoVertices)
         {
-            return null;
+            Grafo AGM = new Grafo();
+            ordemInsercaoVertices = new StringBuilder();
+
+            List<Aresta> arestasRestantes = new List<Aresta>();
+            for (int i = 0; i < this.arestas.Count; i++)
+            {
+                arestasRestantes.Add(this.arestas[i]);
+                arestasRestantes[i].getVertice1.LimpaArestas();
+                arestasRestantes[i].getVertice2.LimpaArestas();
+            }
+
+            List<Vertice> chefes = new List<Vertice>();
+            foreach (Vertice vertice in this.vertices)
+                chefes.Add(vertice);
+
+            int numArestasRestantes = this.Numero_vertices - 1;
+            List<Aresta> arestasMenorPeso;
+
+            while (numArestasRestantes > 0)
+            {
+                arestasMenorPeso = GetArestasMenorPeso(arestasRestantes);
+
+                while (arestasMenorPeso.Count > 0)
+                {
+                    Aresta ret = GetMenorArestaDesempate(arestasMenorPeso);
+                    int indexV1 = this.vertices.IndexOf(ret.getVertice1);
+                    int indexV2 = this.vertices.IndexOf(ret.getVertice2);
+
+                    if (chefes[indexV1] != chefes[indexV2]) // chefe diferente, pode adicionar a arvore
+                    {
+                        if(!AGM.Contem(chefes[indexV1]))
+                        {
+                            ordemInsercaoVertices.Append(ret.getValorVertice1 + "-" + ret.getValorVertice2 + " "); // adiciona os vertices a lista
+                            chefes[indexV2] = chefes[indexV1]; // define o chefe do vertice adicionado
+                        }
+                        else
+                        {
+                            ordemInsercaoVertices.Append(ret.getValorVertice2 + "-" + ret.getValorVertice1 + " "); // adiciona os vertices a lista
+                            chefes[indexV1] = chefes[indexV2]; // define o chefe do vertice adicionado
+                        }
+
+                        AGM.AddAresta(ret); // adiciona aresta e vertice(s) a AGM
+                    }
+
+                    arestasMenorPeso.Remove(ret);
+                    arestasRestantes.Remove(ret);
+                    numArestasRestantes--;
+                }
+            }
+
+            return AGM;
+        }
+
+        public IGrafo GetAGMKruskal(Vertice inicial, out StringBuilder ordemInsercaoVertices) // ~ pra que vértice inicial???
+        {
+            if (!inicial.Contem(GetMenorArestaDesempate(GetArestasMenorPeso(this.arestas))))
+                throw new Exception("Vértice passado por parâmetro não pode ser o vértice inicial da ordem de inserção pois não contém a menor aresta do grafo.");
+
+            return GetAGMKruskal(out ordemInsercaoVertices);
+        }
+
+        private List<Aresta> GetArestasMenorPeso(List<Aresta> arestas)
+        {
+            int menorPeso = int.MaxValue;
+            List<Aresta> empateMenorPeso = new List<Aresta>();
+
+            foreach(Aresta aresta in arestas) // descobre o menor peso
+                menorPeso = aresta.GetPeso() < menorPeso ? aresta.GetPeso() : menorPeso;
+
+            foreach (Aresta aresta in arestas) // separa as arestas com o menor peso
+            {
+                if (aresta.GetPeso() == menorPeso)
+                    empateMenorPeso.Add(aresta);
+            }
+
+            return empateMenorPeso;
+        }
+
+        private Aresta GetMenorArestaDesempate(List<Aresta> arestas)
+        {
+            if (arestas.Count == 1)
+                return arestas[0];
+
+            int[] somaIndice = new int[arestas.Count];
+            for (int i = 0; i < somaIndice.Length; i++) // verifica a soma dos números (índices) dos vértices de cada aresta
+                somaIndice[i] = (int)arestas[i].getValorVertice1 + (int)arestas[i].getValorVertice2; // ~~~~~ ver sobre Dado
+
+            int menorSoma = int.MaxValue;           
+            for (int i = 0; i < somaIndice.Length; i++) // descobre a menor soma
+                menorSoma = somaIndice[i] < menorSoma ? somaIndice[i] : menorSoma;
+
+            List<Aresta> segundoEmpate = new List<Aresta>();
+
+            for (int i = 0; i < somaIndice.Length; i++) // adiciona a aresta de menor soma na lista de segundo empate
+            {
+                if(menorSoma == somaIndice[i])
+                    segundoEmpate.Add(arestas[i]);
+            }
+
+            if(segundoEmpate.Count == 1) // se não houve segundo empate
+                return segundoEmpate[0];
+
+            int menorIndice = int.MaxValue;
+            Aresta arestaMenorIndice = null;
+            for (int i = 0; i < segundoEmpate.Count; i++) // descobre a aresta de vértice de menor número (índice)
+            {
+                if((int)segundoEmpate[i].getValorVertice1 < menorIndice)
+                {
+                    menorIndice = (int)segundoEmpate[i].getValorVertice1;
+                    arestaMenorIndice = segundoEmpate[i];
+                }
+
+                if ((int)segundoEmpate[i].getValorVertice2 < menorIndice)
+                {
+                    menorIndice = (int)segundoEmpate[i].getValorVertice2;
+                    arestaMenorIndice = segundoEmpate[i];
+                }
+            }
+
+            return arestaMenorIndice;
         }
 
         /// <summary>
@@ -338,27 +452,16 @@ namespace listaPraticaGrafo
         /// por referência(caso ele exista no grafo)
         /// </summary>
         /// <returns></returns>
-        public IGrafo GetAGMPrim(Vertice v1)
+        public IGrafo GetAGMPrim(Vertice v1, out StringBuilder ordemInsercaoVertices)
         {
             Grafo subgrafo = new Grafo();
-            this.prim_formato = null;
-            StringBuilder builder = new StringBuilder();
+            ordemInsercaoVertices = new StringBuilder();
 
             if (this.Contem(v1))
             {
-                this.AGMPrimUtil(v1, subgrafo, builder);
+                this.AGMPrimUtil(v1, subgrafo, ordemInsercaoVertices);
             }
             return subgrafo;
-        }
-
-        /// <summary>
-        /// Retorna as arestas geradas pelo percurso prim no grafo
-        /// </summary>
-        /// <returns></returns>
-        public string GetAGMPrimFormatado()
-        {
-            this.GetAGMPrim();
-            return this.prim_formato;
         }
 
         /// <summary>
@@ -366,16 +469,14 @@ namespace listaPraticaGrafo
         /// do grafo
         /// </summary>
         /// <returns></returns>
-        public IGrafo GetAGMPrim()
+        public IGrafo GetAGMPrim(out StringBuilder ordemInsercaoVertices)
         {
             Grafo subgrafo = new Grafo();
-            this.prim_formato = null;
-            StringBuilder builder = new StringBuilder();
+            ordemInsercaoVertices = new StringBuilder();
 
             if (this.vertices[0] != null)
             {
-                this.AGMPrimUtil(this.vertices[0], subgrafo, builder);
-                this.prim_formato = builder.ToString();
+                this.AGMPrimUtil(this.vertices[0], subgrafo, ordemInsercaoVertices);
             }
             else return null;
             return subgrafo;
@@ -394,7 +495,8 @@ namespace listaPraticaGrafo
                 Vertice p_vertice;
 
                 v1.SetVisitado(true);
-                proxima = (Aresta)v1.GetMenorArestaNaoVisitada();
+                
+                proxima = (Aresta)this.GetMenorArestaDesempate(GetArestasMenorPeso(v1.GetArestas()));
 
                 if (proxima != null)
                 {
@@ -413,59 +515,60 @@ namespace listaPraticaGrafo
         {
             List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
             List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
-            foreach (Vertice vItem in vertices)
+            foreach (Vertice vertice1 in vertices) // para cada vertice, traz a lista de arestas para comparar com a lista de arestas do proximo vertice do grafo,
+                                                   //sem tem alguma aresta em comum(igual), que representa a ligação
             {
-                Vertice aux = (Vertice)vItem.Clone();
-                aux.LimpaArestas();
-                foreach (Vertice vItem2 in vertices)
+                List<Aresta> lstAuxAresta = vertice1.GetArestas();
+                foreach (Vertice vertice2 in vertices)
                 {
-                    Vertice aux2 = (Vertice)vItem2.Clone();
-                    aux2.LimpaArestas();
-                    if (vItem.Equals(vItem2) == false)
+                    if (vertice1.Equals(vertice2) == false) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
+                                                            // se estiver na lista é porque não tem ligação com algum outro vertice
                     {
-                        if (vItem.IsAdjacente(vItem2) == false)
+                        List<Aresta> lstAuxAresta2 = vertice2.GetArestas();
+                        //verifica se tenho aresta em comum , se não tiver adiciona lstVertice 
+                        //inicio
+                        foreach (Aresta aItem in lstAuxAresta)
                         {
-                            if (lstVertice.Contains(vItem) == false && lstVertice.Contains(vItem2) == false)
+                            foreach (Aresta aItem2 in lstAuxAresta2)
                             {
-                                lstVertice.Add(vItem);
-                                lstVertice.Add(vItem2);
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux.AddAresta(nAresta);
-                                aux2.AddAresta(nAresta2);
-                                lstVerticeComplementar.Add(aux);
-                                lstVerticeComplementar.Add(aux2);
-                            }
-                            if (lstVertice.Contains(vItem2) == false && lstVertice.Contains(vItem))  // verifica se já está na lista de vertices que não tem ligação entre si
-                            {
-                                lstVertice.Add(vItem2);
-                                aux = lstVerticeComplementar.Find(x => x.Equals(vItem));
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux2.AddAresta(nAresta2);
-                                aux.AddAresta(nAresta);
-                                lstVerticeComplementar.Add(aux2);
-                            }
-                            if (lstVertice.Contains(vItem) == false && lstVertice.Contains(vItem2))  // verifica se já está na lista de vertices que não tem ligação entre si
-                            {
-                                lstVertice.Add(vItem);
-                                aux2 = lstVerticeComplementar.Find(x => x.Equals(vItem2));
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux.AddAresta(nAresta);
-                                aux2.AddAresta(nAresta2);
-                                lstVerticeComplementar.Add(aux);
-                            }
-                            if (lstVertice.Contains(vItem) && lstVertice.Contains(vItem2))  // verifica se já está na lista de vertices que não tem ligação entre si
-                            {
-                                aux = lstVerticeComplementar.Find(x => x.Equals(vItem));
-                                aux2 = lstVerticeComplementar.Find(x => x.Equals(vItem2));
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux.AddAresta(nAresta);
-                                aux2.AddAresta(nAresta2);
+                                if (aItem2.Equals(aItem) == false)
+                                {
+                                    //quando não possuir aresta em comum , não tem ligação
+                                    //adiciona na lista de verificação de vertice - inicio
+                                    if (lstVertice.Contains(vertice1) == false)
+                                    {
+                                        lstVertice.Add(vertice1);
+                                    }
+                                    if (lstVertice.Contains(vertice2) == false)
+                                    {
+                                        lstVertice.Add(vertice2);
+                                    }
+                                    //fim
+                                    //clona os vertice   - inicio
+                                    Vertice aux = (Vertice)(vertice1.Clone());
+                                    Vertice aux2 = (Vertice)(vertice1.Clone());
+                                    //fim
+                                    // desfaz todas ligações
+                                    aux.LimpaArestas();
+                                    aux2.LimpaArestas();
+                                    // fim
+                                    //cria aresta de ligação dos 2 vertices e adiciona ela aos vertices
+                                    Aresta nAresta = new Aresta(aux, aux2);
+                                    aux.AddAresta(nAresta);
+                                    aux2.AddAresta(nAresta);
+                                    //fim , adiciona os vertices a lista de vertice do grafo complementar 
+                                    if (lstVerticeComplementar.Contains(aux) == false)
+                                    {
+                                        lstVerticeComplementar.Add(aux);
+                                    }
+                                    if (lstVerticeComplementar.Contains(aux2) == false)
+                                    {
+                                        lstVerticeComplementar.Add(aux2);
+                                    }
+                                }
                             }
                         }
+                        //fim
                     }
                 }
             }
