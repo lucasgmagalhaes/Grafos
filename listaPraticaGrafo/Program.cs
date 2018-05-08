@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using listaPraticaGrafo.Arquitetura.Estrutura;
-using listaPraticaGrafo.Arquitetura.Interfaces;
-using System.IO;
 using listaPraticaGrafo.utils;
+
 namespace listaPraticaGrafo
 {
     class Program
@@ -19,7 +13,10 @@ namespace listaPraticaGrafo
             Grafo grafo = new Grafo();
             //grafo.GerarGrafo(linhas);
 
-            grafo.GerarGrafo(FileArray.GRAFO2_NAO_DIRIGIDO);
+            grafo = new Digrafo(FileArray.GRAFO01_DIRIGIDO);
+
+            //Console.WriteLine(grafo.GetAGMPrimFormatado());
+            //Console.CursorVisible = false;
 
             Console.WriteLine(grafo.ToString());
 
