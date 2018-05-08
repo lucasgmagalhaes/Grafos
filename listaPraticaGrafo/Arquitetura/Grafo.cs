@@ -238,6 +238,21 @@ namespace listaPraticaGrafo
             return false;
         }
 
+        public bool Contem(IAresta aresta)
+        {
+            if (aresta != null)
+            {
+                foreach (Aresta arestaLocal in this.arestas)
+                {
+                    if (aresta.Equals(arestaLocal))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Insere um novo vértice ao grafo
         /// </summary>
@@ -248,6 +263,12 @@ namespace listaPraticaGrafo
             {
                 this.vertices.Add(v1);
                 this.CalcularArestas(v1);
+
+                foreach (Aresta a in v1.GetArestas())
+                {
+                    if(!this.Contem(a))
+                        this.arestas.Add(a);
+                }             
             }
         }
 
@@ -355,7 +376,7 @@ namespace listaPraticaGrafo
 
                     if (chefes[indexV1] != chefes[indexV2]) // chefe diferente, pode adicionar a arvore
                     {
-                        if (!AGM.Contem(chefes[indexV1]))
+                        if(!AGM.Contem(chefes[indexV1]))
                         {
                             ordemInsercaoVertices.Append(ret.getValorVertice1 + "-" + ret.getValorVertice2 + " "); // adiciona os vertices a lista
                             chefes[indexV2] = chefes[indexV1]; // define o chefe do vertice adicionado
@@ -391,7 +412,7 @@ namespace listaPraticaGrafo
             int menorPeso = int.MaxValue;
             List<Aresta> empateMenorPeso = new List<Aresta>();
 
-            foreach (Aresta aresta in arestas) // descobre o menor peso
+            foreach(Aresta aresta in arestas) // descobre o menor peso
                 menorPeso = aresta.GetPeso() < menorPeso ? aresta.GetPeso() : menorPeso;
 
             foreach (Aresta aresta in arestas) // separa as arestas com o menor peso
@@ -412,7 +433,7 @@ namespace listaPraticaGrafo
             for (int i = 0; i < somaIndice.Length; i++) // verifica a soma dos números (índices) dos vértices de cada aresta
                 somaIndice[i] = (int)arestas[i].getValorVertice1 + (int)arestas[i].getValorVertice2; // ~~~~~ ver sobre Dado
 
-            int menorSoma = int.MaxValue;
+            int menorSoma = int.MaxValue;           
             for (int i = 0; i < somaIndice.Length; i++) // descobre a menor soma
                 menorSoma = somaIndice[i] < menorSoma ? somaIndice[i] : menorSoma;
 
@@ -420,18 +441,18 @@ namespace listaPraticaGrafo
 
             for (int i = 0; i < somaIndice.Length; i++) // adiciona a aresta de menor soma na lista de segundo empate
             {
-                if (menorSoma == somaIndice[i])
+                if(menorSoma == somaIndice[i])
                     segundoEmpate.Add(arestas[i]);
             }
 
-            if (segundoEmpate.Count == 1) // se não houve segundo empate
+            if(segundoEmpate.Count == 1) // se não houve segundo empate
                 return segundoEmpate[0];
 
             int menorIndice = int.MaxValue;
             Aresta arestaMenorIndice = null;
             for (int i = 0; i < segundoEmpate.Count; i++) // descobre a aresta de vértice de menor número (índice)
             {
-                if ((int)segundoEmpate[i].getValorVertice1 < menorIndice)
+                if((int)segundoEmpate[i].getValorVertice1 < menorIndice)
                 {
                     menorIndice = (int)segundoEmpate[i].getValorVertice1;
                     arestaMenorIndice = segundoEmpate[i];
@@ -454,14 +475,67 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public IGrafo GetAGMPrim(Vertice v1, out StringBuilder ordemInsercaoVertices)
         {
-            Grafo subgrafo = new Grafo();
             ordemInsercaoVertices = new StringBuilder();
 
-            if (this.Contem(v1))
+            Grafo AGM = new Grafo();
+            List<Aresta> arestasAlcancaveis = new List<Aresta>();
+
+            AGM.AddVertice(new Vertice(v1.GetDado()));
+            arestasAlcancaveis.AddRange(v1.GetArestas());
+
+            while(AGM.Numero_vertices < this.Numero_vertices)
             {
-                this.AGMPrimUtil(v1, subgrafo, ordemInsercaoVertices);
+                Aresta proxima = this.GetMenorArestaDesempate(GetArestasMenorPeso(arestasAlcancaveis));
+                Vertice novo1 = new Vertice(proxima.getDadoVertice1);
+                Vertice novo2 = new Vertice(proxima.getDadoVertice2);
+
+                if (AGM.Contem(proxima.getVertice1) && AGM.Contem(proxima.getVertice2))
+                    arestasAlcancaveis.Remove(proxima);
+                else if (AGM.Contem(proxima.getVertice1))
+                {
+                    AGM.AddVertice(novo2); //adiciona o vértice
+                    AGM.AddAresta(new Aresta(null, novo2, proxima.GetPeso())); //adiciona a aresta visitada no grafo (e em cada um dos 2 vértices)
+
+                    arestasAlcancaveis.Remove(proxima); // remove a aresta das opções de visitação
+                    arestasAlcancaveis.AddRange(proxima.getVertice2.GetArestas()); // adiciona as arestas do vértice novo nas opções de visitação
+
+                    ordemInsercaoVertices.Append(proxima.getValorVertice1 + "-" + proxima.getValorVertice2 + " "); // adiciona os vertices a lista
+                }
+                else
+                {
+                    AGM.AddVertice(novo1); //adiciona o vértice
+                    AGM.AddAresta(new Aresta(novo1, null, proxima.GetPeso())); //adiciona a aresta visitada no grafo (e em cada um dos 2 vértices)
+
+                    arestasAlcancaveis.Remove(proxima); // remove a aresta das opções de visitação
+                    arestasAlcancaveis.AddRange(proxima.getVertice1.GetArestas()); // adiciona as arestas do vértice novo nas opções de visitação
+
+                    ordemInsercaoVertices.Append(proxima.getValorVertice2 + "-" + proxima.getValorVertice1 + " "); // adiciona os vertices a lista
+                }
+
+                
             }
-            return subgrafo;
+
+            //while (AGM.Numero_vertices < this.Numero_vertices)
+            //{
+            //    Aresta proxima = this.GetMenorArestaDesempate(GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
+
+            //    proxima.SetVisitado(true);
+
+            //    if (AGM.Contem(proxima.getVertice1))
+            //    {
+            //        proxima.getVertice2.FoiVisitado();
+            //        AGM.AddVertice(proxima.getVertice2);
+            //        ordemInsercaoVertices.Append(proxima.getValorVertice1 + "-" + proxima.getValorVertice2 + " "); // adiciona os vertices a lista
+            //    }
+            //    else
+            //    {
+            //        proxima.getVertice1.FoiVisitado();
+            //        AGM.AddVertice(proxima.getVertice1);
+            //        ordemInsercaoVertices.Append(proxima.getValorVertice2 + "-" + proxima.getValorVertice1 + " "); // adiciona os vertices a lista
+            //    }
+            //}
+
+            return AGM;
         }
 
         /// <summary>
@@ -495,8 +569,8 @@ namespace listaPraticaGrafo
                 Vertice p_vertice;
 
                 v1.SetVisitado(true);
-
-                proxima = (Aresta)this.GetMenorArestaDesempate(GetArestasMenorPeso(v1.GetArestas()));
+                
+                proxima = (Aresta)this.GetMenorArestaDesempate(GetArestasMenorPeso(v1.GetArestasNaoVisitadas()));
 
                 if (proxima != null)
                 {
@@ -509,6 +583,19 @@ namespace listaPraticaGrafo
                     this.AGMPrimUtil(p_vertice, grafo, builder);
                 }
             }
+        }
+
+        public List<Aresta> GetArestasNaoVisitadas()
+        {
+            List<Aresta> retorno = new List<Aresta>();
+
+            foreach(Aresta a in this.arestas)
+            {
+                if (!a.FoiVisitado())
+                    retorno.Add(a);
+            }
+
+            return retorno;
         }
 
         public Grafo GetComplementar()
@@ -582,7 +669,7 @@ namespace listaPraticaGrafo
         // disc[] --> salva o tempo de descoberta de cada vértice
         // parent[] --> Salva o vértice pai para ser usado no DFS
         // ap[] --> salva os cut-vértices
-        private void APUtil(int u, bool[] visited, int[] disc, int[] low, int[] parent, bool[] ap)
+        public void APUtil(int u, bool[] visited, int[] disc, int[] low, int[] parent, bool[] ap)
         {
             // Conta os filhos na árvore DFS
             int children = 0;
@@ -715,8 +802,23 @@ namespace listaPraticaGrafo
         public bool IsConexo()
         {
             LimpaVisitaVertices();
-            if (this.componentes == 0) this.DFS();
-            return this.componentes == 1;
+            foreach (Vertice vertice in this.vertices)
+            {
+                if (vertice.FoiVisitado() == false)
+                {
+                    Visitar(vertice, vertice.GetArestas());
+                    componentes++;
+                }
+                vertice.SetVisitado(true);
+            }
+            if (componentes >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         protected void Visitar(Vertice vertice)
@@ -893,44 +995,6 @@ namespace listaPraticaGrafo
                 builder.Append(vertice.ToStringComArestasSemEspaco());
             }
             return builder.ToString();
-        }
-
-        /// <summary>
-        /// Verifica se o arquivo está no formato para ser um grafo, 
-        /// Se houver qualquer erro na verificação, é retornado false
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public static bool IsFileAGrafo(string[] file)
-        {
-            try
-            {
-                return file[1].Split(';').Length == 3;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>	
-        /// Depth First Search	
-        /// </summary>	
-        /// <returns></returns>	
-        public int DFS()
-        {
-            int componentes = 0;
-            this.ResetarCorDosVertices();
-
-            foreach (Vertice vertice in this.vertices)
-            {
-                if (vertice.Cor == Cor.BRANCO)
-                {
-                    this.Visitar(vertice);
-                    componentes++;
-                }
-            }
-            return componentes;
         }
     }
 }
