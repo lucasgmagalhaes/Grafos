@@ -715,23 +715,8 @@ namespace listaPraticaGrafo
         public bool IsConexo()
         {
             LimpaVisitaVertices();
-            foreach (Vertice vertice in this.vertices)
-            {
-                if (vertice.FoiVisitado() == false)
-                {
-                    Visitar(vertice, vertice.GetArestas());
-                    componentes++;
-                }
-                vertice.SetVisitado(true);
-            }
-            if (componentes >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (this.componentes == 0) this.DFS();
+            return this.componentes == 1;
         }
 
         protected void Visitar(Vertice vertice)
@@ -926,6 +911,26 @@ namespace listaPraticaGrafo
             {
                 return false;
             }
+        }
+
+        /// <summary>	
+        /// Depth First Search	
+        /// </summary>	
+        /// <returns></returns>	
+        public int DFS()
+        {
+            int componentes = 0;
+            this.ResetarCorDosVertices();
+
+            foreach (Vertice vertice in this.vertices)
+            {
+                if (vertice.Cor == Cor.BRANCO)
+                {
+                    this.Visitar(vertice);
+                    componentes++;
+                }
+            }
+            return componentes;
         }
     }
 }
