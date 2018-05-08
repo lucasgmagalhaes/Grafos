@@ -159,5 +159,23 @@ namespace listaPraticaGrafo
             }
             return false;
         }
+
+        /// <summary>
+        /// Verifica se o arquivo está no formato para ser um grafo, 
+        /// Se houver qualquer erro na verificação, é retornado false
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static bool IsFileADigrafo(string[] file)
+        {
+            try
+            {
+                return file[1].Split(';').Length == 4;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

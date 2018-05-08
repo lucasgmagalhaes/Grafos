@@ -355,7 +355,7 @@ namespace listaPraticaGrafo
 
                     if (chefes[indexV1] != chefes[indexV2]) // chefe diferente, pode adicionar a arvore
                     {
-                        if(!AGM.Contem(chefes[indexV1]))
+                        if (!AGM.Contem(chefes[indexV1]))
                         {
                             ordemInsercaoVertices.Append(ret.getValorVertice1 + "-" + ret.getValorVertice2 + " "); // adiciona os vertices a lista
                             chefes[indexV2] = chefes[indexV1]; // define o chefe do vertice adicionado
@@ -391,7 +391,7 @@ namespace listaPraticaGrafo
             int menorPeso = int.MaxValue;
             List<Aresta> empateMenorPeso = new List<Aresta>();
 
-            foreach(Aresta aresta in arestas) // descobre o menor peso
+            foreach (Aresta aresta in arestas) // descobre o menor peso
                 menorPeso = aresta.GetPeso() < menorPeso ? aresta.GetPeso() : menorPeso;
 
             foreach (Aresta aresta in arestas) // separa as arestas com o menor peso
@@ -412,7 +412,7 @@ namespace listaPraticaGrafo
             for (int i = 0; i < somaIndice.Length; i++) // verifica a soma dos números (índices) dos vértices de cada aresta
                 somaIndice[i] = (int)arestas[i].getValorVertice1 + (int)arestas[i].getValorVertice2; // ~~~~~ ver sobre Dado
 
-            int menorSoma = int.MaxValue;           
+            int menorSoma = int.MaxValue;
             for (int i = 0; i < somaIndice.Length; i++) // descobre a menor soma
                 menorSoma = somaIndice[i] < menorSoma ? somaIndice[i] : menorSoma;
 
@@ -420,18 +420,18 @@ namespace listaPraticaGrafo
 
             for (int i = 0; i < somaIndice.Length; i++) // adiciona a aresta de menor soma na lista de segundo empate
             {
-                if(menorSoma == somaIndice[i])
+                if (menorSoma == somaIndice[i])
                     segundoEmpate.Add(arestas[i]);
             }
 
-            if(segundoEmpate.Count == 1) // se não houve segundo empate
+            if (segundoEmpate.Count == 1) // se não houve segundo empate
                 return segundoEmpate[0];
 
             int menorIndice = int.MaxValue;
             Aresta arestaMenorIndice = null;
             for (int i = 0; i < segundoEmpate.Count; i++) // descobre a aresta de vértice de menor número (índice)
             {
-                if((int)segundoEmpate[i].getValorVertice1 < menorIndice)
+                if ((int)segundoEmpate[i].getValorVertice1 < menorIndice)
                 {
                     menorIndice = (int)segundoEmpate[i].getValorVertice1;
                     arestaMenorIndice = segundoEmpate[i];
@@ -495,7 +495,7 @@ namespace listaPraticaGrafo
                 Vertice p_vertice;
 
                 v1.SetVisitado(true);
-                
+
                 proxima = (Aresta)this.GetMenorArestaDesempate(GetArestasMenorPeso(v1.GetArestas()));
 
                 if (proxima != null)
@@ -582,7 +582,7 @@ namespace listaPraticaGrafo
         // disc[] --> salva o tempo de descoberta de cada vértice
         // parent[] --> Salva o vértice pai para ser usado no DFS
         // ap[] --> salva os cut-vértices
-        public void APUtil(int u, bool[] visited, int[] disc, int[] low, int[] parent, bool[] ap)
+        private void APUtil(int u, bool[] visited, int[] disc, int[] low, int[] parent, bool[] ap)
         {
             // Conta os filhos na árvore DFS
             int children = 0;
@@ -908,6 +908,24 @@ namespace listaPraticaGrafo
                 builder.Append(vertice.ToStringComArestasSemEspaco());
             }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Verifica se o arquivo está no formato para ser um grafo, 
+        /// Se houver qualquer erro na verificação, é retornado false
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static bool IsFileAGrafo(string[] file)
+        {
+            try
+            {
+                return file[1].Split(';').Length == 3;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
