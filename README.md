@@ -1,5 +1,5 @@
 # Grafos
-
+![alt text](https://github.com/lgmagalhaes88/Grafos/blob/master/diagrama/classes_diagrama.png)
 ## Definição
 A teoria dos grafos é um ramo da matemática que estuda as relações entre os objetos de um determinado conjunto. Para tal são empregadas estruturas chamadas de grafos, {\displaystyle G(V,E)} {\displaystyle G(V,E)}, onde {\displaystyle V} V é um conjunto não vazio de objetos denominados vértices (ou nós) e {\displaystyle E} E (do inglês Edges - arestas) é um subconjunto de pares não ordenados de V.
 
