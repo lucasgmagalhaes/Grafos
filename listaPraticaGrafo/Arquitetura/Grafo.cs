@@ -25,21 +25,17 @@ namespace listaPraticaGrafo
         public Grafo()
         {
             this.Init();
-            this.vertices = new List<Vertice>();
-            this.arestas = new List<Aresta>();
         }
 
         public Grafo(int numero_vertices)
         {
-            for (int i = 0; i < numero_vertices; i++)
-            {
-                this.vertices = new List<Vertice>();
-            }
+            this.Init();
+            this.vertices = new List<Vertice>(numero_vertices);
         }
 
         public Grafo(string[] arquivo)
         {
-            this.vertices = new List<Vertice>();
+            this.Init();
             this.GerarGrafo(arquivo);
         }
 
@@ -66,6 +62,8 @@ namespace listaPraticaGrafo
         protected void Init()
         {
             this.componentes = 0;
+            this.vertices = new List<Vertice>();
+            this.arestas = new List<Aresta>();
         }
 
         /// <summary>
@@ -169,6 +167,7 @@ namespace listaPraticaGrafo
 
                     vertice.AddAresta(aresta);
                     novoVertice.AddAresta(aresta);
+                    this.arestas.Add(aresta);
                 }
                 catch (Exception e)
                 {
@@ -266,9 +265,9 @@ namespace listaPraticaGrafo
 
                 foreach (Aresta a in v1.GetArestas())
                 {
-                    if(!this.Contem(a))
+                    if (!this.Contem(a))
                         this.arestas.Add(a);
-                }             
+                }
             }
         }
 
@@ -376,7 +375,7 @@ namespace listaPraticaGrafo
 
                     if (chefes[indexV1] != chefes[indexV2]) // chefe diferente, pode adicionar a arvore
                     {
-                        if(!AGM.Contem(chefes[indexV1]))
+                        if (!AGM.Contem(chefes[indexV1]))
                         {
                             ordemInsercaoVertices.Append(ret.getValorVertice1 + "-" + ret.getValorVertice2 + " "); // adiciona os vertices a lista
                             chefes[indexV2] = chefes[indexV1]; // define o chefe do vertice adicionado
@@ -395,15 +394,15 @@ namespace listaPraticaGrafo
                     numArestasRestantes--;
                 }
             }
-
             return AGM;
         }
 
         public IGrafo GetAGMKruskal(Vertice inicial, out StringBuilder ordemInsercaoVertices) // ~ pra que vértice inicial???
         {
             if (!inicial.Contem(GetMenorArestaDesempate(GetArestasMenorPeso(this.arestas))))
+            {
                 throw new Exception("Vértice passado por parâmetro não pode ser o vértice inicial da ordem de inserção pois não contém a menor aresta do grafo.");
-
+            }
             return GetAGMKruskal(out ordemInsercaoVertices);
         }
 
@@ -412,7 +411,7 @@ namespace listaPraticaGrafo
             int menorPeso = int.MaxValue;
             List<Aresta> empateMenorPeso = new List<Aresta>();
 
-            foreach(Aresta aresta in arestas) // descobre o menor peso
+            foreach (Aresta aresta in arestas) // descobre o menor peso
                 menorPeso = aresta.GetPeso() < menorPeso ? aresta.GetPeso() : menorPeso;
 
             foreach (Aresta aresta in arestas) // separa as arestas com o menor peso
@@ -433,7 +432,7 @@ namespace listaPraticaGrafo
             for (int i = 0; i < somaIndice.Length; i++) // verifica a soma dos números (índices) dos vértices de cada aresta
                 somaIndice[i] = (int)arestas[i].getValorVertice1 + (int)arestas[i].getValorVertice2; // ~~~~~ ver sobre Dado
 
-            int menorSoma = int.MaxValue;           
+            int menorSoma = int.MaxValue;
             for (int i = 0; i < somaIndice.Length; i++) // descobre a menor soma
                 menorSoma = somaIndice[i] < menorSoma ? somaIndice[i] : menorSoma;
 
@@ -441,18 +440,18 @@ namespace listaPraticaGrafo
 
             for (int i = 0; i < somaIndice.Length; i++) // adiciona a aresta de menor soma na lista de segundo empate
             {
-                if(menorSoma == somaIndice[i])
+                if (menorSoma == somaIndice[i])
                     segundoEmpate.Add(arestas[i]);
             }
 
-            if(segundoEmpate.Count == 1) // se não houve segundo empate
+            if (segundoEmpate.Count == 1) // se não houve segundo empate
                 return segundoEmpate[0];
 
             int menorIndice = int.MaxValue;
             Aresta arestaMenorIndice = null;
             for (int i = 0; i < segundoEmpate.Count; i++) // descobre a aresta de vértice de menor número (índice)
             {
-                if((int)segundoEmpate[i].getValorVertice1 < menorIndice)
+                if ((int)segundoEmpate[i].getValorVertice1 < menorIndice)
                 {
                     menorIndice = (int)segundoEmpate[i].getValorVertice1;
                     arestaMenorIndice = segundoEmpate[i];
@@ -483,14 +482,16 @@ namespace listaPraticaGrafo
             AGM.AddVertice(new Vertice(v1.GetDado()));
             arestasAlcancaveis.AddRange(v1.GetArestas());
 
-            while(AGM.Numero_vertices < this.Numero_vertices)
+            while (AGM.Numero_vertices < this.Numero_vertices)
             {
                 Aresta proxima = this.GetMenorArestaDesempate(GetArestasMenorPeso(arestasAlcancaveis));
                 Vertice novo1 = new Vertice(proxima.getDadoVertice1);
                 Vertice novo2 = new Vertice(proxima.getDadoVertice2);
 
                 if (AGM.Contem(proxima.getVertice1) && AGM.Contem(proxima.getVertice2))
+                {
                     arestasAlcancaveis.Remove(proxima);
+                }
                 else if (AGM.Contem(proxima.getVertice1))
                 {
                     AGM.AddVertice(novo2); //adiciona o vértice
@@ -511,8 +512,6 @@ namespace listaPraticaGrafo
 
                     ordemInsercaoVertices.Append(proxima.getValorVertice2 + "-" + proxima.getValorVertice1 + " "); // adiciona os vertices a lista
                 }
-
-                
             }
 
             //while (AGM.Numero_vertices < this.Numero_vertices)
@@ -548,7 +547,7 @@ namespace listaPraticaGrafo
             Grafo subgrafo = new Grafo();
             ordemInsercaoVertices = new StringBuilder();
 
-            if (this.vertices[0] != null)
+            if (this.vertices.Count > 0)
             {
                 this.AGMPrimUtil(this.vertices[0], subgrafo, ordemInsercaoVertices);
             }
@@ -569,7 +568,7 @@ namespace listaPraticaGrafo
                 Vertice p_vertice;
 
                 v1.SetVisitado(true);
-                
+
                 proxima = (Aresta)this.GetMenorArestaDesempate(GetArestasMenorPeso(v1.GetArestasNaoVisitadas()));
 
                 if (proxima != null)
@@ -589,7 +588,7 @@ namespace listaPraticaGrafo
         {
             List<Aresta> retorno = new List<Aresta>();
 
-            foreach(Aresta a in this.arestas)
+            foreach (Aresta a in this.arestas)
             {
                 if (!a.FoiVisitado())
                     retorno.Add(a);
@@ -802,23 +801,8 @@ namespace listaPraticaGrafo
         public bool IsConexo()
         {
             LimpaVisitaVertices();
-            foreach (Vertice vertice in this.vertices)
-            {
-                if (vertice.FoiVisitado() == false)
-                {
-                    Visitar(vertice, vertice.GetArestas());
-                    componentes++;
-                }
-                vertice.SetVisitado(true);
-            }
-            if (componentes >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (this.componentes == 0) this.DFS();
+            return this.componentes == 1;
         }
 
         protected void Visitar(Vertice vertice)
@@ -995,6 +979,44 @@ namespace listaPraticaGrafo
                 builder.Append(vertice.ToStringComArestasSemEspaco());
             }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Verifica se o arquivo está no formato para ser um grafo, 
+        /// Se houver qualquer erro na verificação, é retornado false
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static bool IsFileAGrafo(string[] file)
+        {
+            try
+            {
+                return file[1].Split(';').Length == 3;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>	
+        /// Depth First Search	
+        /// </summary>	
+        /// <returns></returns>	
+        public int DFS()
+        {
+            int componentes = 0;
+            this.ResetarCorDosVertices();
+
+            foreach (Vertice vertice in this.vertices)
+            {
+                if (vertice.Cor == Cor.BRANCO)
+                {
+                    this.Visitar(vertice);
+                    componentes++;
+                }
+            }
+            return componentes;
         }
     }
 }
