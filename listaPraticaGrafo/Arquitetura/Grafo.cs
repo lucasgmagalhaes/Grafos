@@ -800,7 +800,10 @@ namespace listaPraticaGrafo
         public bool IsConexo()
         {
             LimpaVisitaVertices();
-            if (this.componentes == 0) this.DFS();
+            if (this.componentes == 0)
+            {
+                this.componentes = this.DFS();
+            }
             return this.componentes == 1;
         }
 
