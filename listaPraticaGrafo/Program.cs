@@ -65,8 +65,8 @@ namespace listaPraticaGrafo
                 Console.WriteLine(builder.ToString());
 
                 builder.Clear();
-                grafo.GetAGMPrim(out builder)
-                    ;
+                grafo.GetAGMPrim(out builder);
+
                 Console.WriteLine("Prim: ");
                 Console.WriteLine(builder.ToString());
             }

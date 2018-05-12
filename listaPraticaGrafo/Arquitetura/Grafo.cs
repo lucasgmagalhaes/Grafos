@@ -51,7 +51,6 @@ namespace listaPraticaGrafo
         /// </summary>
         public void LimpaVisitaVertices()
         {
-            this.Init();
             foreach (Vertice vAux in vertices)
             {
                 vAux.SetVisitado(false);
