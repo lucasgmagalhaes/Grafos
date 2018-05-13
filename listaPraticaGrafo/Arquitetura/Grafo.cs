@@ -644,64 +644,63 @@ namespace listaPraticaGrafo
             return retorno;
         }
 
-        public Grafo GetComplementar()
+      public Grafo GetComplementar()
         {
             List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
             List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
-            foreach (Vertice vertice1 in vertices) // para cada vertice, traz a lista de arestas para comparar com a lista de arestas do proximo vertice do grafo,
-                                                   //sem tem alguma aresta em comum(igual), que representa a ligação
+            foreach (Vertice vItem in vertices)
             {
-                List<Aresta> lstAuxAresta = vertice1.GetArestas();
-                foreach (Vertice vertice2 in vertices)
+                Vertice aux = (Vertice)vItem.Clone();
+                aux.LimpaArestas();
+                foreach (Vertice vItem2 in vertices)
                 {
-                    if (vertice1.Equals(vertice2) == false) // evita a comparação do vertice com ele mesmo e se já foi adicionado na lista
-                                                            // se estiver na lista é porque não tem ligação com algum outro vertice
+                    Vertice aux2 = (Vertice)vItem2.Clone();
+                    aux2.LimpaArestas();
+                    if (vItem.Equals(vItem2) == false)
                     {
-                        List<Aresta> lstAuxAresta2 = vertice2.GetArestas();
-                        //verifica se tenho aresta em comum , se não tiver adiciona lstVertice 
-                        //inicio
-                        foreach (Aresta aItem in lstAuxAresta)
+                        if (vItem.IsAdjacente(vItem2) == false)
                         {
-                            foreach (Aresta aItem2 in lstAuxAresta2)
+                            if (lstVertice.Contains(vItem) == false && lstVertice.Contains(vItem2) == false)
                             {
-                                if (aItem2.Equals(aItem) == false)
-                                {
-                                    //quando não possuir aresta em comum , não tem ligação
-                                    //adiciona na lista de verificação de vertice - inicio
-                                    if (lstVertice.Contains(vertice1) == false)
-                                    {
-                                        lstVertice.Add(vertice1);
-                                    }
-                                    if (lstVertice.Contains(vertice2) == false)
-                                    {
-                                        lstVertice.Add(vertice2);
-                                    }
-                                    //fim
-                                    //clona os vertice   - inicio
-                                    Vertice aux = (Vertice)(vertice1.Clone());
-                                    Vertice aux2 = (Vertice)(vertice1.Clone());
-                                    //fim
-                                    // desfaz todas ligações
-                                    aux.LimpaArestas();
-                                    aux2.LimpaArestas();
-                                    // fim
-                                    //cria aresta de ligação dos 2 vertices e adiciona ela aos vertices
-                                    Aresta nAresta = new Aresta(aux, aux2);
-                                    aux.AddAresta(nAresta);
-                                    aux2.AddAresta(nAresta);
-                                    //fim , adiciona os vertices a lista de vertice do grafo complementar 
-                                    if (lstVerticeComplementar.Contains(aux) == false)
-                                    {
-                                        lstVerticeComplementar.Add(aux);
-                                    }
-                                    if (lstVerticeComplementar.Contains(aux2) == false)
-                                    {
-                                        lstVerticeComplementar.Add(aux2);
-                                    }
-                                }
+                                lstVertice.Add(vItem);
+                                lstVertice.Add(vItem2);
+                                Aresta nAresta = new Aresta(aux, aux2);
+                                Aresta nAresta2 = new Aresta(aux2, aux);
+                                aux.AddAresta(nAresta);
+                                aux2.AddAresta(nAresta2);
+                                lstVerticeComplementar.Add(aux);
+                                lstVerticeComplementar.Add(aux2);
+                            }
+                            if (lstVertice.Contains(vItem2) == false && lstVertice.Contains(vItem))  // verifica se já está na lista de vertices que não tem ligação entre si
+                            {
+                                lstVertice.Add(vItem2);
+                                aux = lstVerticeComplementar.Find(x => x.Equals(vItem));
+                                Aresta nAresta = new Aresta(aux, aux2);
+                                Aresta nAresta2 = new Aresta(aux2, aux);
+                                aux2.AddAresta(nAresta2);
+                                aux.AddAresta(nAresta);
+                                lstVerticeComplementar.Add(aux2);
+                            }
+                            if (lstVertice.Contains(vItem) == false && lstVertice.Contains(vItem2))  // verifica se já está na lista de vertices que não tem ligação entre si
+                            {
+                                lstVertice.Add(vItem);
+                                aux2 = lstVerticeComplementar.Find(x => x.Equals(vItem2));
+                                Aresta nAresta = new Aresta(aux, aux2);
+                                Aresta nAresta2 = new Aresta(aux2, aux);
+                                aux.AddAresta(nAresta);
+                                aux2.AddAresta(nAresta2);
+                                lstVerticeComplementar.Add(aux);
+                            }
+                            if (lstVertice.Contains(vItem) && lstVertice.Contains(vItem2))  // verifica se já está na lista de vertices que não tem ligação entre si
+                            {
+                                aux = lstVerticeComplementar.Find(x => x.Equals(vItem));
+                                aux2 = lstVerticeComplementar.Find(x => x.Equals(vItem2));
+                                Aresta nAresta = new Aresta(aux, aux2);
+                                Aresta nAresta2 = new Aresta(aux2, aux);
+                                aux.AddAresta(nAresta);
+                                aux2.AddAresta(nAresta2);
                             }
                         }
-                        //fim
                     }
                 }
             }
