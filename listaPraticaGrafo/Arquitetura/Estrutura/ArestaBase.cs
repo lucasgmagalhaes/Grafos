@@ -108,8 +108,8 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             try
             {
                 Aresta comparar = (Aresta)aresta;
-                return ((comparar.getDadoVertice1.Equals(this.vertice1.GetDado()) || comparar.getDadoVertice1.Equals(this.vertice2.GetDado())) &&
-                     (comparar.getDadoVertice2.Equals(this.vertice1.GetDado()) || comparar.getDadoVertice2.Equals(this.vertice2.GetDado())) &&
+                return (comparar.getDadoVertice1.Equals(this.vertice1.GetDado()) 
+                    && comparar.getDadoVertice2.Equals(this.vertice2.GetDado()) &&
                     comparar.GetPeso().Equals(this.peso));
             }
             catch

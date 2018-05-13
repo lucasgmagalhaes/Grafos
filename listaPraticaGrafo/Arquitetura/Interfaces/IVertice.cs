@@ -20,15 +20,17 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <param name="vertice"></param>
         /// <returns></returns>
         new bool Equals(IVertice vertice);
+
         /// <summary>
         /// Insere uma nova aresta na lista de arestas do vértice
         /// </summary>
         /// <param name="aresta"></param>
         void AddAresta(ArestaBase aresta);
+
         /// <summary>
         /// Remove todas as arestas do vértice
         /// </summary>
-        void LimpaArestas();
+        void LimparArestas();
 
         /// <summary>
         /// Retorna a informção contida no vértice
@@ -102,6 +104,11 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <returns></returns>
         bool IsAdjacente(VerticeBase vertice);
 
+        /// <summary>
+        /// Busca, na lista de arestas, aquela que possui o menor peso e que também não foi
+        /// visitada
+        /// </summary>
+        /// <returns></returns>
         ArestaBase GetMenorArestaNaoVisitada();
     }
 }

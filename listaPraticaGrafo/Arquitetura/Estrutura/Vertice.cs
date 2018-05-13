@@ -35,9 +35,9 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public void RemoverAresta(Aresta aresta)
         {
-            if (this.arestas.Contains(aresta)) this.arestas.Remove(aresta);
+            this.arestas.RemoveAll(aresta_local => aresta_local.Equals(aresta));
         }
-
+        
         /// <summary>
         /// Para uma lista de vértices, verifica se o vértice passado no parâmetro existe nessa lista,
         /// comparando pelo valor do dado do vértice

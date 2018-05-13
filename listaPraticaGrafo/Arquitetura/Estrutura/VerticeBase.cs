@@ -80,11 +80,6 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return this;
         }
 
-        public void LimpaArestas()
-        {
-            this.arestas = new List<ArestaBase>();
-        }
-
         public IDado GetDado()
         {
             return this.dado;
@@ -313,6 +308,15 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                     && aresta.GetPeso() == atual.GetPeso()) return i;
             }
             return -1;
+        }
+
+        /// <summary>
+        /// Limpa a lista de arestas do vértice
+        /// </summary>
+        public void LimparArestas()
+        {
+            if(this.arestas == null) this.arestas = new List<ArestaBase>();
+            else this.arestas.Clear();
         }
     }
 }

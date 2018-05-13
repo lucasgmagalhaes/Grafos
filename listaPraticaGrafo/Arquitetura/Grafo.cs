@@ -221,7 +221,6 @@ namespace listaPraticaGrafo
                     throw new Exception("Arquivo possui conteúdo inválido para leitura " + e.Message);
                 }
             }
-
             this.AddVerticesRestantes(num_vertices);
         }
 
@@ -337,6 +336,7 @@ namespace listaPraticaGrafo
             {
                 this.vertices.Add(v1);
                 this.CalcularArestas(v1);
+                this.AddArestasEmAdjacentes(v1);
 
                 foreach (Aresta a in v1.GetArestas())
                 {
@@ -346,19 +346,19 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
-        /// Adiciona as arestas do vértice nos outros vértices ao qual o vértice do parâmetro
-        /// está relacionado
+        /// Adiciona as arestas de um vértice nos outro vértice 
+        /// no qual ela está ligada, SE este não tiver ela adicionada
+        /// em sua lista
         /// </summary>
-        /// <param name="vertice"></param>
-        private void AddDependenciasAresta(Vertice vertice)
+        public void AddArestasEmAdjacentes(Vertice vertice)
         {
-            if (vertice != null)
+            Vertice vertice1;
+            foreach (Aresta aresta in vertice.GetArestas())
             {
-                Vertice outro;
-                foreach (Aresta aresta in vertice.GetArestas())
+                vertice1 = aresta.GetVerticeDiferente(vertice);
+                if (!vertice1.Contem(aresta))
                 {
-                    outro = aresta.GetVerticeDiferente(vertice);
-                    outro.AddAresta(aresta);
+                    vertice1.AddAresta(aresta);
                 }
             }
         }
@@ -426,11 +426,6 @@ namespace listaPraticaGrafo
                         vertice2.RemoverAresta(aresta);
                     }
                 }
-                v1.GetArestas().Clear();
-                foreach (Vertice vertice in verticesLimpar)
-                {
-                    vertice.GetArestas().RemoveAll(arr => arr == null);
-                }
             }
         }
 
@@ -443,8 +438,8 @@ namespace listaPraticaGrafo
             for (int i = 0; i < this.arestas.Count; i++)
             {
                 arestasRestantes.Add(this.arestas[i]);
-                arestasRestantes[i].getVertice1.LimpaArestas();
-                arestasRestantes[i].getVertice2.LimpaArestas();
+                arestasRestantes[i].getVertice1.LimparArestas();
+                arestasRestantes[i].getVertice2.LimparArestas();
             }
 
             List<Vertice> chefes = new List<Vertice>();
@@ -691,18 +686,18 @@ namespace listaPraticaGrafo
             return retorno;
         }
 
-      public Grafo GetComplementar()
+        public Grafo GetComplementar()
         {
             List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
             List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
             foreach (Vertice vItem in vertices)
             {
                 Vertice aux = (Vertice)vItem.Clone();
-                aux.LimpaArestas();
+                aux.LimparArestas();
                 foreach (Vertice vItem2 in vertices)
                 {
                     Vertice aux2 = (Vertice)vItem2.Clone();
-                    aux2.LimpaArestas();
+                    aux2.LimparArestas();
                     if (vItem.Equals(vItem2) == false)
                     {
                         if (vItem.IsAdjacente(vItem2) == false)
@@ -760,18 +755,17 @@ namespace listaPraticaGrafo
         /// </summary>
         public int GetCutVertices()
         {
-            int count = 0;
+            int count = 0, posicao = 0, n_vertices = this.vertices.Count;
             int n_componentes = this.DFS();
-            Grafo aux = this.Clonar();
-
-            foreach (Vertice vertice in aux.GetVertices())
+            Vertice removido;
+            while(posicao != n_vertices)
             {
-                aux.RemoverVertice(vertice);
-                if (aux.GetComponentes() != n_componentes)
-                {
-                    count++;
-                }
-                aux.AddVertice(vertice);
+                removido = this.vertices[0];
+                this.RemoverVertice(this.vertices[0]);
+
+                if (this.GetComponentes() != n_componentes) count++;
+                this.AddVertice(removido);
+                posicao++;
             }
             return count;
         }
