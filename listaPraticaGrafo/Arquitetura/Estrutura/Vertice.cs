@@ -21,5 +21,27 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             return base.arestas.Count;
         }
+
+        public Vertice Clonar()
+        {
+            Vertice retorno = new Vertice(new Dado((int)this.GetDadoValor()));
+            retorno.AddArestas(this.ClonarArestas());
+            return retorno;
+        }
+
+        public List<Aresta> ClonarArestas()
+        {
+            List<Aresta> clone = new List<Aresta>();
+            foreach (Aresta aresta in this.arestas)
+            {
+                clone.Add(aresta.Clonar());
+            }
+            return clone;
+        }
+
+        public void RemoverAresta(Aresta aresta)
+        {
+            if (this.arestas.Contains(aresta)) this.arestas.Remove(aresta);
+        }
     }
 }

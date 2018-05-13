@@ -60,5 +60,11 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             }
             return null;
         }
+
+        public Aresta Clonar()
+        {
+            return new Aresta(new Vertice(new Dado((int)this.vertice1.GetDadoValor())),
+                new Vertice(new Dado((int)this.vertice2.GetDadoValor())), this.peso);
+        }
     }
 }

@@ -51,9 +51,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Arquitetura\Estrutura\ArestaTests.cs" />
-    <Compile Include="Arquitetura\Estrutura\InformacaoTests.cs" />
-    <Compile Include="Arquitetura\Estrutura\VerticeTests.cs" />
     <Compile Include="GrafoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

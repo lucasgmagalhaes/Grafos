@@ -12,11 +12,7 @@ namespace listaPraticaGrafo
         protected List<Vertice> vertices;
         protected List<Aresta> arestas;
 
-        public List<Vertice> GetVertices { get { return this.vertices; } }
-        public List<Aresta> GetArestas { get { return this.arestas; } }
-
         protected int componentes; //Número de componentes do grafo
-
         protected int tempo; //Usado na contagem do tempo de descoberta dos vértices
 
         public int Numero_vertices { get { return this.vertices.Count; } }
@@ -44,6 +40,33 @@ namespace listaPraticaGrafo
             this.Init();
             this.vertices = lstVertices;
             this.CalcularArestas();
+        }
+
+        public Grafo(List<Vertice> vertices, List<Aresta> arestas)
+        {
+            this.Init();
+            this.vertices = vertices;
+            this.arestas = arestas;
+        }
+
+        public List<Vertice> GetVertices()
+        {
+            return this.vertices;
+        }
+
+        public List<Aresta> GetArestas()
+        {
+            return this.arestas;
+        }
+
+        public Vertice GetVertice(int index)
+        {
+            return this.vertices[index];
+        }
+
+        public Aresta GetAresta(int index)
+        {
+            return this.arestas[index];
         }
 
         /// <summary>
@@ -102,7 +125,17 @@ namespace listaPraticaGrafo
             int num_arestas = 0;
             foreach (Vertice vertice in this.vertices)
             {
-                num_arestas += vertice.GetArestas().Count;
+               if(vertice.GetArestas() != null)
+                {
+                    foreach(Aresta aresta in vertice.GetArestas())
+                    { 
+                        if (!aresta.FoiVisitado())
+                        {
+                            num_arestas++;
+                            aresta.SetVisitado(true);
+                        }
+                    }
+                }
             }
             return num_arestas;
         }
@@ -135,6 +168,7 @@ namespace listaPraticaGrafo
             Vertice vertice, novoVertice;
             Aresta aresta;
             string[] lineSplit;
+            int num_vertices = int.Parse(arquivo[0]);
 
             for (int i = 1; i < arquivo.Length; i++)
             {
@@ -171,6 +205,22 @@ namespace listaPraticaGrafo
                 catch (Exception e)
                 {
                     throw new Exception("Arquivo possui conteúdo inválido para leitura " + e.Message);
+                }
+            }
+
+            this.AddVerticesRestantes(num_vertices);
+        }
+
+        private void AddVerticesRestantes(int num_vertices)
+        {
+            if (num_vertices > this.vertices.Count)
+            {
+                int resto = num_vertices - this.vertices.Count;
+                int ultimo_vertice = (int)this.vertices[this.vertices.Count - 1].GetDadoValor();
+
+                for (int i = 1; i <= resto; i++)
+                {
+                    this.vertices.Add(new Vertice(new Dado(i + ultimo_vertice)));
                 }
             }
         }
@@ -264,8 +314,7 @@ namespace listaPraticaGrafo
 
                 foreach (Aresta a in v1.GetArestas())
                 {
-                    if (!this.Contem(a))
-                        this.arestas.Add(a);
+                    if (!this.Contem(a)) this.arestas.Add(a);
                 }
             }
         }
@@ -307,7 +356,6 @@ namespace listaPraticaGrafo
             }
         }
 
-
         /// <summary>
         /// Remove os valores nulos da lista de arestas dos vértices que fazem ligação com aquele passado no parâmetro.
         /// </summary>
@@ -325,13 +373,13 @@ namespace listaPraticaGrafo
                     vertice1 = aresta.GetVertices()[0];
                     vertice2 = aresta.GetVertices()[1];
 
-                    if (vertice1 != v1)
+                    if (!vertice1.GetDadoValor().Equals(v1.GetDadoValor()))
                     {
-                        verticesLimpar.Add(vertice1);
+                        vertice1.RemoverAresta(aresta);
                     }
-                    else if (vertice2 != v1)
+                    else if (!vertice2.GetDadoValor().Equals(v1.GetDadoValor()))
                     {
-                        verticesLimpar.Add(vertice2);
+                        vertice2.RemoverAresta(aresta);
                     }
                 }
                 v1.GetArestas().Clear();
@@ -711,33 +759,70 @@ namespace listaPraticaGrafo
         /// Retorna o número de vértices que, se removidos criam novos componentes no grafo.
         /// </summary>
         /// <returns></returns>
+        //public int GetCutVertices()
+        //{
+        //    int size = this.vertices.Count;
+        //    int number = 0;
+        //    // Marca os vértices como não visitados
+        //    bool[] visited = new bool[size];
+        //    int[] disc = new int[size];
+        //    int[] low = new int[size];
+        //    int[] parent = new int[size];
+        //    bool[] ap = new bool[size]; // Armazenar os pontos de articulação
+
+        //    //Inicializa pais(adjacentes), visitados, e os vetores de 
+        //    //ponto de articulação
+        //    for (int i = 0; i < this.vertices.Count; i++)
+        //    {
+        //        parent[i] = -1;
+        //        visited[i] = false;
+        //        ap[i] = false;
+        //    }
+
+        //    // Chama a função recursiva de ajuda para achar a articulação
+        //    // Ponto na "árvore" DFS com base no vertex 'i'
+        //    for (int i = 0; i < size; i++) if (visited[i] == false) APUtil(i, visited, disc, low, parent, ap);
+
+        //    // Agora a ap[] contém pontos de articulação, conta os valores
+        //    for (int i = 0; i < size; i++) if (ap[i] == true) number++;
+        //    return number;
+        //}
+
+        /// <summary>
+        /// Retorna o número de vértices que, se removidos criam novos componentes no grafo.
+        /// </summary>
         public int GetCutVertices()
         {
-            int size = this.vertices.Count;
-            int number = 0;
-            // Marca os vértices como não visitados
-            bool[] visited = new bool[size];
-            int[] disc = new int[size];
-            int[] low = new int[size];
-            int[] parent = new int[size];
-            bool[] ap = new bool[size]; // Armazenar os pontos de articulação
-
-            //Inicializa pais(adjacentes), visitados, e os vetores de 
-            //ponto de articulação
-            for (int i = 0; i < this.vertices.Count; i++)
+            int count = 0;
+            int n_componentes = this.DFS();
+            Grafo aux = this.Clone();
+            
+            foreach (Vertice vertice in aux.GetVertices())
             {
-                parent[i] = -1;
-                visited[i] = false;
-                ap[i] = false;
+                aux.RemoverVertice(vertice);
+                if(aux.GetComponentes() != n_componentes)
+                {
+                    count++;
+                }
+                aux.AddVertice(vertice);
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Clone o grafo atual
+        /// </summary>
+        /// <returns></returns>
+        private Grafo Clone()
+        {
+            List<Vertice> vertices = new List<Vertice>();
+
+            foreach (Vertice vertice in this.vertices)
+            {
+                vertices.Add(vertice.Clonar());
             }
 
-            // Chama a função recursiva de ajuda para achar a articulação
-            // Ponto na "árvore" DFS com base no vertex 'i'
-            for (int i = 0; i < size; i++) if (visited[i] == false) APUtil(i, visited, disc, low, parent, ap);
-
-            // Agora a ap[] contém pontos de articulação, conta os valores
-            for (int i = 0; i < size; i++) if (ap[i] == true) number++;
-            return number;
+            return new Grafo(vertices);
         }
 
         /// <summary>
@@ -793,18 +878,22 @@ namespace listaPraticaGrafo
             }
             return true;
         }
+
         /// <summary>
         /// Verifica se existe um caminho entre os vertices
         /// </summary>
         /// <returns></returns>
         public bool IsConexo()
         {
-            LimpaVisitaVertices();
-            if (this.componentes == 0)
-            {
-                this.componentes = this.DFS();
-            }
+            this.LimpaVisitaVertices();
+            this.componentes = this.DFS();
             return this.componentes == 1;
+        }
+
+        public int GetComponentes()
+        {
+            this.LimpaVisitaVertices();
+            return this.DFS();
         }
 
         protected void Visitar(Vertice vertice)

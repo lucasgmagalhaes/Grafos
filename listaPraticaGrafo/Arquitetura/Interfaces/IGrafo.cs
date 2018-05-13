@@ -1,4 +1,5 @@
 using listaPraticaGrafo.Arquitetura.Estrutura;
+using System.Collections.Generic;
 using System.Text;
 
 namespace listaPraticaGrafo.Arquitetura.Interfaces
@@ -19,6 +20,37 @@ namespace listaPraticaGrafo.Arquitetura.Interfaces
         /// <returns></returns>
         bool IsAdjacente(Vertice v1, Vertice v2);
 
+        /// <summary>
+        /// Retorna presente no grafo de acordo com a informação que ele armazena
+        /// </summary>
+        /// <param name="dado"></param>
+        /// <returns></returns>
+        VerticeBase GetVertice(IDado dado);
+        
+        /// <summary>
+        /// Retorna uma lista com todos os vértices
+        /// </summary>
+        /// <returns></returns>
+        List<Vertice> GetVertices();
+
+        /// <summary>
+        /// Retorna uma lista com todas as arestas
+        /// </summary>
+        /// <returns></returns>
+        List<Aresta> GetArestas();
+
+        /// <summary>
+        /// Retorna um vértice contido no grafo
+        /// </summary>
+        /// <returns></returns>
+        Vertice GetVertice(int index);
+
+        /// <summary>
+        /// Retorna uma aresta contida no grafo
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        Aresta GetAresta(int index);
         /// <summary>
         /// O método deve contar e retornar o número de arestas no qual o vértice passado no parâmetro possui.
         /// </summary>

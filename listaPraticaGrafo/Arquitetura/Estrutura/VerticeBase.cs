@@ -51,6 +51,20 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             }
         }
 
+        public void AddArestas(List<Aresta> arestas)
+        {
+            if (arestas != null)
+            {
+                foreach (Aresta aresta in arestas)
+                {
+                    if (!this.Contem(aresta))
+                    {
+                        this.arestas.Add(aresta);
+                    }
+                }
+            }
+        }
+
         public VerticeBase GetVerticeChefe()
         {
             return this;
@@ -101,9 +115,12 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public List<Aresta> GetArestas()
         {
-            return this.arestas.ConvertAll(aresta => new Aresta(aresta.GetVertices()[0], aresta.GetVertices()[1], aresta.GetPeso()));
+            //return this.arestas.ConvertAll(aresta => new Aresta(aresta.GetVertices()[0], aresta.GetVertices()[1], aresta.GetPeso()));
+            List<Aresta> retorno = new List<Aresta>();
+            foreach (Aresta aresta in this.arestas) retorno.Add((Aresta)aresta);
+            return retorno;
         }
-        
+
         public List<Aresta> GetArestasNaoVisitadas()
         {
             List<Aresta> retorno = new List<Aresta>();
@@ -116,7 +133,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
             return retorno;
         }
- 
+
         public bool FoiVisitado()
         {
             return this.visitado;

@@ -9,7 +9,7 @@ namespace listaPraticaGrafo.Tests
     [TestClass()]
     public class GrafoTests
     {
-        private readonly Grafo grafo = new Grafo(FileArray.GRAFO1_NAO_DIRIGIDO);
+        private readonly IGrafo grafo = new Grafo(FileArray.GRAFO1_NAO_DIRIGIDO);
         private readonly Digrafo digrafo = new Digrafo(FileArray.GRAFO01_DIRIGIDO);
 
         [TestMethod()]
@@ -22,7 +22,8 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void GetVerticeTest()
         {
-            Assert.Fail();
+            Vertice get = (Vertice)this.grafo.GetVertice(new Dado(1));
+            Assert.IsNotNull(get);
         }
 
         [TestMethod()]
@@ -34,13 +35,13 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsUnicursalTest()
         {
-            Assert.Fail();
+           Assert.IsTrue(this.grafo.IsUnicursal());
         }
 
         [TestMethod()]
         public void IsRegularTest()
         {
-            Assert.Fail();
+            Assert.IsTrue(this.grafo.IsRegular());
         }
 
         [TestMethod()]
@@ -66,7 +67,7 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsEulerianoTest()
         {
-            Assert.Fail();
+            Assert.IsFalse(this.grafo.IsEuleriano());
         }
 
         [TestMethod()]
@@ -84,21 +85,22 @@ namespace listaPraticaGrafo.Tests
         [TestMethod()]
         public void IsAdjacenteTest()
         {
-            bool val = this.grafo.IsAdjacente(this.grafo.GetVertices[0], this.grafo.GetVertices[1]);
+            bool val = this.grafo.IsAdjacente(this.grafo.GetVertice(0), this.grafo.GetVertice(1));
             Assert.IsTrue(val);
         }
 
         [TestMethod()]
         public void GetGrauTest()
         {
-            List<Vertice> lista = this.grafo.GetVertices;
+            List<Vertice> lista = this.grafo.GetVertices();
             Assert.AreEqual(2, this.grafo.GetGrau(lista[0]));
         }
 
         [TestMethod()]
         public void GetCutVerticesTest()
         {
-            Assert.Fail();
+            int valor = this.grafo.GetCutVertices();
+            Assert.IsTrue(valor == 3);
         }
 
         [TestMethod()]
