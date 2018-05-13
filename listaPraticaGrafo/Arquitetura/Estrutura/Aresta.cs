@@ -8,8 +8,11 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public Vertice getVertice2 { get { return this.vertice2; } }
 
         public Aresta(Vertice v1, Vertice v2) : base(v1, v2) { }
-
         public Aresta(Vertice v1, Vertice v2, int peso) : base(v1, v2, peso) { }
+
+        public void SetVertice1(Vertice vertice) => this.vertice1 = vertice;
+
+        public void SetVertice2(Vertice vertice) => this.vertice2 = vertice;
 
         public object getValorVertice1
         {
@@ -37,6 +40,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 if (this.vertice1 != null) return this.vertice1.GetDado();
                 else return null;
             }
+            set => this.vertice1.SetDado(value);
         }
 
         public IDado getDadoVertice2
@@ -46,6 +50,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 if (this.vertice2 != null) return this.vertice2.GetDado();
                 else return null;
             }
+            set => this.vertice2.SetDado(value);
         }
 
         public Vertice GetVerticeDiferente(Vertice vertice)
@@ -59,12 +64,6 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 return this.vertice1;
             }
             return null;
-        }
-
-        public Aresta Clonar()
-        {
-            return new Aresta(new Vertice(new Dado((int)this.vertice1.GetDadoValor())),
-                new Vertice(new Dado((int)this.vertice2.GetDadoValor())), this.peso);
         }
     }
 }

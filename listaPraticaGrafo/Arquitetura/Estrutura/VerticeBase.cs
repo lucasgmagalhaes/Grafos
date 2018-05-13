@@ -10,10 +10,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
     {
         protected List<ArestaBase> arestas;
         protected IDado dado;
-        /// <summary>
-        /// Usado para realizar os métodos de pesquisa
-        /// </summary>
-        private Cor cor;
+        private Cor cor; //Usado para realizar os métodos de pesquisa
         protected bool visitado;
 
         public Cor Cor { get { return this.cor; } }
@@ -36,6 +33,19 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public ArestaBase GetAresta(int index)
+        {
+            return this.arestas[index];
+        }
+
+        public void SetAresta(int index, ArestaBase aresta)
+        {
+            if(index >= 0 && index <= this.arestas.Count - 1)
+            {
+                this.arestas[index] = aresta;
+            }
         }
 
         /// <summary>
@@ -78,6 +88,11 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public IDado GetDado()
         {
             return this.dado;
+        }
+
+        public void SetDado(IDado dado)
+        {
+            this.dado = dado;
         }
 
         public override string ToString()
@@ -279,6 +294,25 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public bool Equals(IVertice vertice)
         {
             return (vertice.GetDado().Equals(this.dado));
+        }
+
+        /// <summary>
+        /// Procura por uma aresta na lista de arestas do vértice e retorna em qual posição da lista
+        /// essa aresta está. Retorna -1 caso a aresta não exista na lista.
+        /// </summary>
+        /// <param name="aresta"></param>
+        /// <returns></returns>
+        public int getIndexAresta(Aresta aresta)
+        {
+            Aresta atual;
+            for(int i = 0; i < this.arestas.Count; i++)
+            {
+                atual = (Aresta)this.arestas[i];
+                if (atual.getValorVertice1.Equals(aresta.getValorVertice1) 
+                    && atual.getValorVertice2.Equals(aresta.getValorVertice2) 
+                    && aresta.GetPeso() == atual.GetPeso()) return i;
+            }
+            return -1;
         }
     }
 }

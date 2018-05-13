@@ -22,26 +22,57 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return base.arestas.Count;
         }
 
+        /// <summary>
+        /// Clona o vértice, e seu dado. Porém, mantem as arestas
+        /// </summary>
+        /// <returns></returns>
         public Vertice Clonar()
         {
             Vertice retorno = new Vertice(new Dado((int)this.GetDadoValor()));
-            retorno.AddArestas(this.ClonarArestas());
+            retorno.AddArestas(this.GetArestas());
             return retorno;
-        }
-
-        public List<Aresta> ClonarArestas()
-        {
-            List<Aresta> clone = new List<Aresta>();
-            foreach (Aresta aresta in this.arestas)
-            {
-                clone.Add(aresta.Clonar());
-            }
-            return clone;
         }
 
         public void RemoverAresta(Aresta aresta)
         {
             if (this.arestas.Contains(aresta)) this.arestas.Remove(aresta);
+        }
+
+        /// <summary>
+        /// Para uma lista de vértices, verifica se o vértice passado no parâmetro existe nessa lista,
+        /// comparando pelo valor do dado do vértice
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        public static bool Contem(List<Vertice> vertices, Vertice vertice)
+        {
+            foreach (Vertice vertice_index in vertices)
+            {
+                if (vertice.GetDadoValor().Equals(vertice_index.GetDadoValor()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Busca um vértice da lista caso ele exista nela
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <param name="vertices"></param>
+        /// <returns></returns>
+        public static Vertice Get(Vertice vertice, List<Vertice> vertices)
+        {
+            foreach (Vertice vertice_index in vertices)
+            {
+                if (vertice.GetDadoValor() == vertice_index.GetDadoValor())
+                {
+                    return vertice_index;
+                }
+            }
+            return null;
         }
     }
 }

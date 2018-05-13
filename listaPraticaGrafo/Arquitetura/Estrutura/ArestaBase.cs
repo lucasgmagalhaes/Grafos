@@ -1,9 +1,10 @@
 ﻿using listaPraticaGrafo.Arquitetura.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
 {
-    public abstract class ArestaBase
+    public abstract class ArestaBase : ICloneable
     {
         protected Vertice vertice1;
         protected Vertice vertice2;
@@ -71,10 +72,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return visitada;
         }
 
-        public void SetVisitado(bool visita)
-        {
-            this.visitada = visita;
-        }
+        public void SetVisitado(bool visita) => this.visitada = visita;
 
         /// <summary>
         /// Formado a - a; Peso x
@@ -118,6 +116,11 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             {
                 return false;
             }
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }
