@@ -26,7 +26,7 @@ namespace listaPraticaGrafo
                 Console.WriteLine("Grafo completo:");
                 Console.WriteLine(grafo.ToString());
 
-                grafo.GetCutVertices();
+                //grafo.GetCutVertices();
                 Console.Write("isAdjacente(): vertice1{" + grafo.GetVertice(0).GetDadoValor()
                     + "} vertice2{" + grafo.GetVertice(1).GetDadoValor() + "}  ");
                 Console.WriteLine(grafo.IsAdjacente(grafo.GetVertice(0), grafo.GetVertice(1)));

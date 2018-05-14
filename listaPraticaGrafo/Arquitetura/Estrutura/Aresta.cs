@@ -40,7 +40,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 if (this.vertice1 != null) return this.vertice1.GetDado();
                 else return null;
             }
-            set => this.vertice1.SetDado(value);
+            set
+            {
+                this.vertice1.SetDado(value);
+            }
         }
 
         public IDado getDadoVertice2
@@ -50,7 +53,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
                 if (this.vertice2 != null) return this.vertice2.GetDado();
                 else return null;
             }
-            set => this.vertice2.SetDado(value);
+            set
+            {
+                this.vertice2.SetDado(value);
+            }
         }
 
         public Vertice GetVerticeDiferente(Vertice vertice)

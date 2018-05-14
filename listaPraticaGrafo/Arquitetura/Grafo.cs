@@ -756,7 +756,7 @@ namespace listaPraticaGrafo
         public int GetCutVertices()
         {
             int count = 0, posicao = 0, n_vertices = this.vertices.Count;
-            int n_componentes = this.DFS();
+            int n_componentes = this.Componentes();
             Vertice removido;
             while(posicao != n_vertices)
             {
@@ -896,7 +896,7 @@ namespace listaPraticaGrafo
         public bool IsConexo()
         {
             this.LimpaVisitaVertices();
-            this.componentes = this.DFS();
+            this.componentes = this.Componentes();
             return this.componentes == 1;
         }
 
@@ -907,7 +907,7 @@ namespace listaPraticaGrafo
         public int GetComponentes()
         {
             this.LimpaVisitaVertices();
-            return this.DFS();
+            return this.Componentes();
         }
 
         protected void Visitar(Vertice vertice)
@@ -1108,7 +1108,7 @@ namespace listaPraticaGrafo
         /// Depth First Search	
         /// </summary>	
         /// <returns></returns>	
-        public int DFS()
+        public int Componentes()
         {
             int componentes = 0;
             this.ResetarCorDosVertices();
