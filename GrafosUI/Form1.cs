@@ -10,19 +10,23 @@ namespace GrafosUI
 {
     public partial class Form1 : Form
     {
+        private OpenFileDialog openfile;
+        private DialogResult resultFile;
+
         public Form1()
         {
             InitializeComponent();
+            openfile = new OpenFileDialog();
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void btnselectfile_Click_1(object sender, EventArgs e)
         {
+            this.resultFile = this.openfile.ShowDialog();
 
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            if (this.resultFile == DialogResult.OK)
+            {
+                txtfilepath.Text = this.openfile.SafeFileName;
+            }
         }
     }
 }
