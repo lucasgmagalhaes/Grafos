@@ -22,17 +22,6 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return base.arestas.Count;
         }
 
-        /// <summary>
-        /// Clona o vértice, e seu dado. Porém, mantem as arestas
-        /// </summary>
-        /// <returns></returns>
-        public Vertice Clonar()
-        {
-            Vertice retorno = new Vertice(new Dado((int)this.GetDadoValor()));
-            retorno.AddArestas(this.GetArestas());
-            return retorno;
-        }
-
         public void RemoverAresta(Aresta aresta)
         {
             this.arestas.RemoveAll(aresta_local => aresta_local.Equals(aresta));

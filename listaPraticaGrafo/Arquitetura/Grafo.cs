@@ -677,77 +677,52 @@ namespace listaPraticaGrafo
         public List<Aresta> GetArestasNaoVisitadas()
         {
             List<Aresta> retorno = new List<Aresta>();
-
-            foreach (Aresta a in this.arestas)
+            this.arestas.ForEach(aresta =>
             {
-                if (!a.FoiVisitado()) retorno.Add(a);
-            }
+                if (!aresta.FoiVisitado()) retorno.Add(aresta);
+            });
 
             return retorno;
         }
 
+        /// <summary>
+        /// Retorna um grafo que é a "imagem" restante para o grafo original ser completo
+        /// </summary>
+        /// <returns></returns>
         public Grafo GetComplementar()
         {
-            List<Vertice> lstVertice = new List<Vertice>(); //lista que terá os vertice que participarão do grafo complementar
-            List<Vertice> lstVerticeComplementar = new List<Vertice>(); //lista de vertices que terão as arestas complementares
-            foreach (Vertice vItem in vertices)
+            List<Vertice> vertices = new List<Vertice>();
+            Vertice v1 = null, v2 = null;
+            Aresta aresta;
+
+            this.vertices.ForEach(vertice =>
             {
-                Vertice aux = (Vertice)vItem.Clone();
-                aux.LimparArestas();
-                foreach (Vertice vItem2 in vertices)
+                this.vertices.ForEach(vertice2 =>
                 {
-                    Vertice aux2 = (Vertice)vItem2.Clone();
-                    aux2.LimparArestas();
-                    if (vItem.Equals(vItem2) == false)
+                    if (!vertice.Equals(vertice2) && !vertice.TemArestaComVertice(vertice2))
                     {
-                        if (vItem.IsAdjacente(vItem2) == false)
+                        v1 = Vertice.Get(vertice, vertices);
+                        v2 = Vertice.Get(vertice2, vertices);
+
+                        if (v1 == null)
                         {
-                            if (lstVertice.Contains(vItem) == false && lstVertice.Contains(vItem2) == false)
-                            {
-                                lstVertice.Add(vItem);
-                                lstVertice.Add(vItem2);
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux.AddAresta(nAresta);
-                                aux2.AddAresta(nAresta2);
-                                lstVerticeComplementar.Add(aux);
-                                lstVerticeComplementar.Add(aux2);
-                            }
-                            if (lstVertice.Contains(vItem2) == false && lstVertice.Contains(vItem))  // verifica se já está na lista de vertices que não tem ligação entre si
-                            {
-                                lstVertice.Add(vItem2);
-                                aux = lstVerticeComplementar.Find(x => x.Equals(vItem));
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux2.AddAresta(nAresta2);
-                                aux.AddAresta(nAresta);
-                                lstVerticeComplementar.Add(aux2);
-                            }
-                            if (lstVertice.Contains(vItem) == false && lstVertice.Contains(vItem2))  // verifica se já está na lista de vertices que não tem ligação entre si
-                            {
-                                lstVertice.Add(vItem);
-                                aux2 = lstVerticeComplementar.Find(x => x.Equals(vItem2));
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux.AddAresta(nAresta);
-                                aux2.AddAresta(nAresta2);
-                                lstVerticeComplementar.Add(aux);
-                            }
-                            if (lstVertice.Contains(vItem) && lstVertice.Contains(vItem2))  // verifica se já está na lista de vertices que não tem ligação entre si
-                            {
-                                aux = lstVerticeComplementar.Find(x => x.Equals(vItem));
-                                aux2 = lstVerticeComplementar.Find(x => x.Equals(vItem2));
-                                Aresta nAresta = new Aresta(aux, aux2);
-                                Aresta nAresta2 = new Aresta(aux2, aux);
-                                aux.AddAresta(nAresta);
-                                aux2.AddAresta(nAresta2);
-                            }
+                            v1 = new Vertice(vertice.GetDado());
+                            vertices.Add(v1);
                         }
+                        if (v2 == null)
+                        {
+                            v2 = new Vertice(vertice2.GetDado());
+                            vertices.Add(v2);
+                        }
+
+                        aresta = new Aresta(v1, v2, 10);
+
+                        v1.AddAresta(aresta);
+                        v2.AddAresta(aresta);
                     }
-                }
-            }
-            Grafo cGrafo = new Grafo(lstVerticeComplementar);
-            return cGrafo;
+                });
+            });
+            return new Grafo(vertices);
         }
 
         /// <summary>
@@ -758,7 +733,7 @@ namespace listaPraticaGrafo
             int count = 0, posicao = 0, n_vertices = this.vertices.Count;
             int n_componentes = this.Componentes();
             Vertice removido;
-            while(posicao != n_vertices)
+            while (posicao != n_vertices)
             {
                 removido = this.vertices[0];
                 this.RemoverVertice(this.vertices[0]);

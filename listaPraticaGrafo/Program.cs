@@ -17,7 +17,7 @@ namespace listaPraticaGrafo
             Console.Write("Digite o nome do arquivo: ");
             //string filename = Console.ReadLine();
 
-            string[] arquivo = FileArray.GRAFO1_NAO_DIRIGIDO;
+            string[] arquivo = FileArray.GRAFO2_NAO_DIRIGIDO;
 
             if (Grafo.IsFileAGrafo(arquivo))
             {

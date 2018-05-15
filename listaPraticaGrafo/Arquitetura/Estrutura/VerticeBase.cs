@@ -35,6 +35,27 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             return this.MemberwiseClone();
         }
 
+        /// <summary>
+        /// Clona o vértice, e seu dado. Porém, mantem as arestas
+        /// </summary>
+        /// <returns></returns>
+        public Vertice Clonar()
+        {
+            Vertice retorno = new Vertice(new Dado((int)this.GetDadoValor()));
+            retorno.AddArestas(this.GetArestas());
+            return retorno;
+        }
+
+        /// <summary>
+        /// Clona o vértice removendo as arestas
+        /// </summary>
+        /// <returns></returns>
+        public Vertice ClonarSemArestas()
+        {
+            return new Vertice(new Dado((int)this.GetDadoValor()));
+        }
+
+
         public ArestaBase GetAresta(int index)
         {
             return this.arestas[index];
@@ -245,6 +266,24 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             foreach (VerticeBase v in adjacentes)
             {
                 if (v.GetDadoValor().Equals(vertice.GetDadoValor()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Verifica se o vértice possui pelo menos uma aresta com o vértice passado
+        /// no parâmetro
+        /// </summary>
+        /// <param name="vertice"></param>
+        /// <returns></returns>
+        public bool TemArestaComVertice(Vertice vertice)
+        {
+            foreach(Aresta aresta in this.arestas)
+            {
+                if (aresta.GetVerticeDiferente(this).Equals(vertice))
                 {
                     return true;
                 }
