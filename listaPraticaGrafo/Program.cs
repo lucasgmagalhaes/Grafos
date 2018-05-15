@@ -11,7 +11,7 @@ namespace listaPraticaGrafo
         {
             LeitorArquivo leitor = new LeitorArquivo();
             StringBuilder builder = new StringBuilder();
-            Grafo grafo;
+            Grafo grafo, agm;
 
             Console.CursorVisible = false;
             Console.Write("Digite o nome do arquivo: ");
@@ -23,53 +23,57 @@ namespace listaPraticaGrafo
             {
                 grafo = new Grafo(arquivo);
 
-                Console.WriteLine("Grafo completo:");
-                Console.WriteLine(grafo.ToString());
+                Console.WriteLine("Grafo Original:\n" + grafo.ToString());
 
-                //grafo.GetCutVertices();
-                Console.Write("isAdjacente(): vertice1{" + grafo.GetVertice(0).GetDadoValor()
-                    + "} vertice2{" + grafo.GetVertice(1).GetDadoValor() + "}  ");
-                Console.WriteLine(grafo.IsAdjacente(grafo.GetVertice(0), grafo.GetVertice(1)));
+                //Console.WriteLine("Grafo completo:");
+                //Console.WriteLine(grafo.ToString());
 
-                Console.Write("GetGrau(): vertice1{" + grafo.GetVertice(0).GetDadoValor() + "}  ");
-                Console.WriteLine(grafo.GetGrau(grafo.GetVertice(0)));
+                ////grafo.GetCutVertices();
+                //Console.Write("isAdjacente(): vertice1{" + grafo.GetVertice(0).GetDadoValor()
+                //    + "} vertice2{" + grafo.GetVertice(1).GetDadoValor() + "}  ");
+                //Console.WriteLine(grafo.IsAdjacente(grafo.GetVertice(0), grafo.GetVertice(1)));
 
-                Console.Write("IsIsolado(): vertice1{" + grafo.GetVertice(0).GetDadoValor() + "}  ");
-                Console.WriteLine(grafo.IsIsolado(grafo.GetVertice(0)).ToString());
+                //Console.Write("GetGrau(): vertice1{" + grafo.GetVertice(0).GetDadoValor() + "}  ");
+                //Console.WriteLine(grafo.GetGrau(grafo.GetVertice(0)));
 
-                Console.Write("IsPendente(): vertice1{" + grafo.GetVertice(0).GetDadoValor() + "}  ");
-                Console.WriteLine(grafo.IsPendente(grafo.GetVertice(0)).ToString());
+                //Console.Write("IsIsolado(): vertice1{" + grafo.GetVertice(0).GetDadoValor() + "}  ");
+                //Console.WriteLine(grafo.IsIsolado(grafo.GetVertice(0)).ToString());
 
-                Console.Write("IsRegular(): ");
-                Console.WriteLine(grafo.IsRegular().ToString());
+                //Console.Write("IsPendente(): vertice1{" + grafo.GetVertice(0).GetDadoValor() + "}  ");
+                //Console.WriteLine(grafo.IsPendente(grafo.GetVertice(0)).ToString());
 
-                Console.Write("IsNulo(): ");
-                Console.WriteLine(grafo.IsNulo().ToString());
+                //Console.Write("IsRegular(): ");
+                //Console.WriteLine(grafo.IsRegular().ToString());
 
-                Console.Write("IsCompleto(): ");
-                Console.WriteLine(grafo.IsCompleto().ToString());
+                //Console.Write("IsNulo(): ");
+                //Console.WriteLine(grafo.IsNulo().ToString());
 
-                Console.Write("IsConexo(): ");
-                Console.WriteLine(grafo.IsConexo().ToString());
+                //Console.Write("IsCompleto(): ");
+                //Console.WriteLine(grafo.IsCompleto().ToString());
 
-                Console.Write("IsEuleriano(): ");
-                Console.WriteLine(grafo.IsEuleriano().ToString());
+                //Console.Write("IsConexo(): ");
+                //Console.WriteLine(grafo.IsConexo().ToString());
 
-                Console.Write("IsUnicursal(): ");
-                Console.WriteLine(grafo.IsUnicursal().ToString());
+                //Console.Write("IsEuleriano(): ");
+                //Console.WriteLine(grafo.IsEuleriano().ToString());
 
-                Console.WriteLine("GetComplementar()");
-                Console.WriteLine(grafo.GetComplementar().ToStringSimplesSemEspaco());
+                //Console.Write("IsUnicursal(): ");
+                //Console.WriteLine(grafo.IsUnicursal().ToString());
 
-                grafo.GetAGMKruskal(out builder);
-                Console.WriteLine("Kruskal: ");
-                Console.WriteLine(builder.ToString());
+                //Console.WriteLine("GetComplementar()");
+                //Console.WriteLine(grafo.GetComplementar().ToStringSimplesSemEspaco());
+
+                //grafo.GetAGMKruskal(out builder);
+                //Console.WriteLine("Kruskal: ");
+                //Console.WriteLine(builder.ToString());
 
                 builder.Clear();
-                grafo.GetAGMPrim(out builder);
+                agm = (Grafo)grafo.GetAGMPrim(out builder);
 
                 Console.WriteLine("Prim: ");
                 Console.WriteLine(builder.ToString());
+
+                Console.WriteLine("\n¡rvore Geradora MÌnima:\n" + agm.ToString());
             }
             else if (Digrafo.IsFileADigrafo(arquivo))
             {

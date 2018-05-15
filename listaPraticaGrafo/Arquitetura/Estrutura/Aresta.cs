@@ -61,11 +61,11 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public Vertice GetVerticeDiferente(Vertice vertice)
         {
-            if (this.vertice1 == vertice)
+            if (this.vertice1.Equals(vertice))
             {
                 return this.vertice2;
             }
-            else if (this.vertice2 == vertice)
+            else if (this.vertice2.Equals(vertice))
             {
                 return this.vertice1;
             }

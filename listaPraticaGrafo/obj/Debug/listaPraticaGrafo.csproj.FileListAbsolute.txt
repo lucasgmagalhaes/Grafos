@@ -24,3 +24,9 @@ C:\Users\1047825\Documents\GitHub\Grafos\listaPraticaGrafo\obj\Debug\listaPratic
 C:\Users\1047825\Documents\GitHub\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe
 C:\Users\1047825\Documents\GitHub\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.pdb
 C:\Users\1047825\Documents\GitHub\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojResolveAssemblyReference.cache
+C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe.config
+C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.exe
+C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.pdb
+C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojResolveAssemblyReference.cache
+C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe
+C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.pdb

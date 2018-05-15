@@ -35,7 +35,6 @@ namespace listaPraticaGrafo
             this.ValidarVertices(lstVertices);
             base.Init();
             base.vertices = lstVertices;
-            base.CalcularArestas();
         }
 
         /// <summary>

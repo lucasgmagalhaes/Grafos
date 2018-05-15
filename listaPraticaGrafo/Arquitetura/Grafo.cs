@@ -353,8 +353,8 @@ namespace listaPraticaGrafo
                 if (!this.Contem(v1)) this.vertices.Add(v1);
                 if (!this.Contem(v2)) this.vertices.Add(v2);
 
-                v1.AddAresta(aresta);
-                v2.AddAresta(aresta);
+                if(!v1.Contem(aresta)) v1.AddAresta(aresta);
+                if(!v2.Contem(aresta)) v2.AddAresta(aresta);
                 this.arestas.Add(aresta);
             }
         }
@@ -591,7 +591,7 @@ namespace listaPraticaGrafo
                 }
             }
 
-            foreach (Aresta a in AGM.GetArestasVisitadas())
+            foreach (Aresta a in AGM.GetArestasNaoVisitadas())
                 AGM.RemoverAresta(a);
 
             return AGM;
@@ -604,15 +604,17 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public IGrafo GetAGMPrim(out StringBuilder ordemInsercaoVertices)
         {
-            Grafo subgrafo = new Grafo();
-            ordemInsercaoVertices = new StringBuilder();
+            return GetAGMPrim(this.vertices[0], out ordemInsercaoVertices);
 
-            if (this.vertices.Count > 0)
-            {
-                this.AGMPrimUtil(this.vertices[0], subgrafo, ordemInsercaoVertices);
-            }
-            else return null;
-            return subgrafo;
+            //Grafo subgrafo = new Grafo();
+            //ordemInsercaoVertices = new StringBuilder();
+
+            //if (this.vertices.Count > 0)
+            //{
+            //    this.AGMPrimUtil(this.vertices[0], subgrafo, ordemInsercaoVertices);
+            //}
+            //else return null;
+            //return subgrafo;
         }
 
         /// <summary>
@@ -1152,3 +1154,12 @@ namespace listaPraticaGrafo
         }
     }
 }
+
+                //foreach (Vertice v in this.GetVertices())
+                //{
+                //    if (v.Contem(a))
+                //    {
+                //        Vertice outro = a.GetVerticeDiferente(v);
+                //        v.RemoverAresta(a);
+                //    }
+                //    v.RemoverAresta(a);
