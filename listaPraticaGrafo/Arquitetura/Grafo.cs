@@ -373,6 +373,29 @@ namespace listaPraticaGrafo
             }
         }
 
+        public void RemoverAresta(Aresta a)
+        {
+            if (a != null && this.Contem(a))
+            {
+                a.getVertice1.RemoverAresta(a);
+                a.getVertice2.RemoverAresta(a);
+
+                //foreach (Vertice v in this.GetVertices())
+                //{
+                //    if (v.Contem(a))
+                //    {
+                //        Vertice outr = a.GetVerticeDiferente(v);
+                //        v.RemoverAresta(a);
+
+                //    }
+                //        v.RemoverAresta(a);
+                //}
+
+                this.arestas.Remove(a);
+                a = null;
+            }
+        }
+
         /// <summary>
         /// Remove os valores nulos da lista de arestas dos vértices que fazem ligação com aquele passado no parâmetro.
         /// </summary>
@@ -535,63 +558,41 @@ namespace listaPraticaGrafo
         {
             ordemInsercaoVertices = new StringBuilder();
 
-            Grafo AGM = new Grafo();
-            List<Aresta> arestasAlcancaveis = new List<Aresta>();
-
-            AGM.AddVertice(new Vertice(v1.GetDado()));
-            arestasAlcancaveis.AddRange(v1.GetArestas());
-
-            while (AGM.Numero_vertices < this.Numero_vertices)
+            Grafo clone = this.Clonar();
+            foreach (Vertice v in clone.GetVertices())
             {
-                Aresta proxima = this.GetMenorArestaDesempate(GetArestasMenorPeso(arestasAlcancaveis));
-                Vertice novo1 = new Vertice(proxima.getDadoVertice1);
-                Vertice novo2 = new Vertice(proxima.getDadoVertice2);
+                if (v1.Equals(v))
+                    v1 = v;
+            }
+
+            Grafo AGM = new Grafo();
+
+            AGM.AddVertice(v1);
+
+            while (AGM.Numero_vertices < clone.Numero_vertices)
+            {
+                Aresta proxima = GetMenorArestaDesempate(GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
 
                 if (AGM.Contem(proxima.getVertice1) && AGM.Contem(proxima.getVertice2))
                 {
-                    arestasAlcancaveis.Remove(proxima);
+                    AGM.RemoverAresta(proxima);
                 }
                 else if (AGM.Contem(proxima.getVertice1))
                 {
-                    AGM.AddVertice(novo2); //adiciona o vértice
-                    AGM.AddAresta(new Aresta(null, novo2, proxima.GetPeso())); //adiciona a aresta visitada no grafo (e em cada um dos 2 vértices)
-
-                    arestasAlcancaveis.Remove(proxima); // remove a aresta das opções de visitação
-                    arestasAlcancaveis.AddRange(proxima.getVertice2.GetArestas()); // adiciona as arestas do vértice novo nas opções de visitação
-
+                    AGM.AddVertice(proxima.getVertice2); //adiciona o vértice
                     ordemInsercaoVertices.Append(proxima.getValorVertice1 + "-" + proxima.getValorVertice2 + " "); // adiciona os vertices a lista
+                    proxima.SetVisitado(true);
                 }
                 else
                 {
-                    AGM.AddVertice(novo1); //adiciona o vértice
-                    AGM.AddAresta(new Aresta(novo1, null, proxima.GetPeso())); //adiciona a aresta visitada no grafo (e em cada um dos 2 vértices)
-
-                    arestasAlcancaveis.Remove(proxima); // remove a aresta das opções de visitação
-                    arestasAlcancaveis.AddRange(proxima.getVertice1.GetArestas()); // adiciona as arestas do vértice novo nas opções de visitação
-
+                    AGM.AddVertice(proxima.getVertice1); //adiciona o vértice
                     ordemInsercaoVertices.Append(proxima.getValorVertice2 + "-" + proxima.getValorVertice1 + " "); // adiciona os vertices a lista
+                    proxima.SetVisitado(true);
                 }
             }
 
-            //while (AGM.Numero_vertices < this.Numero_vertices)
-            //{
-            //    Aresta proxima = this.GetMenorArestaDesempate(GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
-
-            //    proxima.SetVisitado(true);
-
-            //    if (AGM.Contem(proxima.getVertice1))
-            //    {
-            //        proxima.getVertice2.FoiVisitado();
-            //        AGM.AddVertice(proxima.getVertice2);
-            //        ordemInsercaoVertices.Append(proxima.getValorVertice1 + "-" + proxima.getValorVertice2 + " "); // adiciona os vertices a lista
-            //    }
-            //    else
-            //    {
-            //        proxima.getVertice1.FoiVisitado();
-            //        AGM.AddVertice(proxima.getVertice1);
-            //        ordemInsercaoVertices.Append(proxima.getValorVertice2 + "-" + proxima.getValorVertice1 + " "); // adiciona os vertices a lista
-            //    }
-            //}
+            foreach (Aresta a in AGM.GetArestasVisitadas())
+                AGM.RemoverAresta(a);
 
             return AGM;
         }
