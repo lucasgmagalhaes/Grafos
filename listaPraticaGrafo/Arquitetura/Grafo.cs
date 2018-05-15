@@ -660,6 +660,22 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
+        /// Retorna uma lista com todas as arestas do grafo que não foram visitadas
+        /// </summary>
+        /// <returns></returns>
+        public List<Aresta> GetArestasVisitadas()
+        {
+            List<Aresta> retorno = new List<Aresta>();
+
+            foreach (Aresta a in this.arestas)
+            {
+                if (a.FoiVisitado()) retorno.Add(a);
+            }
+
+            return retorno;
+        }
+
+        /// <summary>
         /// Retorna um grafo que é a "imagem" restante para o grafo original ser completo
         /// </summary>
         /// <returns></returns>
