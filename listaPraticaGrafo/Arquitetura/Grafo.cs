@@ -16,7 +16,6 @@ namespace listaPraticaGrafo
         protected int tempo; //Usado na contagem do tempo de descoberta dos vértices
 
         public int Numero_vertices { get { return this.vertices.Count; } }
-        public int Numero_arestas { get { return this.CalcularArestas(); } }
 
         public Grafo()
         {
@@ -39,14 +38,13 @@ namespace listaPraticaGrafo
         {
             this.Init();
             this.vertices = lstVertices;
-            this.CalcularArestas();
+            this.BuscarArestasNosVertices();
         }
 
         public Grafo(List<Vertice> vertices, List<Aresta> arestas)
         {
             this.Init();
-            this.vertices = vertices;
-            this.arestas = arestas;
+            this.OrganizarVerticesEArestas(vertices, arestas);
         }
 
         public List<Vertice> GetVertices()
@@ -125,31 +123,6 @@ namespace listaPraticaGrafo
             foreach (Vertice vertice in vertices)
             {
                 num_arestas += vertice.GetArestas().Count;
-            }
-            return num_arestas;
-        }
-
-        /// <summary>
-        /// Calcula o números de arestas que o grafo possui contando quantas arestas 
-        /// a lista de vértices o grafo possui
-        /// </summary>
-        /// <param name="vertice"></param>
-        protected int CalcularArestas()
-        {
-            int num_arestas = 0;
-            foreach (Vertice vertice in this.vertices)
-            {
-                if (vertice.GetArestas() != null)
-                {
-                    foreach (Aresta aresta in vertice.GetArestas())
-                    {
-                        if (!aresta.FoiVisitado())
-                        {
-                            num_arestas++;
-                            aresta.SetVisitado(true);
-                        }
-                    }
-                }
             }
             return num_arestas;
         }
@@ -1097,6 +1070,68 @@ namespace listaPraticaGrafo
                 }
             }
             return componentes;
+        }
+
+        /// <summary>
+        /// Torna a visita das arestas de cada vértice como FALSE
+        /// </summary>
+        private void ResetarVisitaArestas()
+        {
+            this.vertices.ForEach(vertice =>
+            {
+                vertice.ResetarVisitaArestas();
+            });
+        }
+
+        /// <summary>
+        /// Adiciona todas as arestas dos vértices na lista de arestas
+        /// </summary>
+        private void BuscarArestasNosVertices()
+        {
+            this.vertices.ForEach(vertice =>
+            {
+                vertice.GetArestas().ForEach(aresta =>
+                {
+                    if (!aresta.FoiVisitado())
+                    {
+                        this.arestas.Add(aresta);
+                    }
+                });
+            });
+            this.ResetarVisitaArestas();
+        }
+
+        /// <summary>
+        /// Adiciona a lista de vértices e aresta no grafo, verificando se, na lista
+        /// de arestas, elas não estão inseridas nos vértices ao qual estão ligadas. 
+        /// Se não estiverem, são inseridas nos respectivos vértices
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="arestas"></param>
+         private void OrganizarVerticesEArestas(List<Vertice>vertices, List<Aresta> arestas)
+        {
+            Vertice v1, v2;
+
+            if(this.vertices != null)
+            {
+                vertices.ForEach(vertice =>
+                {
+                    if (!this.vertices.Contains(vertice)) this.vertices.Add(vertice);
+                });
+
+                arestas.ForEach(aresta =>
+                {
+                    v1 = aresta.getVertice1;
+                    v2 = aresta.getVertice2;
+
+                    if (this.vertices.Contains(v1) && this.vertices.Contains(v2))
+                    {
+                        if (!v1.Contem(aresta)) v1.AddAresta(aresta);
+                        if (!v2.Contem(aresta)) v2.AddAresta(aresta);
+                        this.arestas.Add(aresta);
+                    }
+                });
+            }
         }
     }
 }

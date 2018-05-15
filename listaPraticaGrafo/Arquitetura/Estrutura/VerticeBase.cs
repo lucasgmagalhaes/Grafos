@@ -357,5 +357,10 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
             if(this.arestas == null) this.arestas = new List<ArestaBase>();
             else this.arestas.Clear();
         }
+
+        /// <summary>
+        /// Torna a resta como não visitada
+        /// </summary>
+        public void ResetarVisitaArestas() => this.arestas.ForEach(aresta => aresta.SetVisitado(false));
     }
 }
