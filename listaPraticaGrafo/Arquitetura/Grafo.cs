@@ -69,6 +69,21 @@ namespace listaPraticaGrafo
         }
 
         /// <summary>
+        /// Busca um vértice de acordo com o valor informado no parâmetro
+        /// </summary>
+        /// <param name="valor"></param>
+        /// <returns></returns>
+        public Vertice GetVertice(string valor)
+        {
+            if (valor == null) return null;
+            foreach(Vertice vertice in this.vertices)
+            {
+                if(vertice.GetDadoValor().Equals(int.Parse(valor))) return vertice;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Retorna uma aresta do grafo baseado no indice
         /// </summary>
         /// <param name="index"></param>
@@ -353,8 +368,8 @@ namespace listaPraticaGrafo
                 if (!this.Contem(v1)) this.vertices.Add(v1);
                 if (!this.Contem(v2)) this.vertices.Add(v2);
 
-                if(!v1.Contem(aresta)) v1.AddAresta(aresta);
-                if(!v2.Contem(aresta)) v2.AddAresta(aresta);
+                if (!v1.Contem(aresta)) v1.AddAresta(aresta);
+                if (!v2.Contem(aresta)) v2.AddAresta(aresta);
                 this.arestas.Add(aresta);
             }
         }
@@ -557,21 +572,16 @@ namespace listaPraticaGrafo
         public IGrafo GetAGMPrim(Vertice v1, out StringBuilder ordemInsercaoVertices)
         {
             ordemInsercaoVertices = new StringBuilder();
-
-            Grafo clone = this.Clonar();
-            foreach (Vertice v in clone.GetVertices())
-            {
-                if (v1.Equals(v))
-                    v1 = v;
-            }
-
             Grafo AGM = new Grafo();
+            Grafo clone = this.Clonar();
+            Aresta proxima;
 
+            v1 = Vertice.Get(v1, clone.GetVertices());
             AGM.AddVertice(v1);
 
             while (AGM.Numero_vertices < clone.Numero_vertices)
             {
-                Aresta proxima = GetMenorArestaDesempate(GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
+                 proxima = this.GetMenorArestaDesempate(this.GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
 
                 if (AGM.Contem(proxima.getVertice1) && AGM.Contem(proxima.getVertice2))
                 {
@@ -591,9 +601,7 @@ namespace listaPraticaGrafo
                 }
             }
 
-            foreach (Aresta a in AGM.GetArestasNaoVisitadas())
-                AGM.RemoverAresta(a);
-
+            AGM.GetArestasNaoVisitadas().ForEach(aresta => AGM.RemoverAresta(aresta));
             return AGM;
         }
 
@@ -1096,10 +1104,7 @@ namespace listaPraticaGrafo
         /// </summary>
         private void ResetarVisitaArestas()
         {
-            this.vertices.ForEach(vertice =>
-            {
-                vertice.ResetarVisitaArestas();
-            });
+            this.vertices.ForEach(vertice => vertice.ResetarVisitaArestas());
         }
 
         /// <summary>
@@ -1127,11 +1132,11 @@ namespace listaPraticaGrafo
         /// </summary>
         /// <param name="vertices"></param>
         /// <param name="arestas"></param>
-         private void OrganizarVerticesEArestas(List<Vertice>vertices, List<Aresta> arestas)
+        private void OrganizarVerticesEArestas(List<Vertice> vertices, List<Aresta> arestas)
         {
             Vertice v1, v2;
 
-            if(this.vertices != null)
+            if (this.vertices != null)
             {
                 vertices.ForEach(vertice =>
                 {
@@ -1152,14 +1157,16 @@ namespace listaPraticaGrafo
                 });
             }
         }
+
+        /// <summary>
+        /// Retorna uma lista com o valor do dado de cada vértice
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetValoresVertices()
+        {
+            List<string> retorno = new List<string>();
+            this.vertices.ForEach(vertice => retorno.Add(vertice.GetDadoValor().ToString()));
+            return retorno.ToArray();
+        }
     }
 }
-
-                //foreach (Vertice v in this.GetVertices())
-                //{
-                //    if (v.Contem(a))
-                //    {
-                //        Vertice outro = a.GetVerticeDiferente(v);
-                //        v.RemoverAresta(a);
-                //    }
-                //    v.RemoverAresta(a);

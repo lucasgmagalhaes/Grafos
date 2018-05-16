@@ -75,6 +75,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\listaPraticaGrafo\listaPraticaGrafo.csproj">
+      <Project>{a822da09-8620-4594-9730-b92c559d81c6}</Project>
+      <Name>listaPraticaGrafo</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

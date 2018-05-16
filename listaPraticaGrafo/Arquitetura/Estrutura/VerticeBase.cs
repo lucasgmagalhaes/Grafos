@@ -133,7 +133,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public string ToStringComArestas()
         {
             StringBuilder retorno = new StringBuilder();
-            this.arestas.ForEach(delegate (ArestaBase aresta) { retorno.AppendLine(aresta.ToString()); });
+            this.arestas.ForEach(delegate (ArestaBase aresta) { retorno.AppendLine(aresta.ToString() + " "); });
             return retorno.ToString();
         }
 

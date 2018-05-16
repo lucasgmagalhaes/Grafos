@@ -56,7 +56,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         {
             foreach (Vertice vertice_index in vertices)
             {
-                if (vertice.GetDadoValor() == vertice_index.GetDadoValor())
+                if (vertice.GetDadoValor().Equals(vertice_index.GetDadoValor()))
                 {
                     return vertice_index;
                 }
