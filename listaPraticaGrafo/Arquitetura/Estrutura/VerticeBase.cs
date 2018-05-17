@@ -1,7 +1,6 @@
 ﻿using listaPraticaGrafo.Arquitetura.Enum;
 using listaPraticaGrafo.Arquitetura.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace listaPraticaGrafo.Arquitetura.Estrutura
@@ -10,24 +9,28 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
     {
         protected List<ArestaBase> arestas;
         protected IDado dado;
-        private Cor cor; //Usado para realizar os métodos de pesquisa
+        protected Cor cor; //Usado para realizar os métodos de pesquisa
         protected bool visitado;
-
+        protected VerticeBase chefe;
         public Cor Cor { get { return this.cor; } }
 
         public VerticeBase(IDado dados)
         {
             this.dado = dados;
-            this.visitado = false;
-            this.arestas = new List<ArestaBase>();
+            this.Init();
         }
 
         public VerticeBase(IDado dado, List<Aresta> arestas)
         {
             this.dado = dado;
-            this.arestas = new List<ArestaBase>();
+            this.Init();
             this.arestas.AddRange(arestas);
-            this.visitado = false;
+        }
+
+        private void Init()
+        {
+            this.chefe = this;
+            this.arestas = new List<ArestaBase>();
         }
 
         public object Clone()
@@ -63,7 +66,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public void SetAresta(int index, ArestaBase aresta)
         {
-            if(index >= 0 && index <= this.arestas.Count - 1)
+            if (index >= 0 && index <= this.arestas.Count - 1)
             {
                 this.arestas[index] = aresta;
             }
@@ -98,7 +101,12 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
 
         public VerticeBase GetVerticeChefe()
         {
-            return this;
+            return this.chefe;
+        }
+
+        public void SetVerticeChefe(VerticeBase chefe)
+        {
+            if (chefe != null) this.chefe = chefe;
         }
 
         public IDado GetDado()
@@ -281,7 +289,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// <returns></returns>
         public bool TemArestaComVertice(Vertice vertice)
         {
-            foreach(Aresta aresta in this.arestas)
+            foreach (Aresta aresta in this.arestas)
             {
                 if (aresta.GetVerticeDiferente(this).Equals(vertice))
                 {
@@ -339,11 +347,11 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         public int getIndexAresta(Aresta aresta)
         {
             Aresta atual;
-            for(int i = 0; i < this.arestas.Count; i++)
+            for (int i = 0; i < this.arestas.Count; i++)
             {
                 atual = (Aresta)this.arestas[i];
-                if (atual.getValorVertice1.Equals(aresta.getValorVertice1) 
-                    && atual.getValorVertice2.Equals(aresta.getValorVertice2) 
+                if (atual.getValorVertice1.Equals(aresta.getValorVertice1)
+                    && atual.getValorVertice2.Equals(aresta.getValorVertice2)
                     && aresta.GetPeso() == atual.GetPeso()) return i;
             }
             return -1;
@@ -354,7 +362,7 @@ namespace listaPraticaGrafo.Arquitetura.Estrutura
         /// </summary>
         public void LimparArestas()
         {
-            if(this.arestas == null) this.arestas = new List<ArestaBase>();
+            if (this.arestas == null) this.arestas = new List<ArestaBase>();
             else this.arestas.Clear();
         }
 

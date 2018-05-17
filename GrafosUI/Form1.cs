@@ -20,6 +20,7 @@ namespace GrafosUI
         private Vertice v1;
         private Vertice v2;
         private VerticeDirigido vd1;
+        private string itemSelecionado;
 
         public Form1()
         {
@@ -55,6 +56,7 @@ namespace GrafosUI
 
         private void DefinirValor(Label label, string valor)
         {
+            label.Visible = true;
             label.Text = valor;
         }
 
@@ -66,6 +68,24 @@ namespace GrafosUI
             this.cmbIsAdjacente2.Items.AddRange(valores);
             this.cmbIsIsolado.Items.AddRange(valores);
             this.cmbIsPendente.Items.AddRange(valores);
+            this.cmbGetGrauEntrada.Items.AddRange(valores);
+            this.cmbGetGrauSaida.Items.AddRange(valores);
+        }
+
+        private void LimparTela()
+        {
+            this.cmbGetGrau.Items.Clear();
+            this.cmbIsAdjacente1.Items.Clear();
+            this.cmbIsAdjacente2.Items.Clear();
+            this.cmbIsIsolado.Items.Clear();
+            this.cmbIsPendente.Items.Clear();
+            this.cmbGetGrauEntrada.Items.Clear();
+            this.cmbGetGrauSaida.Items.Clear();
+
+            this.textArquivo.Clear();
+            this.textComplementar.Clear();
+            this.textPrim.Clear();
+            this.textKruskal.Clear();
         }
 
         private void CarregarArquivoNoRichText(string[] arquivo)
@@ -75,14 +95,18 @@ namespace GrafosUI
 
         private void btnExibirResultados_Click(object sender, EventArgs e)
         {
-            if(this.openfile.SafeFileName != null)
+            if (this.openfile.SafeFileName != null && this.openfile.FileName != "")
             {
+                this.LimparTela();
                 LeitorArquivo leitor = new LeitorArquivo();
                 string[] arquivo = leitor.lerArquivo(this.openfile.FileName);
                 this.CarregarArquivoNoRichText(arquivo);
 
                 if (Grafo.IsFileAGrafo(arquivo))
                 {
+                    ((Control)this.tabPageGrafo).Enabled = true;
+                    ((Control)this.tabPageDigrafo).Enabled = false;
+
                     this.grafo = new Grafo(arquivo);
 
                     this.CarregarValoresComboBox();
@@ -96,9 +120,14 @@ namespace GrafosUI
                     this.ExibirComplementar();
                     this.ExibirKruskal();
                     this.ExibirPrim();
+                    this.grafo = new Grafo(arquivo); //GAMBIARRA
                 }
                 else if (Digrafo.IsFileADigrafo(arquivo))
                 {
+                    ((Control)this.tabPageGrafo).Enabled = false;
+                    ((Control)this.tabPageDigrafo).Enabled = true;
+
+                    this.tabControl.SelectedTab = this.tabPageDigrafo;
                     this.digrafo = new Digrafo(arquivo);
                     this.DefinirValorBooleano(this.lblIsNuloDigrafo, this.grafo.IsNulo());
                 }
@@ -129,56 +158,56 @@ namespace GrafosUI
 
         private void btnIsAdjacente_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbIsAdjacente1.SelectedItem.ToString());
-            this.v2 = this.grafo.GetVertice(this.cmbIsAdjacente2.SelectedItem.ToString());
-
-            if (this.v1 != null && this.v2 != null)
+            if (this.cmbIsAdjacente1.SelectedItem != null && this.cmbIsAdjacente2.SelectedItem != null)
             {
+                this.v1 = this.grafo.GetVertice(this.cmbIsAdjacente1.SelectedItem.ToString());
+                this.v2 = this.grafo.GetVertice(this.cmbIsAdjacente2.SelectedItem.ToString());
                 this.DefinirValorBooleano(this.lblIsAdjacente, this.grafo.IsAdjacente(this.v1, this.v2));
+
             }
         }
 
         private void btnIsIsolado_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbIsIsolado.SelectedItem.ToString());
-            if (this.v1 != null)
+            if (this.cmbIsIsolado.SelectedItem != null)
             {
+                this.v1 = this.grafo.GetVertice(this.cmbIsIsolado.SelectedItem.ToString());
                 this.DefinirValorBooleano(this.lblIsIsolado, this.grafo.IsIsolado(v1));
             }
         }
 
         private void btnIsPendente_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbIsPendente.SelectedItem.ToString());
-            if (this.v1 != null)
+            if (this.cmbIsPendente.SelectedItem != null)
             {
+                this.v1 = this.grafo.GetVertice(this.cmbIsPendente.SelectedItem.ToString());
                 this.DefinirValorBooleano(this.lblIsPendente, this.grafo.IsPendente(v1));
             }
         }
 
         private void btnGetGrau_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbGetGrau.SelectedItem.ToString());
-            if (this.v1 != null)
+            if (this.cmbGetGrau.SelectedItem != null)
             {
+                this.v1 = this.grafo.GetVertice(this.cmbGetGrau.SelectedItem.ToString());
                 this.DefinirValor(this.lblGetGrau, this.grafo.GetGrau(v1).ToString());
             }
         }
 
         private void btnGetGrauEntrada_Click(object sender, EventArgs e)
         {
-            this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauEntrada.SelectedItem.ToString());
-            if (this.v1 != null)
+            if (this.cmbGetGrauEntrada.SelectedItem != null)
             {
+                this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauEntrada.SelectedItem.ToString());
                 this.DefinirValor(this.lblGetGrauEntrada, this.digrafo.GetGrauEntrada(vd1).ToString());
             }
         }
 
         private void btnGetGrauSaida_Click(object sender, EventArgs e)
         {
-            this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauSaida.SelectedItem.ToString());
-            if (this.v1 != null)
+            if (this.cmbGetGrauSaida.SelectedItem != null)
             {
+                this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauSaida.SelectedItem.ToString());
                 this.DefinirValor(this.lblGetGrauEntrada, this.digrafo.GetGrauSaida(vd1).ToString());
             }
         }

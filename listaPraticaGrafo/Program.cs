@@ -17,7 +17,7 @@ namespace listaPraticaGrafo
             Console.Write("Digite o nome do arquivo: ");
             //string filename = Console.ReadLine();
 
-            string[] arquivo = FileArray.GRAFO2_NAO_DIRIGIDO;
+            string[] arquivo = FileArray.GRAFO3_NAO_DIRIGIDO;
 
             if (Grafo.IsFileAGrafo(arquivo))
             {
@@ -68,7 +68,8 @@ namespace listaPraticaGrafo
                 //Console.WriteLine(builder.ToString());
 
                 builder.Clear();
-                agm = (Grafo)grafo.GetAGMPrim(out builder);
+               
+                agm = (Grafo)grafo.GetAGMKruskal(out builder);
 
                 Console.WriteLine("Prim: ");
                 Console.WriteLine(builder.ToString());

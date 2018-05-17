@@ -52,8 +52,21 @@ namespace listaPraticaGrafo
             return this.vertices;
         }
 
+        /// <summary>
+        /// Percorre todos os vértices do grafo coletando suas arestas
+        /// (não duplica aresta)
+        /// </summary>
+        /// <returns></returns>
         public List<Aresta> GetArestas()
         {
+            List<Aresta> arestas = new List<Aresta>();
+            this.vertices.ForEach(vertice =>
+            {
+                vertice.GetArestas().ForEach(aresta =>
+                {
+                    if (!arestas.Contains(aresta)) arestas.Add(aresta);
+                });
+            });
             return this.arestas;
         }
 
@@ -76,9 +89,9 @@ namespace listaPraticaGrafo
         public Vertice GetVertice(string valor)
         {
             if (valor == null) return null;
-            foreach(Vertice vertice in this.vertices)
+            foreach (Vertice vertice in this.vertices)
             {
-                if(vertice.GetDadoValor().Equals(int.Parse(valor))) return vertice;
+                if (vertice.GetDadoValor().Equals(int.Parse(valor))) return vertice;
             }
             return null;
         }
@@ -440,58 +453,46 @@ namespace listaPraticaGrafo
             }
         }
 
-        public IGrafo GetAGMKruskal(out StringBuilder ordemInsercaoVertices)
+        public IGrafo GetAGMKruskal(out StringBuilder ordemInsercao)
         {
-            Grafo AGM = new Grafo();
-            ordemInsercaoVertices = new StringBuilder();
+            Aresta arestaMenor = null;
+            Vertice v1, v2;
+            Grafo retorno = new Grafo();
+            List<Aresta> arestas = this.GetArestas();
+            ordemInsercao = new StringBuilder();
 
-            List<Aresta> arestasRestantes = new List<Aresta>();
-            for (int i = 0; i < this.arestas.Count; i++)
+            do
             {
-                arestasRestantes.Add(this.arestas[i]);
-                arestasRestantes[i].getVertice1.LimparArestas();
-                arestasRestantes[i].getVertice2.LimparArestas();
-            }
-
-            List<Vertice> chefes = new List<Vertice>();
-            foreach (Vertice vertice in this.vertices)
-                chefes.Add(vertice);
-
-            int numArestasRestantes = this.Numero_vertices - 1;
-            List<Aresta> arestasMenorPeso;
-
-            while (numArestasRestantes > 0)
-            {
-                arestasMenorPeso = GetArestasMenorPeso(arestasRestantes);
-
-                while (arestasMenorPeso.Count > 0)
+                arestaMenor = this.GetMenorArestaDesempate(this.GetArestasMenorPeso(arestas));
+                if (arestaMenor != null)
                 {
-                    Aresta ret = GetMenorArestaDesempate(arestasMenorPeso);
-                    int indexV1 = this.vertices.IndexOf(ret.getVertice1);
-                    int indexV2 = this.vertices.IndexOf(ret.getVertice2);
+                    arestas.Remove(arestaMenor);
+                    v1 = arestaMenor.getVertice1;
+                    v2 = arestaMenor.getVertice2;
 
-                    if (chefes[indexV1] != chefes[indexV2]) // chefe diferente, pode adicionar a arvore
+                    if (!v1.GetVerticeChefe().Equals(v2.GetVerticeChefe()))
                     {
-                        if (!AGM.Contem(chefes[indexV1]))
-                        {
-                            ordemInsercaoVertices.Append(ret.getValorVertice1 + "-" + ret.getValorVertice2 + " "); // adiciona os vertices a lista
-                            chefes[indexV2] = chefes[indexV1]; // define o chefe do vertice adicionado
-                        }
-                        else
-                        {
-                            ordemInsercaoVertices.Append(ret.getValorVertice2 + "-" + ret.getValorVertice1 + " "); // adiciona os vertices a lista
-                            chefes[indexV1] = chefes[indexV2]; // define o chefe do vertice adicionado
-                        }
+                        if (v1.FoiVisitado()) v2.SetVerticeChefe(v1.GetVerticeChefe());
+                        else v1.SetVerticeChefe(v2.GetVerticeChefe());
 
-                        AGM.AddAresta(ret); // adiciona aresta e vertice(s) a AGM
+                        v1.SetVisitado(true);
+                        v2.SetVisitado(true);
+
+                        retorno.AddAresta(arestaMenor);
+                        ordemInsercao.Append(arestaMenor.getValorVertice1 + "-" + arestaMenor.getValorVertice2 + " ");
                     }
-
-                    arestasMenorPeso.Remove(ret);
-                    arestasRestantes.Remove(ret);
-                    numArestasRestantes--;
                 }
-            }
-            return AGM;
+            } while (arestaMenor != null);
+            this.ResetarVisitaVertices();
+            return retorno;
+        }
+
+        /// <summary>
+        /// Define a visita de todos os vértices do grafo como FALSE
+        /// </summary>
+        private void ResetarVisitaVertices()
+        {
+            this.vertices.ForEach(vertice => vertice.SetVisitado(false));
         }
 
         public IGrafo GetAGMKruskal(Vertice inicial, out StringBuilder ordemInsercaoVertices) // ~ pra que vértice inicial???
@@ -503,6 +504,13 @@ namespace listaPraticaGrafo
             return GetAGMKruskal(out ordemInsercaoVertices);
         }
 
+        /// <summary>
+        /// Retorna uma lista com as aresta de menor peso do grafo.
+        /// Caso duas ou mais arestas possuam o mesmo peso, sendo elas as menores,
+        /// ambas são retornadas.
+        /// </summary>
+        /// <param name="arestas"></param>
+        /// <returns></returns>
         private List<Aresta> GetArestasMenorPeso(List<Aresta> arestas)
         {
             int menorPeso = int.MaxValue;
@@ -520,10 +528,24 @@ namespace listaPraticaGrafo
             return empateMenorPeso;
         }
 
+        /// <summary>
+        /// Retorna uma lista com as aresta de menor peso do grafo.
+        /// Caso duas ou mais arestas possuam o mesmo peso, sendo elas as menores,
+        /// ambas são retornadas.
+        /// </summary>
+        /// <param name="arestas"></param>
+        /// <returns></returns>
+        private List<Aresta> GetArestasMenorPeso()
+        {
+            int menorPeso = int.MaxValue;
+            List<Aresta> arestas = this.GetArestas();
+            arestas.ForEach(aresta => menorPeso = aresta.GetPeso() < menorPeso ? aresta.GetPeso() : menorPeso);
+            return arestas.FindAll(aresta => aresta.GetPeso() == menorPeso); ;
+        }
+
         private Aresta GetMenorArestaDesempate(List<Aresta> arestas)
         {
-            if (arestas.Count == 1)
-                return arestas[0];
+            if (arestas.Count == 1) return arestas[0];
 
             int[] somaIndice = new int[arestas.Count];
             for (int i = 0; i < somaIndice.Length; i++) // verifica a soma dos números (índices) dos vértices de cada aresta
@@ -581,7 +603,7 @@ namespace listaPraticaGrafo
 
             while (AGM.Numero_vertices < clone.Numero_vertices)
             {
-                 proxima = this.GetMenorArestaDesempate(this.GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
+                proxima = this.GetMenorArestaDesempate(this.GetArestasMenorPeso(AGM.GetArestasNaoVisitadas()));
 
                 if (AGM.Contem(proxima.getVertice1) && AGM.Contem(proxima.getVertice2))
                 {
@@ -612,46 +634,7 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public IGrafo GetAGMPrim(out StringBuilder ordemInsercaoVertices)
         {
-            return GetAGMPrim(this.vertices[0], out ordemInsercaoVertices);
-
-            //Grafo subgrafo = new Grafo();
-            //ordemInsercaoVertices = new StringBuilder();
-
-            //if (this.vertices.Count > 0)
-            //{
-            //    this.AGMPrimUtil(this.vertices[0], subgrafo, ordemInsercaoVertices);
-            //}
-            //else return null;
-            //return subgrafo;
-        }
-
-        /// <summary>
-        /// Método recursivo para caminhar no grafo e gerar a arvore pelo método Prim
-        /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="grafo"></param>
-        protected void AGMPrimUtil(Vertice v1, Grafo grafo, StringBuilder builder)
-        {
-            if (!v1.FoiVisitado())
-            {
-                Aresta proxima;
-                Vertice p_vertice;
-
-                v1.SetVisitado(true);
-
-                proxima = (Aresta)this.GetMenorArestaDesempate(GetArestasMenorPeso(v1.GetArestasNaoVisitadas()));
-
-                if (proxima != null)
-                {
-                    proxima.SetVisitado(true);
-
-                    grafo.AddAresta(proxima);
-                    p_vertice = proxima.GetVerticeDiferente(v1);
-
-                    builder.Append(proxima.getValorVertice1 + "-" + proxima.getValorVertice2 + " ");
-                    this.AGMPrimUtil(p_vertice, grafo, builder);
-                }
-            }
+            return this.GetAGMPrim(this.vertices[0], out ordemInsercaoVertices);
         }
 
         /// <summary>
@@ -660,13 +643,7 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public List<Aresta> GetArestasNaoVisitadas()
         {
-            List<Aresta> retorno = new List<Aresta>();
-            this.arestas.ForEach(aresta =>
-            {
-                if (!aresta.FoiVisitado()) retorno.Add(aresta);
-            });
-
-            return retorno;
+           return this.GetArestas().FindAll(aresta => !aresta.FoiVisitado());
         }
 
         /// <summary>
@@ -733,6 +710,7 @@ namespace listaPraticaGrafo
             int count = 0, posicao = 0, n_vertices = this.vertices.Count;
             int n_componentes = this.Componentes();
             Vertice removido;
+
             while (posicao != n_vertices)
             {
                 removido = this.vertices[0];
@@ -753,15 +731,13 @@ namespace listaPraticaGrafo
         private Grafo Clonar()
         {
             List<Vertice> vertices = new List<Vertice>();
-            this.vertices.ForEach(vertice =>
-            {
-                this.CloneUtil(vertices, vertice);
-            });
+            this.vertices.ForEach(vertice => this.CloneUtil(vertices, vertice));
+            this.ResetarVisitaArestas();
             return new Grafo(vertices);
         }
 
         /// <summary>
-        /// Método recursivo para ser usado no o Clonar()
+        /// Método recursivo para ser usado no Clonar()
         /// </summary>
         /// <param name="vertices"></param>
         /// <param name="vertice"></param>
@@ -772,7 +748,7 @@ namespace listaPraticaGrafo
 
             if (!Vertice.Contem(vertices, vertice))
             {
-                v_clone = vertice.Clonar(); //nova instância para o vértice (não é criada novas instâncias para as arestas)
+                v_clone = vertice.Clonar();
 
                 foreach (Aresta aresta in v_clone.GetArestas())
                 {
@@ -818,10 +794,7 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public int GetGrau(Vertice v1)
         {
-            if (v1 != null)
-            {
-                return v1.GetGrau();
-            }
+            if (v1 != null) return v1.GetGrau();
             return -1;
         }
 
@@ -947,10 +920,7 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsIsolado(Vertice v1)
         {
-            if (v1 != null)
-            {
-                return v1.GetGrau() == 0;
-            }
+            if (v1 != null) return v1.GetGrau() == 0;
             return false;
         }
 
@@ -977,10 +947,7 @@ namespace listaPraticaGrafo
         /// <returns></returns>
         public bool IsPendente(Vertice v1)
         {
-            if (v1 != null)
-            {
-                return v1.GetGrau() == 1;
-            }
+            if (v1 != null) return v1.GetGrau() == 1;
             return false;
         }
 
@@ -1024,10 +991,7 @@ namespace listaPraticaGrafo
         /// </summary>
         protected void ResetarCorDosVertices()
         {
-            foreach (Vertice vertice in this.vertices)
-            {
-                vertice.ResetarCor();
-            }
+            this.vertices.ForEach(vertice => vertice.ResetarCor());
         }
 
         /// <summary>
