@@ -30,3 +30,10 @@ C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaG
 C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojResolveAssemblyReference.cache
 C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe
 C:\Users\1019044\Downloads\aqui\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.pdb
+D:\Git\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe.config
+D:\Git\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.exe
+D:\Git\Grafos\listaPraticaGrafo\bin\Debug\listaPraticaGrafo.pdb
+D:\Git\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csprojAssemblyReference.cache
+D:\Git\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.csproj.CoreCompileInputs.cache
+D:\Git\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.exe
+D:\Git\Grafos\listaPraticaGrafo\obj\Debug\listaPraticaGrafo.pdb

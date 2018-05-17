@@ -20,7 +20,6 @@ namespace GrafosUI
         private Vertice v1;
         private Vertice v2;
         private VerticeDirigido vd1;
-        private VerticeDirigido vd2;
 
         public Form1()
         {
@@ -38,6 +37,8 @@ namespace GrafosUI
 
         private void DefinirValorBooleano(Label label, bool resultado)
         {
+            label.Visible = true;
+
             if (resultado)
             {
                 label.Text = "True";
@@ -46,7 +47,7 @@ namespace GrafosUI
             }
             else
             {
-                label.Text = "True";
+                label.Text = "False";
                 label.ForeColor = Color.White;
                 label.BackColor = Color.Red;
             }
@@ -67,13 +68,18 @@ namespace GrafosUI
             this.cmbIsPendente.Items.AddRange(valores);
         }
 
+        private void CarregarArquivoNoRichText(string[] arquivo)
+        {
+            foreach (string linha in arquivo) this.textArquivo.AppendText(linha + "\n");
+        }
+
         private void btnExibirResultados_Click(object sender, EventArgs e)
         {
             if(this.openfile.SafeFileName != null)
             {
                 LeitorArquivo leitor = new LeitorArquivo();
                 string[] arquivo = leitor.lerArquivo(this.openfile.FileName);
-                this.textArquivo.Text = arquivo.ToString();
+                this.CarregarArquivoNoRichText(arquivo);
 
                 if (Grafo.IsFileAGrafo(arquivo))
                 {
@@ -110,20 +116,21 @@ namespace GrafosUI
         {
             StringBuilder valor = new StringBuilder();
             Grafo grafo = this.grafo.GetComplementar();
-            this.textKruskal.Text = grafo.ToString();
+            if (grafo.ToString() == "") this.textComplementar.Text = "Não possui complementar";
+            else this.textComplementar.Text = grafo.ToString();
         }
 
         private void ExibirPrim()
         {
             StringBuilder valor = new StringBuilder();
             this.grafo.GetAGMPrim(out valor);
-            this.textKruskal.Text = valor.ToString();
+            this.textPrim.Text = valor.ToString();
         }
 
         private void btnIsAdjacente_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbIsAdjacente1.SelectedText);
-            this.v2 = this.grafo.GetVertice(this.cmbIsAdjacente2.SelectedText);
+            this.v1 = this.grafo.GetVertice(this.cmbIsAdjacente1.SelectedItem.ToString());
+            this.v2 = this.grafo.GetVertice(this.cmbIsAdjacente2.SelectedItem.ToString());
 
             if (this.v1 != null && this.v2 != null)
             {
@@ -133,7 +140,7 @@ namespace GrafosUI
 
         private void btnIsIsolado_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbIsIsolado.SelectedText);
+            this.v1 = this.grafo.GetVertice(this.cmbIsIsolado.SelectedItem.ToString());
             if (this.v1 != null)
             {
                 this.DefinirValorBooleano(this.lblIsIsolado, this.grafo.IsIsolado(v1));
@@ -142,7 +149,7 @@ namespace GrafosUI
 
         private void btnIsPendente_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbIsPendente.SelectedText);
+            this.v1 = this.grafo.GetVertice(this.cmbIsPendente.SelectedItem.ToString());
             if (this.v1 != null)
             {
                 this.DefinirValorBooleano(this.lblIsPendente, this.grafo.IsPendente(v1));
@@ -151,7 +158,7 @@ namespace GrafosUI
 
         private void btnGetGrau_Click(object sender, EventArgs e)
         {
-            this.v1 = this.grafo.GetVertice(this.cmbGetGrau.SelectedText);
+            this.v1 = this.grafo.GetVertice(this.cmbGetGrau.SelectedItem.ToString());
             if (this.v1 != null)
             {
                 this.DefinirValor(this.lblGetGrau, this.grafo.GetGrau(v1).ToString());
@@ -160,7 +167,7 @@ namespace GrafosUI
 
         private void btnGetGrauEntrada_Click(object sender, EventArgs e)
         {
-            this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauEntrada.SelectedText);
+            this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauEntrada.SelectedItem.ToString());
             if (this.v1 != null)
             {
                 this.DefinirValor(this.lblGetGrauEntrada, this.digrafo.GetGrauEntrada(vd1).ToString());
@@ -169,7 +176,7 @@ namespace GrafosUI
 
         private void btnGetGrauSaida_Click(object sender, EventArgs e)
         {
-            this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauSaida.SelectedText);
+            this.vd1 = (VerticeDirigido)this.digrafo.GetVertice(this.cmbGetGrauSaida.SelectedItem.ToString());
             if (this.v1 != null)
             {
                 this.DefinirValor(this.lblGetGrauEntrada, this.digrafo.GetGrauSaida(vd1).ToString());

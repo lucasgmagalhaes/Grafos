@@ -44,7 +44,6 @@
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.textPrim = new System.Windows.Forms.RichTextBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.textComplementar = new System.Windows.Forms.RichTextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.lblGetGrau = new System.Windows.Forms.Label();
             this.btnGetGrau = new System.Windows.Forms.Button();
@@ -97,6 +96,7 @@
             this.btnGetGrauSaida = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.cmbGetGrauSaida = new System.Windows.Forms.ComboBox();
+            this.textComplementar = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -283,17 +283,6 @@
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Complementar";
             // 
-            // textComplementar
-            // 
-            this.textComplementar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textComplementar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textComplementar.Enabled = false;
-            this.textComplementar.Location = new System.Drawing.Point(3, 16);
-            this.textComplementar.Name = "textComplementar";
-            this.textComplementar.Size = new System.Drawing.Size(229, 145);
-            this.textComplementar.TabIndex = 5;
-            this.textComplementar.Text = "";
-            // 
             // groupBox12
             // 
             this.groupBox12.Controls.Add(this.lblGetGrau);
@@ -316,6 +305,7 @@
             this.lblGetGrau.Size = new System.Drawing.Size(13, 13);
             this.lblGetGrau.TabIndex = 2;
             this.lblGetGrau.Text = "0";
+            this.lblGetGrau.Visible = false;
             // 
             // btnGetGrau
             // 
@@ -339,6 +329,7 @@
             // 
             // cmbGetGrau
             // 
+            this.cmbGetGrau.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbGetGrau.FormattingEnabled = true;
             this.cmbGetGrau.Location = new System.Drawing.Point(82, 24);
             this.cmbGetGrau.Name = "cmbGetGrau";
@@ -367,6 +358,7 @@
             this.lblIsPendente.Size = new System.Drawing.Size(29, 13);
             this.lblIsPendente.TabIndex = 2;
             this.lblIsPendente.Text = "True";
+            this.lblIsPendente.Visible = false;
             // 
             // btnIsPendente
             // 
@@ -390,6 +382,7 @@
             // 
             // cmbIsPendente
             // 
+            this.cmbIsPendente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbIsPendente.FormattingEnabled = true;
             this.cmbIsPendente.Location = new System.Drawing.Point(82, 24);
             this.cmbIsPendente.Name = "cmbIsPendente";
@@ -418,6 +411,7 @@
             this.lblIsIsolado.Size = new System.Drawing.Size(29, 13);
             this.lblIsIsolado.TabIndex = 2;
             this.lblIsIsolado.Text = "True";
+            this.lblIsIsolado.Visible = false;
             // 
             // btnIsIsolado
             // 
@@ -441,6 +435,7 @@
             // 
             // cmbIsIsolado
             // 
+            this.cmbIsIsolado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbIsIsolado.FormattingEnabled = true;
             this.cmbIsIsolado.Location = new System.Drawing.Point(82, 24);
             this.cmbIsIsolado.Name = "cmbIsIsolado";
@@ -471,6 +466,7 @@
             this.lblIsAdjacente.Size = new System.Drawing.Size(29, 13);
             this.lblIsAdjacente.TabIndex = 2;
             this.lblIsAdjacente.Text = "True";
+            this.lblIsAdjacente.Visible = false;
             // 
             // btnIsAdjacente
             // 
@@ -504,6 +500,7 @@
             // 
             // cmbIsAdjacente2
             // 
+            this.cmbIsAdjacente2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbIsAdjacente2.FormattingEnabled = true;
             this.cmbIsAdjacente2.Location = new System.Drawing.Point(229, 26);
             this.cmbIsAdjacente2.Name = "cmbIsAdjacente2";
@@ -512,6 +509,7 @@
             // 
             // cmbIsAdjacente1
             // 
+            this.cmbIsAdjacente1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbIsAdjacente1.FormattingEnabled = true;
             this.cmbIsAdjacente1.Location = new System.Drawing.Point(82, 26);
             this.cmbIsAdjacente1.Name = "cmbIsAdjacente1";
@@ -537,6 +535,7 @@
             this.lblIsUnicursal.Size = new System.Drawing.Size(29, 13);
             this.lblIsUnicursal.TabIndex = 1;
             this.lblIsUnicursal.Text = "True";
+            this.lblIsUnicursal.Visible = false;
             // 
             // label16
             // 
@@ -567,6 +566,7 @@
             this.lblIsEuleriano.Size = new System.Drawing.Size(29, 13);
             this.lblIsEuleriano.TabIndex = 1;
             this.lblIsEuleriano.Text = "True";
+            this.lblIsEuleriano.Visible = false;
             // 
             // label14
             // 
@@ -597,6 +597,7 @@
             this.lblIsConexo.Size = new System.Drawing.Size(29, 13);
             this.lblIsConexo.TabIndex = 1;
             this.lblIsConexo.Text = "True";
+            this.lblIsConexo.Visible = false;
             // 
             // label12
             // 
@@ -627,6 +628,7 @@
             this.lblIsRegular.Size = new System.Drawing.Size(29, 13);
             this.lblIsRegular.TabIndex = 1;
             this.lblIsRegular.Text = "True";
+            this.lblIsRegular.Visible = false;
             // 
             // label10
             // 
@@ -657,6 +659,7 @@
             this.lblIsNulo.Size = new System.Drawing.Size(29, 13);
             this.lblIsNulo.TabIndex = 1;
             this.lblIsNulo.Text = "True";
+            this.lblIsNulo.Visible = false;
             // 
             // label3
             // 
@@ -765,6 +768,7 @@
             // 
             // cmbGetGrauEntrada
             // 
+            this.cmbGetGrauEntrada.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbGetGrauEntrada.FormattingEnabled = true;
             this.cmbGetGrauEntrada.Location = new System.Drawing.Point(82, 24);
             this.cmbGetGrauEntrada.Name = "cmbGetGrauEntrada";
@@ -816,11 +820,23 @@
             // 
             // cmbGetGrauSaida
             // 
+            this.cmbGetGrauSaida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbGetGrauSaida.FormattingEnabled = true;
             this.cmbGetGrauSaida.Location = new System.Drawing.Point(82, 24);
             this.cmbGetGrauSaida.Name = "cmbGetGrauSaida";
             this.cmbGetGrauSaida.Size = new System.Drawing.Size(84, 21);
             this.cmbGetGrauSaida.TabIndex = 3;
+            // 
+            // textComplementar
+            // 
+            this.textComplementar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textComplementar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textComplementar.Enabled = false;
+            this.textComplementar.Location = new System.Drawing.Point(3, 16);
+            this.textComplementar.Name = "textComplementar";
+            this.textComplementar.Size = new System.Drawing.Size(229, 145);
+            this.textComplementar.TabIndex = 6;
+            this.textComplementar.Text = "";
             // 
             // Form1
             // 
@@ -927,7 +943,6 @@
         private System.Windows.Forms.GroupBox groupBox14;
         private System.Windows.Forms.RichTextBox textPrim;
         private System.Windows.Forms.GroupBox groupBox13;
-        private System.Windows.Forms.RichTextBox textComplementar;
         private System.Windows.Forms.GroupBox groupBox15;
         private System.Windows.Forms.RichTextBox textKruskal;
         private System.Windows.Forms.GroupBox groupBox16;
@@ -944,6 +959,7 @@
         private System.Windows.Forms.Label lblIsNuloDigrafo;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.GroupBox groupBox18;
+        private System.Windows.Forms.RichTextBox textComplementar;
     }
 }
 
